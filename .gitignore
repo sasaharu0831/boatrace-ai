@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# Local data and model artifacts
+data/raw/
+data/interim/
+data/processed/
+data/predictions/
+models/
+artifacts/
+*.parquet
+*.feather
+*.pkl
+*.joblib
+
+# Keep documentation and small samples only
+!data/README.md
+!data/sample/
+!data/sample/.gitkeep
+
+# OS/editor
+.DS_Store
+.vscode/
+.idea/

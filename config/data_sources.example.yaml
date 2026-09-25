@@ -1,0 +1,32 @@
+project:
+  timezone: Asia/Tokyo
+  start_date: '2023-09-25'
+  end_date: '2026-09-24'
+
+storage:
+  raw_dir: data/raw
+  interim_dir: data/interim
+  processed_dir: data/processed
+  prediction_dir: data/predictions
+
+source:
+  # Set the provider URL only after verifying its terms, license, and permitted use.
+  base_url: ''
+  request_timeout_seconds: 30
+  retry_count: 3
+  rate_limit_seconds: 1.0
+  file_templates:
+    entries: ''
+    before_info: ''
+    results: ''
+    payouts: ''
+
+validation:
+  required_tables:
+    - entries
+    - results
+    - payouts
+  required_columns:
+    entries: [race_id, race_date, venue_code, race_number, lane, racer_id]
+    results: [race_id, finish_position]
+    payouts: [race_id, bet_type, combination, payout]
