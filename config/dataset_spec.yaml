@@ -1,0 +1,30 @@
+period:
+  start: 2023-10-01
+  end: 2026-09-30
+venues: all_24
+keys:
+  race_id: YYYYMMDD_jcd_rno
+  boat_key: race_id_plus_boat_no
+snapshots:
+  - entry
+  - exhibition
+  - pre_start
+  - t0
+  - t_plus_10m
+weather:
+  t0_window_seconds: 120
+  t_plus_10m_window_seconds: 120
+  primary_source: official_water_condition
+  secondary_source: nearest_weather_station
+  retain_columns:
+    - weather_source
+    - observed_at_jst
+    - weather_lag_seconds
+    - missing_weather_flag
+leakage_policy:
+  prediction_allow: [entry, exhibition, pre_start, t0]
+  prediction_forbid: [t_plus_10m, result, payout, post_race]
+model_policy:
+  cross_venue_training: forbidden
+  separate_models_per_venue: true
+  validation: walk_forward_time_series
