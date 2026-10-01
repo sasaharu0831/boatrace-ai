@@ -1,0 +1,50 @@
+name: One-day collection smoke test
+on:
+  workflow_dispatch:
+    inputs:
+      date:
+        description: 'Collection date (YYYY-MM-DD)'
+        required: true
+        default: '2026-09-30'
+        type: string
+permissions:
+  contents: read
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install requirements
+        run: python -m pip install -r requirements.txt
+      - name: Check input and data-source configuration
+        env:
+          TARGET_DATE: ${{ inputs.date }}
+        run: |
+          python - <<'PY'
+          import datetime, os, pathlib
+          datetime.date.fromisoformat(os.environ['TARGET_DATE'])
+          p = pathlib.Path('config/data_sources.yaml')
+          if not p.is_file():
+              raise SystemExit('Missing config/data_sources.yaml. Configure a verified source before running; no sample data will be fabricated.')
+          PY
+      - name: One-day collection
+        env:
+          TARGET_DATE: ${{ inputs.date }}
+        run: |
+          mkdir -p run-logs
+          python scripts/download_three_years.py --start-date "$TARGET_DATE" --end-date "$TARGET_DATE" --config config/data_sources.yaml 2>&1 | tee run-logs/collection.log
+      - name: Upload run artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: collection-${{ inputs.date }}
+          path: |
+            run-logs/
+            data/raw/
+            data/processed/
+          if-no-files-found: warn
+          retention-days: 7
