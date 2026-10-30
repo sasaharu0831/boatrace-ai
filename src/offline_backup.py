@@ -7,6 +7,7 @@ another persistent storage path and protect it with independent backups.
 from __future__ import annotations
 
 import argparse
+import errno
 from datetime import datetime, timedelta, timezone
 import hashlib
 import json
@@ -40,8 +41,47 @@ def separate_roots(source: Path, destination: Path) -> tuple[Path, Path]:
     return src, dst
 
 
+def publish_without_clobber(staged: Path, target: Path, digest: str) -> str:
+    """Publish an already fsynced temp file without ever replacing a target.
+
+    Prefer atomic hardlink publication. Some removable SD/FAT/exFAT and Android
+    FUSE mounts disallow hardlinks; use O_EXCL for those filesystems. The fallback
+    is not atomic across a power loss: a partial target then fails its checksum
+    and must be repaired explicitly, rather than silently trusted.
+    """
+    try:
+        os.link(staged, target)
+    except FileExistsError:
+        if sha256(target) != digest:
+            raise ValueError(f"conflicting existing backup: {target}")
+        return "identical"
+    except OSError as exc:
+        if exc.errno not in (errno.EOPNOTSUPP, errno.ENOTSUP, errno.ENOSYS, errno.EPERM):
+            raise
+        try:
+            fd = os.open(target, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
+        except FileExistsError:
+            if sha256(target) != digest:
+                raise ValueError(f"conflicting existing backup: {target}")
+            return "identical"
+        try:
+            with os.fdopen(fd, "wb") as out, staged.open("rb") as inp:
+                shutil.copyfileobj(inp, out, 1024 * 1024)
+                out.flush()
+                os.fsync(out.fileno())
+            if sha256(target) != digest:
+                raise ValueError(f"fallback backup digest mismatch: {target}")
+        except BaseException:
+            # This invocation created the O_EXCL target; delete an incomplete
+            # file on caught errors. Sudden power loss still needs a hash audit.
+            target.unlink(missing_ok=True)
+            raise
+        return "copied"
+    return "copied"
+
+
 def copy_verified(src: Path, dst: Path, *, max_bytes: int) -> str:
-    """Atomic copy; an unexpected existing destination is NEVER overwritten."""
+    """Verified, nonclobbering copy; unsupported hardlink mounts use O_EXCL."""
     size = src.stat().st_size
     if not 0 < size <= max_bytes:
         raise ValueError(f"source size outside allowed bounds: {src.name}")
@@ -61,15 +101,7 @@ def copy_verified(src: Path, dst: Path, *, max_bytes: int) -> str:
             os.fsync(f.fileno())
         if sha256(temp) != expected or sha256(src) != expected:
             raise ValueError("source or copied bytes changed during transfer")
-        # No existing dst should appear between the check and the publish.
-        # Use an exclusive hardlink to avoid replacing a concurrent backup.
-        try:
-            os.link(temp, dst)
-        except FileExistsError:
-            if sha256(dst) != expected:
-                raise ValueError(f"concurrent backup mismatch: {dst}")
-            return "identical"
-        return "copied"
+        return publish_without_clobber(temp, dst, expected)
     finally:
         if temp is not None:
             temp.unlink(missing_ok=True)
@@ -95,14 +127,9 @@ def snapshot_sqlite(source: Path, backup_dir: Path) -> dict:
                 raise ValueError(f"conflicting database snapshot: {target}")
             return {"file": str(target), "backup_relative": f"db-snapshots/{target.name}",
                     "sha256": digest, "status": "identical"}
-        try:
-            os.link(stage, target)
-        except FileExistsError:
-            if sha256(target) != digest:
-                raise ValueError(f"concurrent database snapshot mismatch: {target}")
-            return {"file": str(target), "sha256": digest, "status": "identical"}
+        status = publish_without_clobber(stage, target, digest)
         return {"file": str(target), "backup_relative": f"db-snapshots/{target.name}",
-                "sha256": digest, "status": "copied"}
+                "sha256": digest, "status": status}
     finally:
         if stage is not None:
             stage.unlink(missing_ok=True)
