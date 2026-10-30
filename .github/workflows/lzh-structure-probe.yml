@@ -44,6 +44,9 @@ jobs:
           python src/historical_sqlite.py --b "$RUNNER_TEMP/lzh-probe/raw/B/2026/b261028.lzh" --k "$RUNNER_TEMP/lzh-probe/raw/K/2026/k261028.lzh" --day 2026-10-28 --db "$RUNNER_TEMP/boatrace_history.sqlite"
           python src/historical_sqlite.py --b "$RUNNER_TEMP/lzh-probe/raw/B/2026/b261028.lzh" --k "$RUNNER_TEMP/lzh-probe/raw/K/2026/k261028.lzh" --day 2026-10-28 --db "$RUNNER_TEMP/boatrace_history.sqlite"
           python -c 'import sqlite3,os;c=sqlite3.connect(os.environ["RUNNER_TEMP"]+"/boatrace_history.sqlite");r=[c.execute("select count(*) from "+x).fetchone()[0] for x in ("historical_races","historical_program_entries","historical_result_entries","historical_import_audit")];print("SQLite counts:",r);assert r==[106,636,636,1]'
+      - name: Conservative stage and special-evidence audit (no forward selection)
+        run: |
+          python src/quality_policy.py --b "$RUNNER_TEMP/lzh-probe/raw/B/2026/b261028.lzh" --k "$RUNNER_TEMP/lzh-probe/raw/K/2026/k261028.lzh" --day 2026-10-28 --summary-only
       - name: No raw archive upload
         if: always()
         run: echo "No historical raw file is uploaded; runner storage is temporary."
