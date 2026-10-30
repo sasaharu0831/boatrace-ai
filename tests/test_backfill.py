@@ -1,4 +1,5 @@
 import sys
+import hashlib
 import tempfile
 import unittest
 from contextlib import closing
@@ -35,6 +36,78 @@ class BackfillTests(unittest.TestCase):
                 second = index_existing(root, con, date(2025, 1, 2), date(2025, 1, 2))
                 self.assertEqual(second["invalid_files"], 1)
                 self.assertEqual(len(list(pending(con, date(2025, 1, 2), date(2025, 1, 2)))), 2)
+
+    def test_missing_archived_file_keeps_original_hash_and_can_restore(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            day = date(2025, 1, 2)
+            raw = archive_path(root, "B", day)
+            raw.parent.mkdir(parents=True)
+            raw.write_bytes(FAKE_LZH_HEADER)
+            original = hashlib.sha256(FAKE_LZH_HEADER).hexdigest()
+            with closing(connect(root)) as con:
+                index_existing(root, con, day, day)
+                raw.unlink()
+                report = index_existing(root, con, day, day)
+                self.assertEqual(report["missing_files"], 2)
+                self.assertEqual(con.execute(
+                    "SELECT sha256 FROM archives WHERE kind='B' AND day=?",
+                    (str(day),)).fetchone()[0], original)
+                self.assertEqual(con.execute(
+                    "SELECT status FROM archive_anomalies WHERE kind='B' AND day=?",
+                    (str(day),)).fetchone()[0], "missing")
+                self.assertIn(("B", day), list(pending(con, day, day)))
+                raw.write_bytes(FAKE_LZH_HEADER)
+                index_existing(root, con, day, day)
+                self.assertIsNone(con.execute(
+                    "SELECT status FROM archive_anomalies WHERE kind='B' AND day=?",
+                    (str(day),)).fetchone())
+                self.assertEqual(con.execute(
+                    "SELECT sha256 FROM archives WHERE kind='B' AND day=?",
+                    (str(day),)).fetchone()[0], original)
+
+    def test_changed_same_header_archive_is_quarantined(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            day = date(2025, 1, 2)
+            raw = archive_path(root, "B", day)
+            raw.parent.mkdir(parents=True)
+            raw.write_bytes(FAKE_LZH_HEADER)
+            original = hashlib.sha256(FAKE_LZH_HEADER).hexdigest()
+            with closing(connect(root)) as con:
+                index_existing(root, con, day, day)
+                raw.write_bytes(FAKE_LZH_HEADER[:-1] + b"z")
+                report = index_existing(root, con, day, day)
+                self.assertEqual(report["hash_conflicts"], 1)
+                self.assertEqual(con.execute(
+                    "SELECT sha256 FROM archives WHERE kind='B' AND day=?",
+                    (str(day),)).fetchone()[0], original)
+                self.assertEqual(con.execute(
+                    "SELECT status FROM archive_anomalies WHERE kind='B' AND day=?",
+                    (str(day),)).fetchone()[0], "hash_conflict")
+                self.assertNotIn(("B", day), list(pending(con, day, day)))
+                raw.write_bytes(FAKE_LZH_HEADER)
+                index_existing(root, con, day, day)
+                self.assertIsNone(con.execute(
+                    "SELECT status FROM archive_anomalies WHERE kind='B' AND day=?",
+                    (str(day),)).fetchone())
+
+    def test_invalid_archive_does_not_destroy_provenance(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            day = date(2025, 1, 2)
+            raw = archive_path(root, "B", day)
+            raw.parent.mkdir(parents=True)
+            raw.write_bytes(FAKE_LZH_HEADER)
+            with closing(connect(root)) as con:
+                index_existing(root, con, day, day)
+                raw.write_bytes(b"<html>corrupted</html>")
+                report = index_existing(root, con, day, day)
+                self.assertEqual(report["invalid_files"], 1)
+                self.assertTrue(con.execute(
+                    "SELECT sha256 FROM archives WHERE kind='B' AND day=?",
+                    (str(day),)).fetchone())
+                self.assertIn(("B", day), list(pending(con, day, day)))
 
     def test_limited_no_repeat_cached_and_receipts(self):
         with tempfile.TemporaryDirectory() as tmp:
