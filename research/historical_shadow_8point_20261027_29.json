@@ -1,0 +1,433 @@
+{
+  "mode": "HISTORICAL_SHADOW_NOT_FORWARD",
+  "predeclared_heuristics": [
+    "lane_only",
+    "local_only",
+    "local_motor"
+  ],
+  "tickets_per_race": 8,
+  "predictions_frozen_from_B_before_K_parsing": true,
+  "B_prediction_digests": [
+    "3cd7b1f484cded4fdf6c9d43fbe65c40dfd133e4848c5556af4da24f256e016e",
+    "a81069ee2ff0a3f979db76ef7c83906a3471f90528d0a429000554c2f5c0c827",
+    "e3fa708d67b33682948efee72e1ab86650f83b13b257d088d81ebe9c6b2eb9ea"
+  ],
+  "days": [
+    {
+      "day": "2026-10-27",
+      "B_only_prediction_sha256": "3cd7b1f484cded4fdf6c9d43fbe65c40dfd133e4848c5556af4da24f256e016e",
+      "B_archive_sha256": "858cdf313924ad2f7c756d18eea3af8c8948208364382d3f2ace99ade48fcd41",
+      "K_archive_sha256": "644a5b852257fbf57873764ffc2f148c790ba6ee8d83e66e4f733b4b3caf8d0c",
+      "B_only_races_with_8_tickets": 156,
+      "policies": {
+        "lane_only": {
+          "evaluated": 148,
+          "hits": 49,
+          "stakes_yen": 118400,
+          "payout_yen": 80890,
+          "by_stage": {
+            "QUALIFYING": {
+              "evaluated": 69,
+              "hits": 22,
+              "hypothetical_hit_rate": 0.3188405797101449
+            },
+            "UNSPECIFIED": {
+              "evaluated": 29,
+              "hits": 9,
+              "hypothetical_hit_rate": 0.3103448275862069
+            },
+            "GENERAL": {
+              "evaluated": 36,
+              "hits": 13,
+              "hypothetical_hit_rate": 0.3611111111111111
+            },
+            "SELECTION": {
+              "evaluated": 5,
+              "hits": 1,
+              "hypothetical_hit_rate": 0.2
+            },
+            "FINAL": {
+              "evaluated": 3,
+              "hits": 1,
+              "hypothetical_hit_rate": 0.3333333333333333
+            },
+            "SEMIFINAL": {
+              "evaluated": 6,
+              "hits": 3,
+              "hypothetical_hit_rate": 0.5
+            }
+          },
+          "K_positive_marker_count": 2,
+          "hypothetical_hit_rate": 0.3310810810810811,
+          "hypothetical_return_rate": 0.6831925675675675
+        },
+        "local_only": {
+          "evaluated": 148,
+          "hits": 50,
+          "stakes_yen": 118400,
+          "payout_yen": 65550,
+          "by_stage": {
+            "QUALIFYING": {
+              "evaluated": 69,
+              "hits": 22,
+              "hypothetical_hit_rate": 0.3188405797101449
+            },
+            "UNSPECIFIED": {
+              "evaluated": 29,
+              "hits": 12,
+              "hypothetical_hit_rate": 0.41379310344827586
+            },
+            "GENERAL": {
+              "evaluated": 36,
+              "hits": 11,
+              "hypothetical_hit_rate": 0.3055555555555556
+            },
+            "SELECTION": {
+              "evaluated": 5,
+              "hits": 1,
+              "hypothetical_hit_rate": 0.2
+            },
+            "FINAL": {
+              "evaluated": 3,
+              "hits": 1,
+              "hypothetical_hit_rate": 0.3333333333333333
+            },
+            "SEMIFINAL": {
+              "evaluated": 6,
+              "hits": 3,
+              "hypothetical_hit_rate": 0.5
+            }
+          },
+          "K_positive_marker_count": 2,
+          "hypothetical_hit_rate": 0.33783783783783783,
+          "hypothetical_return_rate": 0.5536317567567568
+        },
+        "local_motor": {
+          "evaluated": 148,
+          "hits": 49,
+          "stakes_yen": 118400,
+          "payout_yen": 65620,
+          "by_stage": {
+            "QUALIFYING": {
+              "evaluated": 69,
+              "hits": 21,
+              "hypothetical_hit_rate": 0.30434782608695654
+            },
+            "UNSPECIFIED": {
+              "evaluated": 29,
+              "hits": 12,
+              "hypothetical_hit_rate": 0.41379310344827586
+            },
+            "GENERAL": {
+              "evaluated": 36,
+              "hits": 11,
+              "hypothetical_hit_rate": 0.3055555555555556
+            },
+            "SELECTION": {
+              "evaluated": 5,
+              "hits": 1,
+              "hypothetical_hit_rate": 0.2
+            },
+            "FINAL": {
+              "evaluated": 3,
+              "hits": 1,
+              "hypothetical_hit_rate": 0.3333333333333333
+            },
+            "SEMIFINAL": {
+              "evaluated": 6,
+              "hits": 3,
+              "hypothetical_hit_rate": 0.5
+            }
+          },
+          "K_positive_marker_count": 2,
+          "hypothetical_hit_rate": 0.3310810810810811,
+          "hypothetical_return_rate": 0.554222972972973
+        }
+      }
+    },
+    {
+      "day": "2026-10-28",
+      "B_only_prediction_sha256": "a81069ee2ff0a3f979db76ef7c83906a3471f90528d0a429000554c2f5c0c827",
+      "B_archive_sha256": "9adc04038c790e6ee44850e529539b529a158a10eabb7d2d1ead0920d6a7e0a2",
+      "K_archive_sha256": "fd87851c169699293e41b82ae008cae2acec70fadfe6f9f548bde17470e361aa",
+      "B_only_races_with_8_tickets": 120,
+      "policies": {
+        "lane_only": {
+          "evaluated": 106,
+          "hits": 27,
+          "stakes_yen": 84800,
+          "payout_yen": 63950,
+          "by_stage": {
+            "QUALIFYING": {
+              "evaluated": 62,
+              "hits": 13,
+              "hypothetical_hit_rate": 0.20967741935483872
+            },
+            "UNSPECIFIED": {
+              "evaluated": 24,
+              "hits": 9,
+              "hypothetical_hit_rate": 0.375
+            },
+            "GENERAL": {
+              "evaluated": 13,
+              "hits": 4,
+              "hypothetical_hit_rate": 0.3076923076923077
+            },
+            "SELECTION": {
+              "evaluated": 5,
+              "hits": 0,
+              "hypothetical_hit_rate": 0
+            },
+            "FINAL": {
+              "evaluated": 2,
+              "hits": 1,
+              "hypothetical_hit_rate": 0.5
+            }
+          },
+          "K_positive_marker_count": 2,
+          "hypothetical_hit_rate": 0.25471698113207547,
+          "hypothetical_return_rate": 0.754127358490566
+        },
+        "local_only": {
+          "evaluated": 106,
+          "hits": 24,
+          "stakes_yen": 84800,
+          "payout_yen": 35090,
+          "by_stage": {
+            "QUALIFYING": {
+              "evaluated": 62,
+              "hits": 11,
+              "hypothetical_hit_rate": 0.1774193548387097
+            },
+            "UNSPECIFIED": {
+              "evaluated": 24,
+              "hits": 8,
+              "hypothetical_hit_rate": 0.3333333333333333
+            },
+            "GENERAL": {
+              "evaluated": 13,
+              "hits": 4,
+              "hypothetical_hit_rate": 0.3076923076923077
+            },
+            "SELECTION": {
+              "evaluated": 5,
+              "hits": 0,
+              "hypothetical_hit_rate": 0
+            },
+            "FINAL": {
+              "evaluated": 2,
+              "hits": 1,
+              "hypothetical_hit_rate": 0.5
+            }
+          },
+          "K_positive_marker_count": 2,
+          "hypothetical_hit_rate": 0.22641509433962265,
+          "hypothetical_return_rate": 0.41379716981132075
+        },
+        "local_motor": {
+          "evaluated": 106,
+          "hits": 25,
+          "stakes_yen": 84800,
+          "payout_yen": 39140,
+          "by_stage": {
+            "QUALIFYING": {
+              "evaluated": 62,
+              "hits": 12,
+              "hypothetical_hit_rate": 0.1935483870967742
+            },
+            "UNSPECIFIED": {
+              "evaluated": 24,
+              "hits": 8,
+              "hypothetical_hit_rate": 0.3333333333333333
+            },
+            "GENERAL": {
+              "evaluated": 13,
+              "hits": 4,
+              "hypothetical_hit_rate": 0.3076923076923077
+            },
+            "SELECTION": {
+              "evaluated": 5,
+              "hits": 0,
+              "hypothetical_hit_rate": 0
+            },
+            "FINAL": {
+              "evaluated": 2,
+              "hits": 1,
+              "hypothetical_hit_rate": 0.5
+            }
+          },
+          "K_positive_marker_count": 2,
+          "hypothetical_hit_rate": 0.2358490566037736,
+          "hypothetical_return_rate": 0.46155660377358493
+        }
+      }
+    },
+    {
+      "day": "2026-10-29",
+      "B_only_prediction_sha256": "e3fa708d67b33682948efee72e1ab86650f83b13b257d088d81ebe9c6b2eb9ea",
+      "B_archive_sha256": "af99f0e9d6c005f090921700c264a83711003b2c24887a1fda54b8df317d4111",
+      "K_archive_sha256": "272f0e2aac574e09370f76511317fb968bfaaa0df2c33ef533d5ba974022a16a",
+      "B_only_races_with_8_tickets": 120,
+      "policies": {
+        "lane_only": {
+          "evaluated": 109,
+          "hits": 35,
+          "stakes_yen": 87200,
+          "payout_yen": 55410,
+          "by_stage": {
+            "GENERAL": {
+              "evaluated": 13,
+              "hits": 3,
+              "hypothetical_hit_rate": 0.23076923076923078
+            },
+            "UNSPECIFIED": {
+              "evaluated": 26,
+              "hits": 9,
+              "hypothetical_hit_rate": 0.34615384615384615
+            },
+            "SEMIFINAL": {
+              "evaluated": 5,
+              "hits": 2,
+              "hypothetical_hit_rate": 0.4
+            },
+            "QUALIFYING": {
+              "evaluated": 63,
+              "hits": 19,
+              "hypothetical_hit_rate": 0.30158730158730157
+            },
+            "SELECTION": {
+              "evaluated": 2,
+              "hits": 2,
+              "hypothetical_hit_rate": 1
+            }
+          },
+          "K_positive_marker_count": 1,
+          "hypothetical_hit_rate": 0.3211009174311927,
+          "hypothetical_return_rate": 0.6354357798165138
+        },
+        "local_only": {
+          "evaluated": 109,
+          "hits": 40,
+          "stakes_yen": 87200,
+          "payout_yen": 69140,
+          "by_stage": {
+            "GENERAL": {
+              "evaluated": 13,
+              "hits": 2,
+              "hypothetical_hit_rate": 0.15384615384615385
+            },
+            "UNSPECIFIED": {
+              "evaluated": 26,
+              "hits": 9,
+              "hypothetical_hit_rate": 0.34615384615384615
+            },
+            "SEMIFINAL": {
+              "evaluated": 5,
+              "hits": 3,
+              "hypothetical_hit_rate": 0.6
+            },
+            "QUALIFYING": {
+              "evaluated": 63,
+              "hits": 24,
+              "hypothetical_hit_rate": 0.38095238095238093
+            },
+            "SELECTION": {
+              "evaluated": 2,
+              "hits": 2,
+              "hypothetical_hit_rate": 1
+            }
+          },
+          "K_positive_marker_count": 1,
+          "hypothetical_hit_rate": 0.3669724770642202,
+          "hypothetical_return_rate": 0.7928899082568808
+        },
+        "local_motor": {
+          "evaluated": 109,
+          "hits": 37,
+          "stakes_yen": 87200,
+          "payout_yen": 62930,
+          "by_stage": {
+            "GENERAL": {
+              "evaluated": 13,
+              "hits": 2,
+              "hypothetical_hit_rate": 0.15384615384615385
+            },
+            "UNSPECIFIED": {
+              "evaluated": 26,
+              "hits": 7,
+              "hypothetical_hit_rate": 0.2692307692307692
+            },
+            "SEMIFINAL": {
+              "evaluated": 5,
+              "hits": 2,
+              "hypothetical_hit_rate": 0.4
+            },
+            "QUALIFYING": {
+              "evaluated": 63,
+              "hits": 24,
+              "hypothetical_hit_rate": 0.38095238095238093
+            },
+            "SELECTION": {
+              "evaluated": 2,
+              "hits": 2,
+              "hypothetical_hit_rate": 1
+            }
+          },
+          "K_positive_marker_count": 1,
+          "hypothetical_hit_rate": 0.3394495412844037,
+          "hypothetical_return_rate": 0.7216743119266055
+        }
+      }
+    }
+  ],
+  "aggregate": {
+    "lane_only": {
+      "evaluated": 363,
+      "hits": 111,
+      "stakes_yen": 290400,
+      "payout_yen": 200250,
+      "K_positive_marker_count": 5,
+      "hypothetical_hit_rate": 0.30578512396694213,
+      "hypothetical_return_rate": 0.6895661157024794
+    },
+    "local_only": {
+      "evaluated": 363,
+      "hits": 114,
+      "stakes_yen": 290400,
+      "payout_yen": 169780,
+      "K_positive_marker_count": 5,
+      "hypothetical_hit_rate": 0.3140495867768595,
+      "hypothetical_return_rate": 0.5846418732782369
+    },
+    "local_motor": {
+      "evaluated": 363,
+      "hits": 111,
+      "stakes_yen": 290400,
+      "payout_yen": 167690,
+      "K_positive_marker_count": 5,
+      "hypothetical_hit_rate": 0.30578512396694213,
+      "hypothetical_return_rate": 0.5774449035812672
+    }
+  },
+  "forward_verified_races": 0,
+  "production_model_changed": false,
+  "warnings": [
+    "B archives acquired after races are historical, not truly preclose.",
+    "No odds or payout used to rank tickets; K is used only for scoring.",
+    "K missing explicit incident markers does NOT prove accident-free.",
+    "Model scores are uncalibrated fixed ranking heuristics.",
+    "No parameter was fitted on or selected by these K results."
+  ],
+  "source": "Official BOAT RACE B/K LZH, three past dates",
+  "tested_at_jst": "2026-10-31",
+  "ci_log": "https://github.com/sasaharu0831/boatrace-ai/actions/runs/41095677893",
+  "storage_policy": "Only SHA256, aggregate, historical model measurements and stage counts. No raw official B/K data.",
+  "source_capture_certification": "HISTORICAL_ONLY",
+  "evaluation_status": "No genuine predeadline capture evidence.",
+  "adoption_decision": "NONE; all tested hypothetical returns <1.0; no tuning or deployment authorized.",
+  "interpretation": "local_only had highest historical hit count, lane_only had highest hypothetical return; no model outperformed both measures.",
+  "notes": [
+    "Three consecutive already-completed dates are not a representative independent test set.",
+    "This is an observational historical trial with predeclared fixed policy coefficients; 100% prediction is not supported."
+  ]
+}
