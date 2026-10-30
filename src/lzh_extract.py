@@ -62,10 +62,10 @@ def inspect_text(text: str):
     import re
     lines = text.splitlines()
     return {
-        "sample_lines": [line[:120] for line in lines if line.strip()][:10],
-        "venue_candidates": [line[:120] for line in lines if "［番組］" in line or "［成績］" in line][:6],
-        "race_candidates": [line[:120] for line in lines if re.search(r"(^|\s)(?:[0-9]{1,2}R|[０-９]{1,2}Ｒ)\s", line)][:8],
-        "entry_candidates": [line[:120] for line in lines if re.search(r"^\s*(?:0[1-6]|[1-6])\s+\d\s+\d{4}",line)][:3],
+        "sample_lines": [line[:120] for line in lines if line.strip()][:52],
+        "venue_candidates": [line[:120] for line in lines if "［番組］" in line or "［成績］" in line][:10],
+        "race_candidates": [line[:120] for line in lines if re.search(r"(^|\s)(?:[0-9]{1,2}R|[０-９]{1,2}Ｒ)\s", line)][:14],
+        "entry_candidates": [line[:120] for line in lines if re.search(r"^\s*(?:0[1-6]|[1-6])\s+\d\s+\d{4}",line)][:8],
     }
 
 
