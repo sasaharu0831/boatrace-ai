@@ -131,7 +131,17 @@ def backup(source_root: Path, target_root: Path, *, max_files: int = 12) -> dict
         if new_copies >= max_files:
             break
         relative = item.relative_to(src)
-        target = dst / "files" / relative
+        if relative.parts[0] == "raw":
+            # Official raw archives are immutable by date and kind. A changed
+            # same-name file is an integrity event, not a silent replacement.
+            target = dst / "files" / relative
+        else:
+            # Manifests, checkpoints and quality labels can legitimately change
+            # as new days are added or parser rules improve. Keep every version
+            # under an immutable content-addressed name instead.
+            digest = sha256(item)
+            target = (dst / "metadata-versions" / relative.parent /
+                      f"{item.stem}-{digest[:16]}{item.suffix}")
         try:
             status = copy_verified(item, target, max_bytes=MAX_RAW_BYTES)
             (copied if status == "copied" else verified).append(relative.as_posix())
