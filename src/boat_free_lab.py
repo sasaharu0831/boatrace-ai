@@ -196,6 +196,8 @@ def main(argv=None):
     p = sub.add_parser("evaluate")
     p.add_argument("--predictions", type=Path, required=True)
     p.add_argument("--outcomes", type=Path, required=True)
+    p.add_argument("--research-only", action="store_true",
+                   help="Explicitly run hypothetical historical scoring, NEVER certified Forward")
     args = parser.parse_args(argv)
     if args.action == "collect":
         start = date.fromisoformat(args.start)
@@ -206,7 +208,8 @@ def main(argv=None):
         return 0 if all(r["status"] in ("downloaded", "cached") for r in result) else 1
     predictions = json.loads(args.predictions.read_text(encoding="utf-8"))
     outcomes = json.loads(args.outcomes.read_text(encoding="utf-8"))
-    print(json.dumps(evaluate(predictions, outcomes), ensure_ascii=False, indent=2))
+    scorer = evaluate_historical_research if args.research_only else evaluate
+    print(json.dumps(scorer(predictions, outcomes), ensure_ascii=False, indent=2))
     return 0
 
 if __name__ == "__main__":
