@@ -9,6 +9,22 @@
 - `historical_export.py` exports B-derived features and K-derived outcome labels as **separate, allowlisted CSVs**. This is a historical simulation, **never** authenticated Forward.
 - GitHub test execution: https://github.com/sasaharu0831/boatrace-ai/actions/runs/41080733361
 
+
+## Multi-day independent verification (2026-10-27, 28, 29)
+
+A second official-data probe succeeded on 2026-10-27 and 2026-10-29. Together with the separate 2026-10-28 verification, it produced **413 matched B/K race records and 363 historical six-finisher registration/result joins**. The stricter reconciliation discards bad B percentage stats, racer duplicates, and mismatched B/K distance before accepting a historical normal join. This is *not* an accuracy measurement and does not prove an incident-free race.
+
+The small aggregate-and-hash checkpoint is at `research/verified_coverage_2026-10-27_to_29.json`. It contains no raw archives or race selections. To re-run an **offline** audit from archive files on a persistent local disk:
+
+```bash
+python src/multi_day_audit.py \
+  --root /ABSOLUTE/PERSISTENT/DISK/boatdata \
+  --dates 2026-10-27 2026-10-28 2026-10-29 \
+  --require-positive
+```
+
+CI evidence: [2026-10-27/29 coverage](https://github.com/sasaharu0831/boatrace-ai/actions/runs/41089419845), [2026-10-28 join, SQLite, no-leakage CSV](https://github.com/sasaharu0831/boatrace-ai/actions/runs/41089419562). These jobs use GitHub's temporary filesystem and do not create a perpetual raw-data archive.
+
 ## Permanent local disk (zero paid API usage)
 
 Install Python 3 and free 7zip/p7zip-full locally. Use an **absolute storage path** on a disk that you control and back up; do not use `$RUNNER_TEMP`, `/tmp` or any temporary GitHub Actions workspace.
