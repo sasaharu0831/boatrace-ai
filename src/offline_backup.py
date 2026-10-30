@@ -124,6 +124,7 @@ def backup(source_root: Path, target_root: Path, *, max_files: int = 12) -> dict
         raise ValueError("max_files must be 1..24")
     src, dst = separate_roots(source_root, target_root)
     copied, verified, missing_sqlite, conflict = [], [], [], []
+    file_receipts = []
     # Limit newly copied data files, but continue checking already backed-up
     # files to prevent silent inconsistencies.
     new_copies = 0
@@ -145,6 +146,11 @@ def backup(source_root: Path, target_root: Path, *, max_files: int = 12) -> dict
         try:
             status = copy_verified(item, target, max_bytes=MAX_RAW_BYTES)
             (copied if status == "copied" else verified).append(relative.as_posix())
+            file_receipts.append({
+                "source_relative": relative.as_posix(),
+                "backup_relative": target.relative_to(dst).as_posix(),
+                "sha256": sha256(target), "status": status,
+            })
             if status == "copied":
                 new_copies += 1
         except (ValueError, OSError) as exc:
@@ -163,6 +169,7 @@ def backup(source_root: Path, target_root: Path, *, max_files: int = 12) -> dict
         "captured_at_jst": datetime.now(JST).isoformat(timespec="seconds"),
         "source": str(src), "backup_root": str(dst),
         "new_file_copies": copied, "matching_existing_files": len(verified),
+        "file_receipts": file_receipts,
         "conflicts": conflict, "sqlite_snapshots": dbs,
         "missing_sqlite_files": missing_sqlite,
         "reliable_independent_disk": None,
@@ -174,12 +181,66 @@ def backup(source_root: Path, target_root: Path, *, max_files: int = 12) -> dict
     return report
 
 
+def verify_backup(backup_root: Path) -> dict:
+    """Verify saved receipts without requiring the original source machine."""
+    backup_root = Path(backup_root)
+    if not backup_root.is_absolute():
+        raise ValueError("backup root must be an absolute path")
+    root = backup_root.resolve()
+    audit = root / "backup_audit.jsonl"
+    if not audit.is_file():
+        raise FileNotFoundError(audit)
+    receipt_files = {}
+    snapshots = {}
+    with audit.open(encoding="utf-8") as handle:
+        for line_no, line in enumerate(handle, 1):
+            if not line.strip():
+                continue
+            record = json.loads(line)
+            for item in record.get("file_receipts", []):
+                relative = item["backup_relative"]
+                if Path(relative).is_absolute() or ".." in Path(relative).parts:
+                    raise ValueError(f"invalid backup relative path in audit line {line_no}")
+                receipt_files[relative] = item["sha256"]
+            for item in record.get("sqlite_snapshots", []):
+                p = Path(item["file"])
+                if p.is_relative_to(root):
+                    snapshots[p.relative_to(root).as_posix()] = item["sha256"]
+                else:
+                    raise ValueError(f"snapshot outside backup root in audit line {line_no}")
+    bad = []
+    verified = 0
+    for relative, digest in sorted({**receipt_files, **snapshots}.items()):
+        path = root / relative
+        if not path.is_file():
+            bad.append({"path": relative, "reason": "missing"})
+        elif sha256(path) != digest:
+            bad.append({"path": relative, "reason": "sha256 mismatch"})
+        else:
+            verified += 1
+    return {
+        "backup_root": str(root), "verified_objects": verified,
+        "tracked_objects": len(receipt_files) + len(snapshots),
+        "damaged_or_missing": bad, "verified_ok": bool(verified) and not bad,
+        "note": "File-integrity evidence only; separate physical storage is not certified.",
+    }
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--source", type=Path, required=True)
+    p.add_argument("--source", type=Path)
     p.add_argument("--backup", type=Path, required=True)
     p.add_argument("--max-files", type=int, default=12)
+    p.add_argument("--verify-only", action="store_true")
     args = p.parse_args()
+    if args.verify_only:
+        report = verify_backup(args.backup)
+        print(json.dumps(report, ensure_ascii=False, indent=2))
+        if not report["verified_ok"]:
+            raise SystemExit(1)
+        return
+    if args.source is None:
+        p.error("--source is required unless --verify-only is set")
     report = backup(args.source, args.backup, max_files=args.max_files)
     print(json.dumps(report, ensure_ascii=False, indent=2))
     if report["conflicts"]:
