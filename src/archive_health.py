@@ -29,10 +29,16 @@ def inspect(root: Path, start: date, end: date) -> dict:
             ORDER BY day,kind
         """, (str(start), str(end))).fetchall()
         failed = con.execute("""
-            SELECT kind,day,COUNT(*) AS n FROM attempts
-            WHERE status='failed' AND day BETWEEN ? AND ?
-            GROUP BY kind,day HAVING COUNT(*)>=3
-            ORDER BY day,kind
+            SELECT t.kind,t.day,COUNT(*) AS n
+            FROM attempts AS t
+            LEFT JOIN archives AS a
+              ON a.kind=t.kind AND a.day=t.day
+            LEFT JOIN archive_anomalies AS q
+              ON q.kind=t.kind AND q.day=t.day
+            WHERE t.status='failed' AND t.day BETWEEN ? AND ?
+              AND (a.kind IS NULL OR q.status IS NOT NULL)
+            GROUP BY t.kind,t.day HAVING COUNT(*)>=3
+            ORDER BY t.day,t.kind
         """, (str(start), str(end))).fetchall()
         retryable = list(pending(con, start, end))
         history_count = con.execute(
