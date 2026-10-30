@@ -67,6 +67,11 @@ def connect(root: Path):
        original_sha256 TEXT, observed_sha256 TEXT,
        detected_at_jst TEXT NOT NULL,
        PRIMARY KEY(kind,day))""")
+    con.execute("""CREATE TABLE IF NOT EXISTS archive_anomaly_history (
+       id INTEGER PRIMARY KEY AUTOINCREMENT,
+       kind TEXT NOT NULL, day TEXT NOT NULL, status TEXT NOT NULL,
+       original_sha256 TEXT, observed_sha256 TEXT,
+       event_at_jst TEXT NOT NULL)""")
     con.commit()
     return con
 
@@ -107,7 +112,17 @@ def index_existing(root: Path, con: sqlite3.Connection, start: date, end: date) 
             old_digest = previous[0] if previous else None
             now = datetime.now(JST).isoformat(timespec="seconds")
 
+            existing_anomaly = con.execute(
+                "SELECT status,observed_sha256 FROM archive_anomalies WHERE kind=? AND day=?",
+                (kind, day_str)
+            ).fetchone()
+
             def anomaly(status: str, new_digest: str | None = None):
+                if existing_anomaly != (status, new_digest):
+                    con.execute("""INSERT INTO archive_anomaly_history(
+                      kind,day,status,original_sha256,observed_sha256,event_at_jst
+                    ) VALUES(?,?,?,?,?,?)""",
+                        (kind, day_str, status, old_digest, new_digest, now))
                 con.execute("""INSERT INTO archive_anomalies(
                      kind,day,status,original_sha256,observed_sha256,detected_at_jst
                 ) VALUES(?,?,?,?,?,?)
@@ -150,6 +165,11 @@ def index_existing(root: Path, con: sqlite3.Connection, start: date, end: date) 
                 file_path=excluded.file_path, bytes=excluded.bytes,
                 indexed_at_jst=excluded.indexed_at_jst""",
                 (kind, day_str, str(path), size, digest, origin, now))
+            if existing_anomaly:
+                con.execute("""INSERT INTO archive_anomaly_history(
+                   kind,day,status,original_sha256,observed_sha256,event_at_jst
+                ) VALUES(?,?,?,?,?,?)""",
+                    (kind, day_str, "resolved", old_digest, digest, now))
             con.execute("DELETE FROM archive_anomalies WHERE kind=? AND day=?", (kind, day_str))
             good += 1
     con.commit()
