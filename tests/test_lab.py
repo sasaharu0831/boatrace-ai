@@ -1,4 +1,6 @@
 import io
+import json
+from contextlib import redirect_stdout
 import sys
 import tempfile
 import unittest
@@ -6,7 +8,7 @@ from datetime import date
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-from boat_free_lab import archive_url, collect, download_archive, evaluate, evaluate_historical_research, is_lzh, validate_freeze
+from boat_free_lab import archive_url, collect, download_archive, evaluate, evaluate_historical_research, is_lzh, main, validate_freeze
 
 class FakeResponse(io.BytesIO):
     def __enter__(self): return self
@@ -73,6 +75,32 @@ class FreeLabTests(unittest.TestCase):
             validate_freeze(base, dict(pred, freeze_time_jst="2026-10-30T11:31:00+09:00"))
         with self.assertRaises(ValueError):
             validate_freeze(base, dict(pred, tickets=["1-1-2"]))
+
+    def test_scoring_cli_requires_explicit_research_mode(self):
+        with tempfile.TemporaryDirectory() as td:
+            p = Path(td) / "predictions.json"
+            o = Path(td) / "outcomes.json"
+            p.write_text(json.dumps([
+                {"race_key": "A", "status": "SHADOW", "tickets": ["1-2-3"]}
+            ]), encoding="utf-8")
+            o.write_text(json.dumps([
+                {"race_key": "A", "incident": False, "trifecta": "1-2-3",
+                 "payout_yen_per_100": 150}
+            ]), encoding="utf-8")
+            args = ["evaluate", "--predictions", str(p), "--outcomes", str(o)]
+            output = io.StringIO()
+            with redirect_stdout(output):
+                self.assertEqual(main(args), 0)
+            safe = json.loads(output.getvalue())
+            self.assertEqual(safe["eligible_races"], 0)
+            self.assertIsNone(safe["hit_rate"])
+            output = io.StringIO()
+            with redirect_stdout(output):
+                self.assertEqual(main(args + ["--research-only"]), 0)
+            research = json.loads(output.getvalue())
+            self.assertTrue(research["research_only"])
+            self.assertEqual(research["hypothetical_hits"], 1)
+            self.assertEqual(research["forward_verified_races"], 0)
 
     def test_false_forward_verified_claim_rejected_even_if_it_matches(self):
         preds = [{"race_key": "A", "status": "FORWARD_VERIFIED",
