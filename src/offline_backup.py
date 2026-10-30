@@ -156,12 +156,23 @@ def backup(source_root: Path, target_root: Path, *, max_files: int = 12) -> dict
     file_receipts = []
     # Limit newly copied data files, but continue checking already backed-up
     # files to prevent silent inconsistencies.
-    new_copies = 0
+    raw_new = 0
+    metadata_new = 0
+    deferred_raw = 0
+    deferred_metadata = 0
     for item in listed_files(src):
-        if new_copies >= max_files:
-            break
         relative = item.relative_to(src)
-        if relative.parts[0] == "raw":
+        is_raw = relative.parts[0] == "raw"
+        # Separate bounded budgets ensure a long raw backfill does not starve
+        # ever-changing manifest, quality and checkpoint records.
+        if is_raw and raw_new >= max_files:
+            deferred_raw += 1
+            continue
+        if not is_raw and metadata_new >= max_files:
+            deferred_metadata += 1
+            continue
+        selected_meta_digest = None
+        if is_raw:
             # Official raw archives are immutable by date and kind. A changed
             # same-name file is an integrity event, not a silent replacement.
             target = dst / "files" / relative
@@ -169,11 +180,13 @@ def backup(source_root: Path, target_root: Path, *, max_files: int = 12) -> dict
             # Manifests, checkpoints and quality labels can legitimately change
             # as new days are added or parser rules improve. Keep every version
             # under an immutable content-addressed name instead.
-            digest = sha256(item)
+            selected_meta_digest = sha256(item)
             target = (dst / "metadata-versions" / relative.parent /
-                      f"{item.stem}-{digest[:16]}{item.suffix}")
+                      f"{item.stem}-{selected_meta_digest[:16]}{item.suffix}")
         try:
             status = copy_verified(item, target, max_bytes=MAX_RAW_BYTES)
+            if selected_meta_digest is not None and sha256(target) != selected_meta_digest:
+                raise ValueError(f"metadata changed during backup: {relative}")
             (copied if status == "copied" else verified).append(relative.as_posix())
             file_receipts.append({
                 "source_relative": relative.as_posix(),
@@ -181,7 +194,10 @@ def backup(source_root: Path, target_root: Path, *, max_files: int = 12) -> dict
                 "sha256": sha256(target), "status": status,
             })
             if status == "copied":
-                new_copies += 1
+                if is_raw:
+                    raw_new += 1
+                else:
+                    metadata_new += 1
         except (ValueError, OSError) as exc:
             conflict.append({"path": relative.as_posix(), "error": str(exc)})
             # Do not ignore a conflicting backup; stop and preserve both copies.
@@ -198,6 +214,9 @@ def backup(source_root: Path, target_root: Path, *, max_files: int = 12) -> dict
         "captured_at_jst": datetime.now(JST).isoformat(timespec="seconds"),
         "source": str(src), "backup_root": str(dst),
         "new_file_copies": copied, "matching_existing_files": len(verified),
+        "new_raw_copies": raw_new, "new_metadata_copies": metadata_new,
+        "deferred_raw": deferred_raw, "deferred_metadata": deferred_metadata,
+        "copy_batch_complete": not bool(conflict or deferred_raw or deferred_metadata),
         "file_receipts": file_receipts,
         "conflicts": conflict, "sqlite_snapshots": dbs,
         "missing_sqlite_files": missing_sqlite,
