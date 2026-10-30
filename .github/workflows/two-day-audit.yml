@@ -1,0 +1,39 @@
+name: Two-day independent official archive coverage audit
+on:
+  pull_request:
+    paths:
+      - 'src/multi_day_audit.py'
+      - 'tests/test_multi_day_audit.py'
+      - '.github/workflows/two-day-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: two-day-official-coverage
+  cancel-in-progress: true
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install free p7zip
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq p7zip-full
+      - name: Get 2026-10-27 official B/K pair only
+        run: |
+          python src/boat_free_lab.py collect --start 2026-10-27 --days 1 --root "$RUNNER_TEMP/two-day" --sleep 2
+      - name: Get 2026-10-29 official B/K pair only
+        run: |
+          sleep 2
+          python src/boat_free_lab.py collect --start 2026-10-29 --days 1 --root "$RUNNER_TEMP/two-day" --sleep 2
+      - name: Inspect both dates without model learning or raw archive publication
+        run: |
+          python src/multi_day_audit.py --root "$RUNNER_TEMP/two-day" --dates 2026-10-27 2026-10-29 --require-positive
+      - name: Never publish collected archives
+        if: always()
+        run: echo "Raw official B/K and results are limited to this ephemeral CI job."
