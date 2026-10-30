@@ -164,11 +164,23 @@ def reconcile(b_data, k_data):
     br, be, bi = b_data
     kr, ke, kp, ki = k_data
     problems = list(bi) + list(ki)
+    # A flagged race cannot slip into the normal historical pool merely because
+    # its six boat / racer IDs happen to match between B and K.
+    flagged = {row[1] for row in problems if len(row) > 1 and isinstance(row[1], str)}
     eligible = []
     for key in sorted(set(br) & set(kr)):
         b = be[key]
         k = ke[key]
-        if len(b) != 6 or len(k) != 6 or key not in kp:
+        if key in flagged or len(b) != 6 or len(k) != 6 or key not in kp:
+            continue
+        if len({x["boat"] for x in b}) != 6 or len({x["racer"] for x in b}) != 6:
+            problems.append(["duplicate_B_boat_or_racer", key])
+            continue
+        if len({x["boat"] for x in k}) != 6 or len({x["racer"] for x in k}) != 6:
+            problems.append(["duplicate_K_boat_or_racer", key])
+            continue
+        if br[key]["distance_m"] != kr[key]["distance_m"]:
+            problems.append(["B_K_distance_mismatch", key])
             continue
         if sorted(r["finish"] for r in k) != list(range(1, 7)):
             continue
