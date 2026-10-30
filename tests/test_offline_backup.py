@@ -77,6 +77,48 @@ class OfflineBackupTests(unittest.TestCase):
             self.assertEqual(sha256(target), hashlib.sha256(FAKE_LZH).hexdigest())
             self.assertTrue((dst / "backup_audit.jsonl").exists())
 
+    def test_raw_backlog_does_not_starve_checkpoint_metadata(self):
+        with tempfile.TemporaryDirectory() as td:
+            src, dest = Path(td) / "source", Path(td) / "backup"
+            raw = src / "raw" / "B" / "2026"
+            raw.mkdir(parents=True)
+            (raw / "b261027.lzh").write_bytes(FAKE_LZH)
+            (raw / "b261028.lzh").write_bytes(FAKE_LZH)
+            (src / "manifest.jsonl").write_text('{"day":"2026-10-28"}\n', encoding="utf-8")
+            with patch.dict(os.environ, {"GITHUB_ACTIONS": "false"}):
+                first = backup(src, dest, max_files=1)
+                second = backup(src, dest, max_files=1)
+                third = backup(src, dest, max_files=1)
+            self.assertEqual(first["new_raw_copies"], 1)
+            self.assertEqual(first["new_metadata_copies"], 1)
+            self.assertFalse(first["copy_batch_complete"])
+            self.assertEqual(first["deferred_raw"], 1)
+            self.assertEqual(second["new_raw_copies"], 1)
+            self.assertTrue(second["copy_batch_complete"])
+            self.assertTrue(third["copy_batch_complete"])
+            self.assertEqual(len(list((dest / "metadata-versions").glob("manifest-*.jsonl"))), 1)
+            self.assertEqual(verify_backup(dest)["verified_objects"], 3)
+
+    def test_metadata_revised_during_copy_is_not_accepted_as_named_version(self):
+        with tempfile.TemporaryDirectory() as td:
+            src, dest = Path(td) / "source", Path(td) / "backup"
+            src.mkdir()
+            manifest = src / "manifest.jsonl"
+            manifest.write_text('{"phase":"old"}\n', encoding="utf-8")
+            real_copy = copy_verified
+
+            def mutate_then_copy(source, destination, *, max_bytes):
+                if source.name == "manifest.jsonl":
+                    source.write_text('{"phase":"new"}\n', encoding="utf-8")
+                return real_copy(source, destination, max_bytes=max_bytes)
+
+            with patch.dict(os.environ, {"GITHUB_ACTIONS": "false"}), \
+                 patch("offline_backup.copy_verified", side_effect=mutate_then_copy):
+                report = backup(src, dest, max_files=1)
+            self.assertEqual(len(report["conflicts"]), 1)
+            self.assertIn("metadata changed during backup", report["conflicts"][0]["error"])
+            self.assertFalse(report["copy_batch_complete"])
+
     def test_mutable_manifest_is_versioned_across_runs(self):
         with tempfile.TemporaryDirectory() as td:
             src, dest = Path(td) / "source", Path(td) / "backup"
