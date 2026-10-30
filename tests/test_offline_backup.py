@@ -1,5 +1,6 @@
 import hashlib
 import os
+import shutil
 from pathlib import Path
 import sqlite3
 import sys
@@ -113,6 +114,23 @@ class OfflineBackupTests(unittest.TestCase):
             self.assertNotEqual(first["file_receipts"][0]["backup_relative"],
                                 second["file_receipts"][0]["backup_relative"])
             self.assertEqual(verify_backup(dest)["verified_objects"], 2)
+
+    def test_moved_backup_directory_keeps_relative_sqlite_receipts_valid(self):
+        with tempfile.TemporaryDirectory() as td:
+            src = Path(td) / "source"
+            dst = Path(td) / "first-backup"
+            moved = Path(td) / "restored-backup"
+            src.mkdir()
+            db = src / "historical_only.sqlite3"
+            with sqlite3.connect(db) as con:
+                con.execute("CREATE TABLE historical(v INTEGER)")
+                con.execute("INSERT INTO historical VALUES (42)")
+            with patch.dict(os.environ, {"GITHUB_ACTIONS": "false"}):
+                backup(src, dst)
+            shutil.move(str(dst), str(moved))
+            report = verify_backup(moved)
+            self.assertTrue(report["verified_ok"])
+            self.assertEqual(report["verified_objects"], 1)
 
     def test_paths_not_nested_or_ephemeral_ci(self):
         with tempfile.TemporaryDirectory() as td:
