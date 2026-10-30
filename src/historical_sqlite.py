@@ -103,9 +103,39 @@ def persist_day(db_path: Path, day: date, b, k, bsha: str, ksha: str):
                     "historical coverage changed for imported day; "
                     "quarantine/review instead of deleting existing races"
                 )
+            old_counts = con.execute(
+                "SELECT B_races,K_races,paired_races,historical_normal_joined "
+                "FROM historical_import_audit WHERE race_date=?", (str(day),)
+            ).fetchone()
+            new_counts = (
+                audit["B_races"], audit["K_races"], audit["paired_races"],
+                audit["historical_normal_joined"]
+            )
+            if old_counts != new_counts:
+                raise ValueError("parser coverage counts changed for same source; manual review needed")
+            bcount = con.execute(
+                "SELECT COUNT(*) FROM historical_program_entries p JOIN "
+                "historical_races r ON r.race_key=p.race_key WHERE r.race_date=?",
+                (str(day),)
+            ).fetchone()[0]
+            kcount = con.execute(
+                "SELECT COUNT(*) FROM historical_result_entries k JOIN "
+                "historical_races r ON r.race_key=k.race_key WHERE r.race_date=?",
+                (str(day),)
+            ).fetchone()[0]
+            if bcount != len(prior_keys) * 6 or kcount != len(prior_keys) * 6:
+                raise ValueError("stored rows are incomplete; repair from an independently audited backup")
+            # Identical files + identical coverage are immutable. Repeated
+            # parsing cannot silently rewrite previously learned history.
+            con.commit()
+            audit["database"] = str(db_path)
+            audit["stored_program_rows"] = bcount
+            audit["stored_result_rows"] = kcount
+            audit["import_status"] = "unchanged"
+            return audit
         elif prior_keys:
             raise ValueError("existing races have no import audit; refuse destructive replacement")
-        # A repeat of the identical source and RaceKeys is idempotent.
+        # Brand-new audited day only: never destructively replace a prior day.
         con.execute("DELETE FROM historical_races WHERE race_date = ?", (str(day),))
         br, be, _ = b
         kr, ke, kp, _ = k
