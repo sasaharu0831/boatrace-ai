@@ -35,7 +35,14 @@ def download_archive(kind: str, day: date, root: Path, *, opener=urlopen,
         raise ValueError("future date")
     dest = root / "raw" / kind / str(day.year) / f"{kind.lower()}{day:%y%m%d}.lzh"
     url = archive_url(kind, day)
-    if dest.is_file() and is_lzh(dest.read_bytes()[:32]):
+    if dest.exists():
+        if not dest.is_file() or not 16 < dest.stat().st_size <= max_bytes:
+            raise ValueError("existing raw archive is invalid or oversized; quarantine manually")
+        with dest.open("rb") as existing:
+            header = existing.read(32)
+        if not is_lzh(header):
+            # Never silently overwrite damaged local evidence with a fresh copy.
+            raise ValueError("existing raw archive has invalid signature; quarantine manually")
         with dest.open("rb") as existing:
             digest = hashlib.file_digest(existing, "sha256").hexdigest()
         return {"date": day.isoformat(), "kind": kind, "status": "cached",
