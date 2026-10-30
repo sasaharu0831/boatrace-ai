@@ -32,6 +32,10 @@ jobs:
         run: |
           python src/lzh_extract.py "$RUNNER_TEMP/lzh-probe/raw/B/2026/b261028.lzh" --print-structure
           python src/lzh_extract.py "$RUNNER_TEMP/lzh-probe/raw/K/2026/k261028.lzh" --print-structure
+      - name: Audit historical B/K race joins (do not feed prediction)
+        run: |
+          python src/historical_records.py --b "$RUNNER_TEMP/lzh-probe/raw/B/2026/b261028.lzh" --k "$RUNNER_TEMP/lzh-probe/raw/K/2026/k261028.lzh" --day 2026-10-28 > "$RUNNER_TEMP/join-audit.json"
+          python -c 'import json,os;d=json.load(open(os.environ["RUNNER_TEMP"]+"/join-audit.json"));print(json.dumps({k:v for k,v in d.items() if k not in ("normal_race_keys","issues")},ensure_ascii=False));print("issues by type:",{x[0]:sum(1 for y in d["issues"] if y[0]==x[0]) for x in d["issues"]});assert d["B_races"]>0 and d["K_races"]>0 and d["historical_normal_joined"]>0 and d["forward_eligible"] is False'
       - name: No raw archive upload
         if: always()
         run: echo "No historical raw file is uploaded; runner storage is temporary."
