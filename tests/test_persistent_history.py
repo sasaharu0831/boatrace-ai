@@ -13,13 +13,32 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from archive_backfill import archive_path, index_existing, connect
 from historical_records import parse_program, parse_results
 from historical_sqlite import persist_day
-from persistent_history import assert_storage_is_local, atomic_summary, run_batch
+from persistent_history import assert_storage_is_local, atomic_summary, run_batch, complete_days
 from test_historical_records import DAY, program, results
 
 DATA = b"\x15\x00-lh5-" + b"z" * 80
 
 
 class PersistentHistoryTests(unittest.TestCase):
+    def test_pair_excluded_if_file_changed_after_index_scan(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for kind in ("B", "K"):
+                raw = archive_path(root, kind, DAY)
+                raw.parent.mkdir(parents=True)
+                raw.write_bytes(DATA)
+            with connect(root) as con:
+                index_existing(root, con, DAY, DAY)
+            self.assertEqual(len(list(complete_days(root, DAY, DAY))), 1)
+            raw = archive_path(root, "K", DAY)
+            raw.write_bytes(DATA[:-1] + b"x")
+            # The ledger still holds the original SHA; never import changed bytes.
+            self.assertEqual(list(complete_days(root, DAY, DAY)), [])
+            with connect(root) as con:
+                report = index_existing(root, con, DAY, DAY)
+            self.assertEqual(report["hash_conflicts"], 1)
+            self.assertEqual(list(complete_days(root, DAY, DAY)), [])
+
     def test_hosted_actions_guard(self):
         with patch.dict(os.environ, {"GITHUB_ACTIONS": "true"}):
             with self.assertRaises(RuntimeError):
