@@ -1,11 +1,6 @@
 name: One-day official B/K HTTP probe (no archive publication)
 on:
-  pull_request:
-    paths:
-      - 'src/archive_backfill.py'
-      - 'tests/test_backfill.py'
-      - 'docs/four-year-backfill.md'
-      - '.github/workflows/official-one-day-probe.yml'
+  workflow_dispatch: # Historical HTTP check already passed; no repeat on every PR update
 permissions:
   contents: read
 concurrency:
