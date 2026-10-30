@@ -81,7 +81,31 @@ def persist_day(db_path: Path, day: date, b, k, bsha: str, ksha: str):
     try:
         create_schema(con)
         con.execute("BEGIN")
-        # Replace all rows for one complete validated day's import atomically.
+        # Never destroy a previously imported day merely because a new download
+        # or parser revision yields fewer/different races. Review differences
+        # independently first and restore explicitly from a verified backup.
+        prior = con.execute(
+            "SELECT B_sha256,K_sha256 FROM historical_import_audit WHERE race_date=?",
+            (str(day),)
+        ).fetchone()
+        prior_keys = {row[0] for row in con.execute(
+            "SELECT race_key FROM historical_races WHERE race_date=?", (str(day),)
+        )}
+        new_keys = set(audit["normal_race_keys"])
+        if prior is not None:
+            if tuple(prior) != (bsha, ksha):
+                raise ValueError(
+                    "source archive hash changed for imported day; "
+                    "quarantine/review instead of automatic replacement"
+                )
+            if prior_keys != new_keys:
+                raise ValueError(
+                    "historical coverage changed for imported day; "
+                    "quarantine/review instead of deleting existing races"
+                )
+        elif prior_keys:
+            raise ValueError("existing races have no import audit; refuse destructive replacement")
+        # A repeat of the identical source and RaceKeys is idempotent.
         con.execute("DELETE FROM historical_races WHERE race_date = ?", (str(day),))
         br, be, _ = b
         kr, ke, kp, _ = k
