@@ -10,6 +10,21 @@
 - GitHub test execution: https://github.com/sasaharu0831/boatrace-ai/actions/runs/41080733361
 
 
+## Local offline backup with no paid API
+
+To keep history across machine failures, copy it to a **separate storage location you control** (ideally a different physical device). This repository cannot supply a disk or secretly connect a cloud account, so the actual backup destination must exist and have sufficient free space.
+
+```bash
+python src/offline_backup.py \
+  --source /ABSOLUTE/PERSISTENT/DISK/boatdata \
+  --backup /ABSOLUTE/SECOND-STORAGE/boatdata-backup \
+  --max-files 24
+```
+
+Re-run the command to continue. Raw LZH files are immutable in the backup; changed bytes cause a hard stop for manual review, rather than overwriting. Changing `manifest.jsonl`, `checkpoint_latest.json` and quality JSON documents are saved by their SHA-256 version name. SQLite databases are backed up using the SQLite backup API and verified with `PRAGMA integrity_check`. Backups include `backup_audit.jsonl` receipts. No network API calls or subscriptions are required.
+
+**Important:** Two directories on the *same physical drive* are not an independent backup. Files may be written to a local disk without any provider cost, but electricity, hardware and storage capacity are not guaranteed free.
+
 ## Multi-day independent verification (2026-10-27, 28, 29)
 
 A second official-data probe succeeded on 2026-10-27 and 2026-10-29. Together with the separate 2026-10-28 verification, it produced **413 matched B/K race records and 363 historical six-finisher registration/result joins**. The stricter reconciliation discards bad B percentage stats, racer duplicates, and mismatched B/K distance before accepting a historical normal join. This is *not* an accuracy measurement and does not prove an incident-free race.
