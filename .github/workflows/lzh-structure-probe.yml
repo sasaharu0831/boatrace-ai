@@ -5,6 +5,8 @@ on:
       - 'src/lzh_extract.py'
       - 'src/historical_records.py'
       - 'src/historical_sqlite.py'
+      - 'src/quality_policy.py'
+      - 'src/historical_export.py'
       - 'tests/test_historical_records.py'
       - 'tests/test_historical_sqlite.py'
       - 'tests/test_lzh_extract.py'
@@ -44,6 +46,10 @@ jobs:
           python src/historical_sqlite.py --b "$RUNNER_TEMP/lzh-probe/raw/B/2026/b261028.lzh" --k "$RUNNER_TEMP/lzh-probe/raw/K/2026/k261028.lzh" --day 2026-10-28 --db "$RUNNER_TEMP/boatrace_history.sqlite"
           python src/historical_sqlite.py --b "$RUNNER_TEMP/lzh-probe/raw/B/2026/b261028.lzh" --k "$RUNNER_TEMP/lzh-probe/raw/K/2026/k261028.lzh" --day 2026-10-28 --db "$RUNNER_TEMP/boatrace_history.sqlite"
           python -c 'import sqlite3,os;c=sqlite3.connect(os.environ["RUNNER_TEMP"]+"/boatrace_history.sqlite");r=[c.execute("select count(*) from "+x).fetchone()[0] for x in ("historical_races","historical_program_entries","historical_result_entries","historical_import_audit")];print("SQLite counts:",r);assert r==[106,636,636,1]'
+      - name: Export 106R B-only historical features and K-only labels
+        run: |
+          python src/historical_export.py --db "$RUNNER_TEMP/boatrace_history.sqlite" --features "$RUNNER_TEMP/feature_only.csv" --outcomes "$RUNNER_TEMP/outcome_only.csv"
+          python -c 'import csv,os;root=os.environ["RUNNER_TEMP"];fr=list(csv.DictReader(open(root+"/feature_only.csv")));orows=list(csv.DictReader(open(root+"/outcome_only.csv")));print("separated CSV rows:",len(fr),len(orows));assert len(fr)==len(orows)==636;assert not {"finish","trifecta","payout_yen_per_100"}.intersection(fr[0].keys());assert set(fr[0].keys()) != set(orows[0].keys())'
       - name: Conservative stage and special-evidence audit (no forward selection)
         run: |
           python src/quality_policy.py --b "$RUNNER_TEMP/lzh-probe/raw/B/2026/b261028.lzh" --k "$RUNNER_TEMP/lzh-probe/raw/K/2026/k261028.lzh" --day 2026-10-28 --summary-only
