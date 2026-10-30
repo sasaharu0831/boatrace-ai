@@ -8,7 +8,7 @@ import unittest
 from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-from offline_backup import backup, copy_verified, separate_roots, sha256
+from offline_backup import backup, copy_verified, separate_roots, sha256, verify_backup
 
 FAKE_LZH = b"\x15\x00-lh5-" + b"abc123" * 11
 
@@ -81,6 +81,38 @@ class OfflineBackupTests(unittest.TestCase):
             self.assertTrue(path.is_file())
             with sqlite3.connect(path) as con:
                 self.assertEqual(con.execute("SELECT v FROM t").fetchone()[0], "readable")
+
+    def test_verify_with_source_deleted_and_detect_corruption(self):
+        with tempfile.TemporaryDirectory() as td:
+            src, dest = Path(td) / "source", Path(td) / "backup"
+            file = src / "raw" / "B" / "2026" / "b261028.lzh"
+            file.parent.mkdir(parents=True)
+            file.write_bytes(FAKE_LZH)
+            with patch.dict(os.environ, {"GITHUB_ACTIONS": "false"}):
+                backup(src, dest, max_files=1)
+            file.unlink()
+            verified = verify_backup(dest)
+            self.assertTrue(verified["verified_ok"])
+            self.assertEqual(verified["verified_objects"], 1)
+            stored = dest / "files" / "raw" / "B" / "2026" / "b261028.lzh"
+            stored.write_bytes(b"corruption")
+            failed = verify_backup(dest)
+            self.assertFalse(failed["verified_ok"])
+            self.assertEqual(failed["damaged_or_missing"][0]["reason"], "sha256 mismatch")
+
+    def test_receipts_record_versioned_manifest(self):
+        with tempfile.TemporaryDirectory() as td:
+            src, dest = Path(td) / "source", Path(td) / "backup"
+            src.mkdir()
+            manifest = src / "manifest.jsonl"
+            with patch.dict(os.environ, {"GITHUB_ACTIONS": "false"}):
+                manifest.write_text('{"a":1}\\n', encoding="utf-8")
+                first = backup(src, dest, max_files=1)
+                manifest.write_text('{"a":2}\\n', encoding="utf-8")
+                second = backup(src, dest, max_files=1)
+            self.assertNotEqual(first["file_receipts"][0]["backup_relative"],
+                                second["file_receipts"][0]["backup_relative"])
+            self.assertEqual(verify_backup(dest)["verified_objects"], 2)
 
     def test_paths_not_nested_or_ephemeral_ci(self):
         with tempfile.TemporaryDirectory() as td:
