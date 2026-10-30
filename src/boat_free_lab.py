@@ -127,23 +127,63 @@ def validate_freeze(snapshot: dict, prediction: dict) -> None:
         raise ValueError("invalid capture digest")
 
 def evaluate(predictions: list[dict], outcomes: list[dict]) -> dict:
-    """Payout is read only AFTER independent picks; never used to choose them."""
+    """Fail closed: labels alone cannot certify a genuine predeadline forecast.
+
+    External, independently timestamped preclose capture/Freeze verification is
+    NOT implemented. Do not publish any purported Forward accuracy from
+    user-supplied JSON containing status="FORWARD_VERIFIED".
+    """
+    claims = sum(p.get("status") == "FORWARD_VERIFIED" for p in predictions)
+    return {
+        "eligible_races": 0, "hits": 0, "hit_rate": None,
+        "stakes_yen": 0, "payout_yen": 0, "return_rate": None,
+        "unverified_forward_claims_rejected": claims,
+        "verification_status": "NO_INDEPENDENT_PRECLOSE_ATTESTATION",
+        "warning": "Forward scoring blocked until source and prediction Freeze can be independently authenticated."
+    }
+
+
+def evaluate_historical_research(predictions: list[dict], outcomes: list[dict]) -> dict:
+    """Explicitly labelled hypothetical historical score, never a Forward result.
+
+    Ticket generation must be separately designed without reading K/outcomes.
+    This calculation is not evidence a prediction existed before race closure.
+    """
     outcome_map = {x["race_key"]: x for x in outcomes}
     total = hits = cost = paid = 0
+    used = set()
     for pred in predictions:
-        if pred.get("status") != "FORWARD_VERIFIED":
+        if pred.get("status") not in ("HISTORICAL_ONLY", "SHADOW"):
             continue
-        outcome = outcome_map.get(pred["race_key"])
+        key = pred.get("race_key")
+        if key in used or not isinstance(key, str):
+            continue
+        used.add(key)
+        outcome = outcome_map.get(key)
         if not outcome or outcome.get("incident") is not False:
             continue
-        picks = pred["tickets"]
+        picks = pred.get("tickets", [])
+        if not 1 <= len(picks) <= 8 or len(set(picks)) != len(picks):
+            continue
+        if any(len(x.split("-")) != 3 or len(set(x.split("-"))) != 3
+               or any(y not in "123456" for y in x.split("-")) for x in picks):
+            continue
         total += 1
         cost += 100 * len(picks)
-        if outcome["trifecta"] in picks:
+        if outcome.get("trifecta") in picks:
             hits += 1
             paid += int(outcome["payout_yen_per_100"])
-    return {"eligible_races": total, "hits": hits, "hit_rate": hits / total if total else None,
-            "stakes_yen": cost, "payout_yen": paid, "return_rate": paid / cost if cost else None}
+    return {
+        "research_only": True,
+        "historical_races_scored": total,
+        "hypothetical_hits": hits,
+        "hypothetical_hit_rate": hits / total if total else None,
+        "hypothetical_stakes_yen": cost,
+        "hypothetical_payout_yen": paid,
+        "hypothetical_return_rate": paid / cost if cost else None,
+        "forward_verified_races": 0,
+        "warning": "Backtest/historical what-if only. Not authenticated forward accuracy."
+    }
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
