@@ -4,6 +4,9 @@ on:
     paths:
       - 'src/lzh_extract.py'
       - 'src/historical_records.py'
+      - 'src/historical_sqlite.py'
+      - 'tests/test_historical_records.py'
+      - 'tests/test_historical_sqlite.py'
       - 'tests/test_lzh_extract.py'
       - '.github/workflows/lzh-structure-probe.yml'
 permissions:
@@ -36,6 +39,11 @@ jobs:
         run: |
           python src/historical_records.py --b "$RUNNER_TEMP/lzh-probe/raw/B/2026/b261028.lzh" --k "$RUNNER_TEMP/lzh-probe/raw/K/2026/k261028.lzh" --day 2026-10-28 > "$RUNNER_TEMP/join-audit.json"
           python -c 'import json,os;d=json.load(open(os.environ["RUNNER_TEMP"]+"/join-audit.json"));print(json.dumps({k:v for k,v in d.items() if k not in ("normal_race_keys","issues")},ensure_ascii=False));print("issues by type:",{x[0]:sum(1 for y in d["issues"] if y[0]==x[0]) for x in d["issues"]});assert d["B_races"]>0 and d["K_races"]>0 and d["historical_normal_joined"]>0 and d["forward_eligible"] is False'
+      - name: Import normal races into temporary SQLite twice and verify idempotency
+        run: |
+          python src/historical_sqlite.py --b "$RUNNER_TEMP/lzh-probe/raw/B/2026/b261028.lzh" --k "$RUNNER_TEMP/lzh-probe/raw/K/2026/k261028.lzh" --day 2026-10-28 --db "$RUNNER_TEMP/boatrace_history.sqlite"
+          python src/historical_sqlite.py --b "$RUNNER_TEMP/lzh-probe/raw/B/2026/b261028.lzh" --k "$RUNNER_TEMP/lzh-probe/raw/K/2026/k261028.lzh" --day 2026-10-28 --db "$RUNNER_TEMP/boatrace_history.sqlite"
+          python -c 'import sqlite3,os;c=sqlite3.connect(os.environ["RUNNER_TEMP"]+"/boatrace_history.sqlite");r=[c.execute("select count(*) from "+x).fetchone()[0] for x in ("historical_races","historical_program_entries","historical_result_entries","historical_import_audit")];print("SQLite counts:",r);assert r==[106,636,636,1]'
       - name: No raw archive upload
         if: always()
         run: echo "No historical raw file is uploaded; runner storage is temporary."
