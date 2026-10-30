@@ -50,10 +50,11 @@ class FreeLabTests(unittest.TestCase):
             day = date(2025, 1, 1)
             path = root / "raw" / "B" / "2025" / "b250101.lzh"
             path.parent.mkdir(parents=True)
-            path.write_bytes(b"\\x15\\x00-lh5-" + b"x" * 120)
+            original = b"\\x15\\x00-lh5-" + b"x" * 120
+            path.write_bytes(original)
             with self.assertRaisesRegex(ValueError, "invalid or oversized"):
                 download_archive("B", day, root, max_bytes=100)
-            self.assertEqual(path.stat().st_size, 127)
+            self.assertEqual(path.read_bytes(), original)
 
     def test_reject_html_and_long_horizon(self):
         self.assertFalse(is_lzh(b"<html>hi</html>"))
