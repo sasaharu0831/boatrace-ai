@@ -33,6 +33,23 @@ class OfflineBackupTests(unittest.TestCase):
             self.assertEqual(sha256(target), hashlib.sha256(FAKE_LZH).hexdigest())
             self.assertTrue((dst / "backup_audit.jsonl").exists())
 
+    def test_mutable_manifest_is_versioned_across_runs(self):
+        with tempfile.TemporaryDirectory() as td:
+            src, dest = Path(td) / "source", Path(td) / "backup"
+            src.mkdir()
+            manifest = src / "manifest.jsonl"
+            manifest.write_text('{"day":"2026-10-27"}\\n', encoding="utf-8")
+            with patch.dict(os.environ, {"GITHUB_ACTIONS": "false"}):
+                first = backup(src, dest, max_files=1)
+                manifest.write_text('{"day":"2026-10-27"}\\n{"day":"2026-10-28"}\\n',
+                                    encoding="utf-8")
+                second = backup(src, dest, max_files=1)
+            versions = sorted((dest / "metadata-versions").glob("manifest-*.jsonl"))
+            self.assertEqual(len(versions), 2)
+            self.assertEqual(first["conflicts"], [])
+            self.assertEqual(second["conflicts"], [])
+            self.assertEqual(len(second["new_file_copies"]), 1)
+
     def test_changed_destination_not_silently_overwritten(self):
         with tempfile.TemporaryDirectory() as td:
             src, dest = Path(td) / "source", Path(td) / "target"
