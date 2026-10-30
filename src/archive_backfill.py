@@ -61,6 +61,12 @@ def connect(root: Path):
     con.execute("""CREATE TABLE IF NOT EXISTS attempts (
        id INTEGER PRIMARY KEY AUTOINCREMENT, kind TEXT NOT NULL, day TEXT NOT NULL,
        status TEXT NOT NULL, attempted_at_jst TEXT NOT NULL, message TEXT NOT NULL DEFAULT '')""")
+    con.execute("""CREATE TABLE IF NOT EXISTS archive_anomalies (
+       kind TEXT NOT NULL, day TEXT NOT NULL,
+       status TEXT NOT NULL CHECK(status IN ('missing','invalid','hash_conflict')),
+       original_sha256 TEXT, observed_sha256 TEXT,
+       detected_at_jst TEXT NOT NULL,
+       PRIMARY KEY(kind,day))""")
     con.commit()
     return con
 
@@ -83,39 +89,73 @@ def manifest_proofs(root: Path) -> set[tuple[str, str, str]]:
 
 
 def index_existing(root: Path, con: sqlite3.Connection, start: date, end: date) -> dict:
-    """Recompute hashes and reconcile SQLite from actual files, never guesses."""
+    """Reconcile local bytes without destroying the original archive receipt.
+
+    A removed or changed file is an anomaly. An earlier SHA-256 is immutable:
+    never reassign it to new bytes merely because the archive path is the same.
+    """
     proofs = manifest_proofs(root)
-    good = invalid = missing = 0
+    good = invalid = missing = conflicts = 0
     for day in day_range(start, end):
+        day_str = day.isoformat()
         for kind in KINDS:
             path = archive_path(root, kind, day)
+            previous = con.execute(
+                "SELECT sha256 FROM archives WHERE kind=? AND day=?",
+                (kind, day_str)
+            ).fetchone()
+            old_digest = previous[0] if previous else None
+            now = datetime.now(JST).isoformat(timespec="seconds")
+
+            def anomaly(status: str, new_digest: str | None = None):
+                con.execute("""INSERT INTO archive_anomalies(
+                     kind,day,status,original_sha256,observed_sha256,detected_at_jst
+                ) VALUES(?,?,?,?,?,?)
+                ON CONFLICT(kind,day) DO UPDATE SET
+                     status=excluded.status, original_sha256=excluded.original_sha256,
+                     observed_sha256=excluded.observed_sha256,
+                     detected_at_jst=excluded.detected_at_jst""",
+                    (kind, day_str, status, old_digest, new_digest, now))
+
             if not path.is_file():
                 missing += 1
-                con.execute("DELETE FROM archives WHERE kind=? AND day=?", (kind, day.isoformat()))
+                if previous:
+                    anomaly("missing")
+                else:
+                    con.execute("DELETE FROM archive_anomalies WHERE kind=? AND day=?",
+                                (kind, day_str))
                 continue
             size = path.stat().st_size
-            if size > MAX_BYTES or size <= 16:
+            if not 16 < size <= MAX_BYTES:
                 valid = False
             else:
                 with path.open("rb") as handle:
                     valid = is_lzh(handle.read(32))
             if not valid:
                 invalid += 1
-                con.execute("DELETE FROM archives WHERE kind=? AND day=?", (kind, day.isoformat()))
+                anomaly("invalid")
                 continue
+
             with path.open("rb") as handle:
                 digest = hashlib.file_digest(handle, "sha256").hexdigest()
-            origin = "official_download_receipt" if (kind, day.isoformat(), digest) in proofs else "local_unverified_origin"
-            now = datetime.now(JST).isoformat(timespec="seconds")
+            if old_digest is not None and digest != old_digest:
+                conflicts += 1
+                anomaly("hash_conflict", digest)
+                continue
+            origin = ("official_download_receipt"
+                      if (kind, day_str, digest) in proofs else "local_unverified_origin")
             con.execute("""INSERT INTO archives(kind, day, file_path, bytes, sha256, origin, indexed_at_jst)
-              VALUES (?,?,?,?,?,?,?) ON CONFLICT(kind,day) DO UPDATE SET
-              file_path=excluded.file_path, bytes=excluded.bytes, sha256=excluded.sha256,
-              origin=excluded.origin, indexed_at_jst=excluded.indexed_at_jst""",
-              (kind, day.isoformat(), str(path), size, digest, origin, now))
+                VALUES (?,?,?,?,?,?,?)
+                ON CONFLICT(kind,day) DO UPDATE SET
+                file_path=excluded.file_path, bytes=excluded.bytes,
+                indexed_at_jst=excluded.indexed_at_jst""",
+                (kind, day_str, str(path), size, digest, origin, now))
+            con.execute("DELETE FROM archive_anomalies WHERE kind=? AND day=?", (kind, day_str))
             good += 1
     con.commit()
-    return {"expected_files": 2 * ((end - start).days + 1), "indexed_files": good,
-            "missing_files": missing, "invalid_files": invalid,
+    return {"expected_files": 2 * ((end - start).days + 1),
+            "indexed_files": good, "missing_files": missing,
+            "invalid_files": invalid, "hash_conflicts": conflicts,
             "window": [start.isoformat(), end.isoformat()]}
 
 
@@ -123,12 +163,20 @@ def pending(con: sqlite3.Connection, start: date, end: date, *, max_attempts: in
     """Skip indexed files and exhausted failures; audit still counts those missing."""
     known = {(kind, day) for kind, day in con.execute(
         "SELECT kind,day FROM archives WHERE day>=? AND day<=?", (start.isoformat(), end.isoformat()))}
+    anomalies = {(kind, day): status for kind, day, status in con.execute(
+        "SELECT kind,day,status FROM archive_anomalies WHERE day>=? AND day<=?",
+        (start.isoformat(), end.isoformat()))}
     failures = dict(con.execute("""SELECT kind || ':' || day, COUNT(*) FROM attempts
       WHERE status = 'failed' GROUP BY kind, day"""))
     for day in day_range(start, end):
         keyday = day.isoformat()
         for kind in KINDS:
-            if (kind, keyday) not in known and failures.get(f"{kind}:{keyday}", 0) < max_attempts:
+            anomaly = anomalies.get((kind, keyday))
+            # Changed bytes must be manually quarantined/restored. Missing or
+            # malformed bytes may be retrieved again, but never rewrite the
+            # immutable historical SHA-256 receipt.
+            needs_download = (kind, keyday) not in known or anomaly in ("missing", "invalid")
+            if anomaly != "hash_conflict" and needs_download and failures.get(f"{kind}:{keyday}", 0) < max_attempts:
                 yield kind, day
 
 
