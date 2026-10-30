@@ -53,6 +53,22 @@ class ArchiveHealthTests(unittest.TestCase):
             self.assertEqual(restored["active_anomaly_count"], 0)
             self.assertEqual(restored["currently_valid_sha256_archives"], 1)
 
+    def test_recovered_archive_no_longer_counted_as_retry_exhausted(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            with closing(connect(root)) as con:
+                for _ in range(3):
+                    con.execute(
+                        "INSERT INTO attempts(kind,day,status,attempted_at_jst) VALUES (?,?,?,?)",
+                        ("B", str(DAY), "failed", "2025-01-03T10:00:00+09:00"))
+                con.commit()
+            raw = archive_path(root, "B", DAY)
+            raw.parent.mkdir(parents=True)
+            raw.write_bytes(HEADER)
+            report = inspect(root, DAY, DAY)
+            self.assertEqual(report["currently_valid_sha256_archives"], 1)
+            self.assertEqual(report["retry_exhausted_archives"], 0)
+
     def test_exhausted_failure_is_visible_without_network(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
