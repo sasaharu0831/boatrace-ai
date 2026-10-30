@@ -1,11 +1,6 @@
 name: Two-day independent official archive coverage audit
 on:
-  pull_request:
-    paths:
-      - 'src/multi_day_audit.py'
-      - 'tests/test_multi_day_audit.py'
-      - '.github/workflows/two-day-audit.yml'
-  workflow_dispatch:
+  workflow_dispatch: # Explicit audit only: avoid repeat network requests on every PR edit
 permissions:
   contents: read
 concurrency:
