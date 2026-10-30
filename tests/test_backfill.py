@@ -92,6 +92,29 @@ class BackfillTests(unittest.TestCase):
                     "SELECT status FROM archive_anomalies WHERE kind='B' AND day=?",
                     (str(day),)).fetchone())
 
+    def test_anomaly_events_remain_after_restore_without_scan_spam(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            day = date(2025, 1, 2)
+            raw = archive_path(root, "B", day)
+            raw.parent.mkdir(parents=True)
+            raw.write_bytes(FAKE_LZH_HEADER)
+            with closing(connect(root)) as con:
+                index_existing(root, con, day, day)
+                raw.unlink()
+                index_existing(root, con, day, day)
+                index_existing(root, con, day, day)
+                self.assertEqual(con.execute(
+                    "SELECT COUNT(*) FROM archive_anomaly_history "
+                    "WHERE kind='B' AND day=? AND status='missing'", (str(day),)
+                ).fetchone()[0], 1)
+                raw.write_bytes(FAKE_LZH_HEADER)
+                index_existing(root, con, day, day)
+                statuses = [row[0] for row in con.execute(
+                    "SELECT status FROM archive_anomaly_history "
+                    "WHERE kind='B' AND day=? ORDER BY id", (str(day),))]
+                self.assertEqual(statuses, ["missing", "resolved"])
+
     def test_invalid_archive_does_not_destroy_provenance(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
