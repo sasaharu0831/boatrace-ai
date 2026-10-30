@@ -1,0 +1,56 @@
+name: Free BOAT RACE official archive audit
+
+on:
+  workflow_dispatch:
+    inputs:
+      day:
+        description: 'JST day YYYY-MM-DD (blank = 2 days before Japan today)'
+        required: false
+        type: string
+  schedule:
+    - cron: '35 20 * * *' # 05:35 JST; day -2 to allow official results to settle
+
+permissions:
+  contents: read
+
+concurrency:
+  group: free-boat-race-archive
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Unit tests (free / stdlib)
+        run: python -m unittest discover -s tests -v
+      - name: Determine completed day in JST
+        id: day
+        env:
+          INPUT_DAY: ${{ inputs.day }}
+        run: |
+          if [ -n "$INPUT_DAY" ]; then
+            python -c "from datetime import date; date.fromisoformat('$INPUT_DAY')"
+            echo "value=$INPUT_DAY" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=$(TZ=Asia/Tokyo date -d '2 days ago' +%F)" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Collect official B/K archives (2 per run only)
+        run: python src/boat_free_lab.py collect --start '${{ steps.day.outputs.value }}' --days 1 --root data --sleep 2
+      - name: Build DuckDB manifest catalogue
+        if: success()
+        run: |
+          python -m pip install --disable-pip-version-check duckdb
+          python src/duckdb_catalog.py --manifest data/manifest.jsonl --db data/archive.duckdb
+      - name: Keep short-lived evidence (NOT permanent backup)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: official-archives-${{ github.run_id }}
+          path: data/
+          retention-days: 3
+          if-no-files-found: ignore
