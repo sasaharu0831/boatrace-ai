@@ -6,7 +6,7 @@ from datetime import date
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-from boat_free_lab import archive_url, collect, download_archive, evaluate, is_lzh, validate_freeze
+from boat_free_lab import archive_url, collect, download_archive, evaluate, evaluate_historical_research, is_lzh, validate_freeze
 
 class FakeResponse(io.BytesIO):
     def __enter__(self): return self
@@ -74,17 +74,35 @@ class FreeLabTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_freeze(base, dict(pred, tickets=["1-1-2"]))
 
-    def test_outcome_scoring_separation(self):
-        preds = [{"race_key": "A", "status": "FORWARD_VERIFIED", "tickets": ["1-2-3", "1-3-2"]},
+    def test_false_forward_verified_claim_rejected_even_if_it_matches(self):
+        preds = [{"race_key": "A", "status": "FORWARD_VERIFIED",
+                  "tickets": ["1-2-3", "1-3-2"]}]
+        outcomes = [{"race_key": "A", "incident": False, "trifecta": "1-2-3",
+                     "payout_yen_per_100": 360}]
+        result = evaluate(preds, outcomes)
+        self.assertEqual(result["eligible_races"], 0)
+        self.assertIsNone(result["hit_rate"])
+        self.assertIsNone(result["return_rate"])
+        self.assertEqual(result["unverified_forward_claims_rejected"], 1)
+        self.assertEqual(result["verification_status"],
+                         "NO_INDEPENDENT_PRECLOSE_ATTESTATION")
+
+    def test_historical_research_is_separately_labelled_and_no_forward_claim(self):
+        preds = [{"race_key": "A", "status": "HISTORICAL_ONLY", "tickets": ["1-2-3", "1-3-2"]},
+                 {"race_key": "A", "status": "HISTORICAL_ONLY", "tickets": ["1-2-3"]},
                  {"race_key": "B", "status": "SHADOW", "tickets": ["2-3-1"]},
-                 {"race_key": "C", "status": "FORWARD_VERIFIED", "tickets": ["1-2-3"]}]
+                 {"race_key": "C", "status": "FORWARD_VERIFIED", "tickets": ["1-2-3"]},
+                 {"race_key": "D", "status": "SHADOW", "tickets": ["1-2-3"]}]
         out = [{"race_key": "A", "incident": False, "trifecta": "1-2-3", "payout_yen_per_100": 360},
-               {"race_key": "B", "incident": False, "trifecta": "2-3-1", "payout_yen_per_100": 9999},
-               {"race_key": "C", "incident": True, "trifecta": "1-2-3", "payout_yen_per_100": 100}]
-        r = evaluate(preds, out)
-        self.assertEqual(r["eligible_races"], 1)
-        self.assertEqual(r["hits"], 1)
-        self.assertEqual(r["return_rate"], 1.8)
-        self.assertEqual(evaluate([], [])["hit_rate"], None)
+               {"race_key": "B", "incident": True, "trifecta": "2-3-1", "payout_yen_per_100": 9999},
+               {"race_key": "C", "incident": False, "trifecta": "1-2-3", "payout_yen_per_100": 100},
+               {"race_key": "D", "incident": None, "trifecta": "1-2-3", "payout_yen_per_100": 100}]
+        result = evaluate_historical_research(preds, out)
+        self.assertTrue(result["research_only"])
+        self.assertEqual(result["historical_races_scored"], 1)
+        self.assertEqual(result["hypothetical_hits"], 1)
+        self.assertEqual(result["hypothetical_return_rate"], 1.8)
+        self.assertEqual(result["forward_verified_races"], 0)
+        self.assertIsNone(evaluate([], [])["hit_rate"])
 
 if __name__ == "__main__": unittest.main()
