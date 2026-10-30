@@ -7,8 +7,8 @@ on:
         description: 'JST day YYYY-MM-DD (blank = 2 days before Japan today)'
         required: false
         type: string
-  schedule:
-    - cron: '35 20 * * *' # 05:35 JST; day -2 to allow official results to settle
+  # Daily scheduling is deliberately disabled until persistent storage and
+  # official site usage constraints have been reviewed.
 
 permissions:
   contents: read
