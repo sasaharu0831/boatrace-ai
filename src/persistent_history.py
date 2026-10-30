@@ -104,10 +104,21 @@ def run_batch(root: Path, start: date, end: date, *,
             con.close()
     db_path = root / "historical_only.sqlite3"
     past = previous_import_hashes(db_path)
-    imported, skipped, errors = [], 0, []
+    imported, repaired_quality, skipped, errors = [], [], 0, []
     for day_str, pair in complete_days(root, start, end):
         hashes = (pair["B"][0], pair["K"][0])
+        qfile = root / "quality" / f"{day_str}.json"
         if past.get(day_str) == hashes:
+            if not qfile.is_file() and len(repaired_quality) < max_imports:
+                try:
+                    b_text, _ = decode_report(pair["B"][1])
+                    k_text, _ = decode_report(pair["K"][1])
+                    quality = classification_audit(b_text, k_text, date.fromisoformat(day_str))
+                    quality["B_sha256"], quality["K_sha256"] = hashes
+                    atomic_summary(qfile, quality)
+                    repaired_quality.append(day_str)
+                except (OSError, ValueError, RuntimeError) as exc:
+                    errors.append({"day": day_str, "reason": "quality repair: " + str(exc)[:200]})
             skipped += 1
             continue
         if len(imported) >= max_imports:
@@ -119,7 +130,6 @@ def run_batch(root: Path, start: date, end: date, *,
             b_text, _ = decode_report(pair["B"][1])
             k_text, _ = decode_report(pair["K"][1])
             quality = classification_audit(b_text, k_text, day)
-            quality.pop("race_labels")
             quality["B_sha256"], quality["K_sha256"] = hashes
             atomic_summary(root / "quality" / f"{day}.json", quality)
             imported.append({"day": day_str, "normal_joined": audit["historical_normal_joined"],
@@ -127,6 +137,7 @@ def run_batch(root: Path, start: date, end: date, *,
         except (OSError, ValueError, RuntimeError, sqlite3.Error) as exc:
             errors.append({"day": day_str, "reason": str(exc)[:300]})
     report["imported_days"] = imported
+    report["repaired_quality_days"] = repaired_quality
     report["already_imported_unchanged_days"] = skipped
     report["import_errors"] = errors
     report["db_path"] = str(db_path)
