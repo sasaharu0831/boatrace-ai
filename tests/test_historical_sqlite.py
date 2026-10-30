@@ -51,6 +51,23 @@ class HistoricalSqliteTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_report_date("2026/10/27", DAY, "K")
 
+    def test_repeat_cannot_silently_rewrite_original_motor_features(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            db = Path(tmp) / "history.sqlite"
+            b = parse_program(program(), DAY)
+            k = parse_results(results(), DAY)
+            persist_day(db, DAY, b, k, SHA_B, SHA_K)
+            original = b[1]["202610282301"][0]["motor_2rate"]
+            b[1]["202610282301"][0]["motor_2rate"] = 99.99
+            second = persist_day(db, DAY, b, k, SHA_B, SHA_K)
+            self.assertEqual(second["import_status"], "unchanged")
+            with sqlite3.connect(db) as con:
+                stored = con.execute(
+                    "SELECT motor_2rate FROM historical_program_entries "
+                    "WHERE race_key='202610282301' AND boat=1"
+                ).fetchone()[0]
+            self.assertEqual(stored, original)
+
     def test_changed_official_source_hash_cannot_replace_prior_day(self):
         with tempfile.TemporaryDirectory() as tmp:
             db = Path(tmp) / "history.sqlite"
