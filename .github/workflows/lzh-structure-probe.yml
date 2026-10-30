@@ -1,0 +1,37 @@
+name: Official LZH CP932 structure probe (bounded)
+on:
+  pull_request:
+    paths:
+      - 'src/lzh_extract.py'
+      - 'src/historical_records.py'
+      - 'tests/test_lzh_extract.py'
+      - '.github/workflows/lzh-structure-probe.yml'
+permissions:
+  contents: read
+concurrency:
+  group: lzh-structure-probe
+  cancel-in-progress: true
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install free 7z decompressor
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq p7zip-full
+          command -v 7z
+      - name: Download two official historical files with bounded requests
+        run: |
+          python src/boat_free_lab.py collect --start 2026-10-28 --days 1 --root "$RUNNER_TEMP/lzh-probe" --sleep 2
+      - name: Extract B and K with CP932 and print limited structure
+        run: |
+          python src/lzh_extract.py "$RUNNER_TEMP/lzh-probe/raw/B/2026/b261028.lzh" --print-structure
+          python src/lzh_extract.py "$RUNNER_TEMP/lzh-probe/raw/K/2026/k261028.lzh" --print-structure
+      - name: No raw archive upload
+        if: always()
+        run: echo "No historical raw file is uploaded; runner storage is temporary."
