@@ -51,6 +51,50 @@ class HistoricalSqliteTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_report_date("2026/10/27", DAY, "K")
 
+    def test_changed_official_source_hash_cannot_replace_prior_day(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            db = Path(tmp) / "history.sqlite"
+            b = parse_program(program(), DAY)
+            k = parse_results(results(), DAY)
+            persist_day(db, DAY, b, k, SHA_B, SHA_K)
+            with self.assertRaisesRegex(ValueError, "source archive hash changed"):
+                persist_day(db, DAY, b, k, "c" * 64, SHA_K)
+            with sqlite3.connect(db) as con:
+                self.assertEqual(con.execute(
+                    "select B_sha256 from historical_import_audit where race_date=?",
+                    (str(DAY),)).fetchone()[0], SHA_B)
+                self.assertEqual(con.execute("select count(*) from historical_races").fetchone()[0], 1)
+                self.assertEqual(con.execute("select count(*) from historical_program_entries").fetchone()[0], 6)
+
+    def test_incomplete_reparse_cannot_delete_existing_valid_race(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            db = Path(tmp) / "history.sqlite"
+            b = parse_program(program(), DAY)
+            k = parse_results(results(), DAY)
+            persist_day(db, DAY, b, k, SHA_B, SHA_K)
+            other = parse_program(program(), DAY)
+            other[0]["202610282301"] = dict(other[0]["202610282301"])
+            # Simulate a parser regression that omits one race entirely.
+            other[0].pop("202610282301")
+            # A second valid imported race would normally be needed for a
+            # positive candidate. Build that by copying the same parsed race
+            # with a different RaceKey, then try replacing the previous day.
+            new_key = "202610282302"
+            original_key = "202610282301"
+            b2 = parse_program(program(), DAY)
+            k2 = parse_results(results(), DAY)
+            b2[0][new_key] = dict(b2[0].pop(original_key), race_key=new_key, race=2)
+            b2[1][new_key] = [dict(x, race_key=new_key) for x in b2[1].pop(original_key)]
+            k2[0][new_key] = dict(k2[0].pop(original_key), race_key=new_key, race=2)
+            k2[1][new_key] = [dict(x, race_key=new_key) for x in k2[1].pop(original_key)]
+            k2[2][new_key] = dict(k2[2].pop(original_key), race_key=new_key)
+            with self.assertRaisesRegex(ValueError, "historical coverage changed"):
+                persist_day(db, DAY, b2, k2, SHA_B, SHA_K)
+            with sqlite3.connect(db) as con:
+                self.assertEqual(con.execute(
+                    "select race_key from historical_races").fetchone()[0], original_key)
+                self.assertEqual(con.execute("select count(*) from historical_program_entries").fetchone()[0], 6)
+
     def test_bad_hash_refused(self):
         with tempfile.TemporaryDirectory() as tmp:
             with self.assertRaises(ValueError):
