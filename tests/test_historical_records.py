@@ -70,6 +70,29 @@ class ParsingTests(unittest.TestCase):
         self.assertEqual(audit["historical_normal_joined"], 0)
         self.assertTrue(any(row[0] == "payout_finish_mismatch" for row in audit["issues"]))
 
+    def test_out_of_range_motor_rate_is_quarantined(self):
+        bad = program().replace("45 33.33 18 31.72", "45 133.33 18 31.72")
+        b = parse_program(bad, DAY)
+        self.assertTrue(any(x[0] == "out_of_range_B" for x in b[2]))
+        result = reconcile(b, parse_results(results(), DAY))
+        self.assertEqual(result["historical_normal_joined"], 0)
+
+    def test_distance_conflict_is_quarantined(self):
+        bad = results().replace("H1800m", "H1200m")
+        result = reconcile(parse_program(program(), DAY), parse_results(bad, DAY))
+        self.assertEqual(result["historical_normal_joined"], 0)
+        self.assertTrue(any(x[0] == "B_K_distance_mismatch" for x in result["issues"]))
+
+    def test_duplicate_crew_refused_even_if_six_positions(self):
+        b = parse_program(program(), DAY)
+        k = parse_results(results(), DAY)
+        key = "202610282301"
+        b[1][key][1]["racer"] = b[1][key][0]["racer"]
+        k[1][key][3]["racer"] = b[1][key][0]["racer"]
+        result = reconcile(b, k)
+        self.assertEqual(result["historical_normal_joined"], 0)
+        self.assertTrue(any(x[0] == "duplicate_B_boat_or_racer" for x in result["issues"]))
+
     def test_missing_boat_never_eligible(self):
         b = parse_program(program().replace(B_LINE[-1], ""), DAY)
         k = parse_results(results(), DAY)
