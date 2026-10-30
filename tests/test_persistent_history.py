@@ -56,6 +56,31 @@ class PersistentHistoryTests(unittest.TestCase):
             self.assertEqual(report["inventory"]["indexed_files"], 2)
             self.assertTrue((root / "checkpoint_latest.json").exists())
 
+    def test_quality_checkpoint_repaired_for_existing_import(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            digest = hashlib.sha256(DATA).hexdigest()
+            for kind in ("B", "K"):
+                path = archive_path(root, kind, DAY)
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(DATA)
+            persist_day(root / "historical_only.sqlite3", DAY,
+                        parse_program(program(), DAY), parse_results(results(), DAY),
+                        digest, digest)
+
+            def fake_decode(path):
+                return (program(), {}) if path.parent.parent.name == "B" else (results(), {})
+
+            with patch("persistent_history.assert_storage_is_local", side_effect=lambda x: x), \
+                 patch("persistent_history.decode_report", side_effect=fake_decode):
+                report = run_batch(root, DAY, DAY, download=False)
+            self.assertEqual(report["repaired_quality_days"], [str(DAY)])
+            self.assertEqual(report["import_errors"], [])
+            saved = json.loads((root / "quality" / f"{DAY}.json").read_text())
+            self.assertIn("202610282301", saved["race_labels"])
+            self.assertEqual(saved["training_eligible_races"], 0)
+            self.assertEqual(report["imported_days"], [])
+
     def test_import_error_is_audited(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
