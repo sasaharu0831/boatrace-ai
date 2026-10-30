@@ -10,6 +10,23 @@
 - GitHub test execution: https://github.com/sasaharu0831/boatrace-ai/actions/runs/41080733361
 
 
+## Recovery health audit without any network requests
+
+The collector now treats the original `archive_index.sqlite3` SHA-256 as **immutable provenance**. A missing, corrupt or changed raw LZH never silently overwrites the prior hash. Outstanding problems are in `archive_anomalies`; state transitions (including successful restoration) are preserved in `archive_anomaly_history`.
+
+```bash
+# No official-site requests. Scans and updates the local integrity ledger.
+python src/archive_health.py --root /ABSOLUTE/PERSISTENT/DISK/boatdata
+
+# Narrow the scan and return a nonzero status when unresolved anomalies remain.
+python src/archive_health.py --root /ABSOLUTE/PERSISTENT/DISK/boatdata \
+  --start 2026-10-27 --end 2026-10-29 --fail-on-anomalies
+```
+
+The JSON includes expected/valid/missing/invalid/changed archives, retryable and exhausted failures, and a sample of active SHA-256 problems. A restored file with its original SHA-256 clears the active anomaly while leaving an append-only event trail. Different bytes with the same filename are **quarantined from historical import** and must be manually reviewed.
+
+Existing corrupt or oversized local LZH files are *not* automatically overwritten. Preserve evidence and restore matching originals from a verified backup before re-running. The file index checks header+size+SHA-256, not full decompression; downstream LZH parsing and B/K racer checks remain separate.
+
 ## Local offline backup with no paid API
 
 To keep history across machine failures, copy it to a **separate storage location you control** (ideally a different physical device). This repository cannot supply a disk or secretly connect a cloud account, so the actual backup destination must exist and have sufficient free space.
