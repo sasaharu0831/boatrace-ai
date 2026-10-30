@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 from datetime import date, datetime
 import json
+import hashlib
 import os
 from pathlib import Path
 import sqlite3
@@ -38,8 +39,13 @@ def complete_days(root: Path, start: date, end: date):
     con = connect(root)
     try:
         rows = con.execute("""
-          SELECT day,kind,sha256,file_path FROM archives
-          WHERE day BETWEEN ? AND ? ORDER BY day,kind
+          SELECT a.day,a.kind,a.sha256,a.file_path FROM archives AS a
+          WHERE a.day BETWEEN ? AND ?
+            AND NOT EXISTS (
+              SELECT 1 FROM archive_anomalies AS q
+              WHERE q.kind=a.kind AND q.day=a.day
+            )
+          ORDER BY a.day,a.kind
         """, (str(start), str(end))).fetchall()
     finally:
         con.close()
@@ -47,7 +53,19 @@ def complete_days(root: Path, start: date, end: date):
     for day, kind, sha, path in rows:
         grouped.setdefault(day, {})[kind] = (sha, Path(path))
     for day, kinds in sorted(grouped.items()):
-        if "B" in kinds and "K" in kinds and all(kinds[k][1].is_file() for k in ("B","K")):
+        if not ("B" in kinds and "K" in kinds):
+            continue
+        valid = True
+        for kind in ("B", "K"):
+            digest, path = kinds[kind]
+            if not path.is_file():
+                valid = False
+                break
+            with path.open("rb") as handle:
+                if hashlib.file_digest(handle, "sha256").hexdigest() != digest:
+                    valid = False
+                    break
+        if valid:
             yield day, kinds
 
 
