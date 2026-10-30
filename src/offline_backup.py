@@ -93,14 +93,16 @@ def snapshot_sqlite(source: Path, backup_dir: Path) -> dict:
         if target.is_file():
             if sha256(target) != digest:
                 raise ValueError(f"conflicting database snapshot: {target}")
-            return {"file": str(target), "sha256": digest, "status": "identical"}
+            return {"file": str(target), "backup_relative": f"db-snapshots/{target.name}",
+                    "sha256": digest, "status": "identical"}
         try:
             os.link(stage, target)
         except FileExistsError:
             if sha256(target) != digest:
                 raise ValueError(f"concurrent database snapshot mismatch: {target}")
             return {"file": str(target), "sha256": digest, "status": "identical"}
-        return {"file": str(target), "sha256": digest, "status": "copied"}
+        return {"file": str(target), "backup_relative": f"db-snapshots/{target.name}",
+                "sha256": digest, "status": "copied"}
     finally:
         if stage is not None:
             stage.unlink(missing_ok=True)
@@ -203,11 +205,19 @@ def verify_backup(backup_root: Path) -> dict:
                     raise ValueError(f"invalid backup relative path in audit line {line_no}")
                 receipt_files[relative] = item["sha256"]
             for item in record.get("sqlite_snapshots", []):
-                p = Path(item["file"])
-                if p.is_relative_to(root):
-                    snapshots[p.relative_to(root).as_posix()] = item["sha256"]
-                else:
-                    raise ValueError(f"snapshot outside backup root in audit line {line_no}")
+                relative = item.get("backup_relative")
+                if relative is None:
+                    # Legacy receipts used absolute paths and are only
+                    # portable if the original mount point still exists.
+                    p = Path(item["file"])
+                    if not p.is_relative_to(root):
+                        raise ValueError(
+                            f"legacy snapshot path outside backup root in audit line {line_no}"
+                        )
+                    relative = p.relative_to(root).as_posix()
+                if Path(relative).is_absolute() or ".." in Path(relative).parts:
+                    raise ValueError(f"unsafe snapshot path in audit line {line_no}")
+                snapshots[relative] = item["sha256"]
     bad = []
     verified = 0
     for relative, digest in sorted({**receipt_files, **snapshots}.items()):
