@@ -1,4 +1,5 @@
 import hashlib
+import errno
 import os
 import shutil
 from pathlib import Path
@@ -15,6 +16,48 @@ FAKE_LZH = b"\x15\x00-lh5-" + b"abc123" * 11
 
 
 class OfflineBackupTests(unittest.TestCase):
+    def test_external_volume_without_hardlinks_saves_and_verifies_raw(self):
+        with tempfile.TemporaryDirectory() as td:
+            src, dest = Path(td) / "source", Path(td) / "backup"
+            item = src / "raw" / "B" / "2026" / "b261028.lzh"
+            item.parent.mkdir(parents=True)
+            item.write_bytes(FAKE_LZH)
+            with patch.dict(os.environ, {"GITHUB_ACTIONS": "false"}), \
+                 patch("offline_backup.os.link",
+                       side_effect=OSError(errno.EOPNOTSUPP, "hardlinks unsupported")):
+                first = backup(src, dest, max_files=1)
+                second = backup(src, dest, max_files=1)
+            self.assertEqual(len(first["new_file_copies"]), 1)
+            self.assertEqual(second["new_file_copies"], [])
+            self.assertTrue(verify_backup(dest)["verified_ok"])
+
+    def test_external_volume_without_hardlinks_saves_sqlite(self):
+        with tempfile.TemporaryDirectory() as td:
+            src, dest = Path(td) / "source", Path(td) / "backup"
+            src.mkdir()
+            with sqlite3.connect(src / "historical_only.sqlite3") as con:
+                con.execute("CREATE TABLE t(n INTEGER)")
+                con.execute("INSERT INTO t VALUES (91)")
+            with patch.dict(os.environ, {"GITHUB_ACTIONS": "false"}), \
+                 patch("offline_backup.os.link",
+                       side_effect=OSError(errno.EPERM, "FUSE permission denied")):
+                record = backup(src, dest)
+            self.assertEqual(record["sqlite_snapshots"][0]["status"], "copied")
+            self.assertTrue(verify_backup(dest)["verified_ok"])
+            with sqlite3.connect(record["sqlite_snapshots"][0]["file"]) as con:
+                self.assertEqual(con.execute("SELECT n FROM t").fetchone()[0], 91)
+
+    def test_external_volume_fallback_rejects_overwrite(self):
+        with tempfile.TemporaryDirectory() as td:
+            src, dest = Path(td) / "source", Path(td) / "backup"
+            src.write_bytes(FAKE_LZH)
+            dest.write_bytes(b"not-original")
+            with patch("offline_backup.os.link",
+                       side_effect=OSError(errno.EOPNOTSUPP, "no hardlinks")):
+                with self.assertRaises(ValueError):
+                    copy_verified(src, dest, max_bytes=1000)
+            self.assertEqual(dest.read_bytes(), b"not-original")
+
     def test_verified_copy_and_resume(self):
         with tempfile.TemporaryDirectory() as td:
             src = Path(td) / "source"
