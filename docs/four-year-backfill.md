@@ -38,9 +38,25 @@ python src/offline_backup.py \
   --max-files 24
 ```
 
-Re-run the command to continue. Raw LZH files are immutable in the backup; changed bytes cause a hard stop for manual review, rather than overwriting. Changing `manifest.jsonl`, `checkpoint_latest.json` and quality JSON documents are saved by their SHA-256 version name. SQLite databases are backed up using the SQLite backup API and verified with `PRAGMA integrity_check`. Backups include `backup_audit.jsonl` receipts. No network API calls or subscriptions are required.
+Re-run the command to continue. The `--max-files` limit applies separately to new raw LZH and metadata copies, so a large raw backlog does not starve changing manifests and quality labels. Review `copy_batch_complete` and `deferred_raw`/`deferred_metadata` in the result; an incomplete batch is not a complete backup. Raw LZH files are immutable in the backup; changed bytes cause a hard stop for manual review, rather than overwriting. Changing `manifest.jsonl`, `checkpoint_latest.json` and quality JSON documents are saved by their SHA-256 version name. SQLite databases are backed up using the SQLite backup API and verified with `PRAGMA integrity_check`. Backups include `backup_audit.jsonl` receipts. No network API calls or subscriptions are required.
+
+SD cards and exFAT/FUSE removable drives that **do not support hardlinks** use an exclusive-create, SHA-256-verified fallback. This fallback does not overwrite existing files, but cannot guarantee power-loss atomicity; after an unclean shutdown run `--verify-only` and inspect corrupt/incomplete files before continuing.
 
 **Important:** Two directories on the *same physical drive* are not an independent backup. Files may be written to a local disk without any provider cost, but electricity, hardware and storage capacity are not guaranteed free.
+
+## Genuine predeadline metrics are blocked until independently attested
+
+The old `status="FORWARD_VERIFIED"` marker was not a real receipt. It is no longer sufficient to compute Forward accuracy. The default `evaluate` command **returns zero eligible Forward races** until an independently time-stamped evidence verification system is implemented.
+
+```bash
+# This does NOT trust arbitrary self-declared status labels.
+python src/boat_free_lab.py evaluate --predictions predictions.json --outcomes outcomes.json
+
+# Separately labelled hypothetical historical research, NOT true Forward:
+python src/boat_free_lab.py evaluate --predictions predictions.json --outcomes outcomes.json --research-only
+```
+
+For `--research-only`, pass records marked `SHADOW` or `HISTORICAL_ONLY`. The resulting score is hypothetical after-the-fact performance, not proof that those tickets existed before the race. No payout, result or popularity enters the ticket-selection features.
 
 ## Multi-day independent verification (2026-10-27, 28, 29)
 
