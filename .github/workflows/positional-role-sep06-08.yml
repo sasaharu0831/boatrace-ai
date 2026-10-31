@@ -1,9 +1,6 @@
 name: One-time B-only positional-role Sep06-08 historical holdout
 on:
-  pull_request:
-    paths:
-      - '.github/workflows/positional-role-sep06-08.yml'
-  workflow_dispatch:
+  workflow_dispatch: # One-time historical trial completed; future official requests require explicit manual action
 permissions:
   contents: read
 concurrency:
