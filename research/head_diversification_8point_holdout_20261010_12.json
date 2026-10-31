@@ -1,0 +1,124 @@
+{
+  "report_kind": "PREDECLARED_B_ONLY_HEAD_DIVERSIFICATION_HISTORICAL_HOLDOUT",
+  "evidence_url": "https://github.com/sasaharu0831/boatrace-ai/actions/runs/41151005883",
+  "dates": [
+    "2026-10-10",
+    "2026-10-11",
+    "2026-10-12"
+  ],
+  "ticket_count": 8,
+  "stake_yen_per_ticket_assumed": 100,
+  "fixed_base_policy": "local_motor",
+  "candidate_policies": [
+    "local_motor_head2",
+    "local_motor_head3"
+  ],
+  "candidate_definition": "Maximize sum of positive PL ordering scores with at least two or three distinct 1st-place boats in the fixed 8 tickets, using B-only local and motor weights, without odds or K",
+  "source_receipts": [
+    {
+      "B_sha": "3d731cdcb5072b12f5b8818c3720090f5d1dc704cca2024f71f21244f28f642f",
+      "K_sha": "b9e0befbc3cf72646ce70e08f0775fb88c3203b26f8ac148effd2a83c350f880",
+      "date": "2026-10-10",
+      "frozen": 144,
+      "ticket_sha": "ae1f8188f48909a7d2e3bdeed86dcb952d9676221a30b99758c5db52df283036"
+    },
+    {
+      "B_sha": "064f4ac9dc93ece4d340f2d2f98bf49bab65f1c00d8182c571a93b5b191d7d59",
+      "K_sha": "791b26bdf1ba4120518f7537806b49d7b626e496a952ac9bbf7c1528f5b8fb37",
+      "date": "2026-10-11",
+      "frozen": 144,
+      "ticket_sha": "b9871bf60f25527730d2370e42aa9696189b5b8b165aa49dad1cddd30eb97ceb"
+    },
+    {
+      "B_sha": "26a369557e4199ff35c8a8792558105cdd1dec51fdfb057dab60e663d3c1fc14",
+      "K_sha": "784e6f11c25e7df0f152a3cfa883e2ceb0708b984f7323d32e59c0e24a440ffd",
+      "date": "2026-10-12",
+      "frozen": 156,
+      "ticket_sha": "e755bdbf8fd8a695db144038617d9d0da6b91dcecb07aa938214602d61bf5129"
+    }
+  ],
+  "policy_results": {
+    "baseline_local_motor": {
+      "K_positive_marker_races": 4,
+      "head_covered": 329,
+      "hits": 126,
+      "hypothetical_hit_rate": 0.30656934306569344,
+      "hypothetical_return_rate": 0.716301703163017,
+      "mean_distinct_predicted_heads": 2.727493917274939,
+      "miss_reasons": {
+        "EXACT_HIT": 126,
+        "HEAD_ABSENT": 82,
+        "HEAD_PRESENT_SECOND_ABSENT": 82,
+        "HEAD_SECOND_PRESENT_THIRD_ABSENT": 106,
+        "SECOND_THIRD_SWAPPED": 15
+      },
+      "payout_yen": 235520,
+      "races": 411,
+      "stakes_yen": 328800,
+      "sum_distinct_predicted_heads": 1121,
+      "winner_head_coverage_rate": 0.8004866180048662
+    },
+    "local_motor_head2": {
+      "K_positive_marker_races": 4,
+      "head_covered": 330,
+      "hits": 126,
+      "hypothetical_hit_rate": 0.30656934306569344,
+      "hypothetical_return_rate": 0.716301703163017,
+      "mean_distinct_predicted_heads": 2.7445255474452557,
+      "miss_reasons": {
+        "EXACT_HIT": 126,
+        "HEAD_ABSENT": 81,
+        "HEAD_PRESENT_SECOND_ABSENT": 82,
+        "HEAD_SECOND_PRESENT_THIRD_ABSENT": 107,
+        "SECOND_THIRD_SWAPPED": 15
+      },
+      "payout_yen": 235520,
+      "races": 411,
+      "stakes_yen": 328800,
+      "sum_distinct_predicted_heads": 1128,
+      "winner_head_coverage_rate": 0.8029197080291971
+    },
+    "local_motor_head3": {
+      "K_positive_marker_races": 4,
+      "head_covered": 348,
+      "hits": 122,
+      "hypothetical_hit_rate": 0.29683698296836986,
+      "hypothetical_return_rate": 0.6981447688564477,
+      "mean_distinct_predicted_heads": 3.002433090024331,
+      "miss_reasons": {
+        "EXACT_HIT": 122,
+        "HEAD_ABSENT": 63,
+        "HEAD_PRESENT_SECOND_ABSENT": 92,
+        "HEAD_SECOND_PRESENT_THIRD_ABSENT": 118,
+        "SECOND_THIRD_SWAPPED": 16
+      },
+      "payout_yen": 229550,
+      "races": 411,
+      "stakes_yen": 328800,
+      "sum_distinct_predicted_heads": 1234,
+      "winner_head_coverage_rate": 0.8467153284671532
+    }
+  },
+  "baseline_12day_descriptive_total": {
+    "historical_races": 1573,
+    "hits": 538,
+    "hypothetical_hit_rate": 0.3420216147488875,
+    "stakes_yen": 1258400,
+    "payout_yen": 927200,
+    "hypothetical_return_rate": 0.736808645899555
+  },
+  "decision": "NO_MODEL_PROMOTED",
+  "observed_head3_effect": {
+    "head_miss_difference": -19,
+    "hit_difference": -4,
+    "payout_yen_difference": -5970,
+    "roi_difference": -0.018156934306569283
+  },
+  "forward_verified_races": 0,
+  "caveats": [
+    "Only historical B data retrieved after the races, no authentic predeadline source Freeze.",
+    "Six-finisher joined races not certified incident-free; K-positive markers are separate descriptive evidence.",
+    "Four-year raw archive still not durably stored; GitHub CI runner is ephemeral.",
+    "Comparing results on a historical test does not establish future profitability; no posthoc tuning promoted."
+  ]
+}
