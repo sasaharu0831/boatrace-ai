@@ -34,8 +34,6 @@ class RoleTemperatureTwoCohortGateTests(unittest.TestCase):
         p["hits"]=base["hits"]-1
         p["misses"]["EXACT_HIT"]=p["hits"]
         p["misses"]["HEAD_ABSENT"]+=20
-        p["misses"]["HEAD_PRESENT_SECOND_ABSENT"]-=1
-        p["misses"]["HEAD_ABSENT"]-=19
         # Ensure the summed miss population remains intact.
         self.assertEqual(sum(p["misses"].values()),p["races"])
         r=evaluate(a,b)
