@@ -1,0 +1,135 @@
+{
+  "kind": "B_ONLY_PAIR_PRESERVATION_FIXED_8POINT_HISTORICAL_HOLDOUT",
+  "mode": "HISTORICAL_ONLY_NOT_FORWARD",
+  "cohort_dates": [
+    "2026-10-05",
+    "2026-10-06",
+    "2026-10-07"
+  ],
+  "cohort_bk_ticket_sha256": [
+    {
+      "B_sha": "495fe47edaecd0838dabf8353bfa30536b2b436fd7b8d1de1e76f1ac338ccc0e",
+      "K_sha": "a39785185cae7fa8133e8a67872fc653a3ccecc26636134d2fad934bc8ca8913",
+      "date": "2026-10-05",
+      "frozen_B_races": 132,
+      "tickets_sha": "e03c37c2868b62e41f500313db2aca26511b2571ec61ed8fdc6a9d8bab48b605"
+    },
+    {
+      "B_sha": "adbf3e6ad24f948e1367a3da57f72ddfa039304938f62507e080ef23bb31279e",
+      "K_sha": "14b76620c09dea1c0adabc0f6ef4b3c9fb7398f66782ec489ec84af56a2c16cd",
+      "date": "2026-10-06",
+      "frozen_B_races": 144,
+      "tickets_sha": "c7260970f3959dc52fbcab9561faa8df3dde48115791901701bc1e8b29e35456"
+    },
+    {
+      "B_sha": "5c46a37d687b3052bcac0ad653ad136189982e7b83c77d7b29244fbc30da2fda",
+      "K_sha": "98287345a34cc325b4ea5e40747da4f1c327f3e8694e3559f387a1a467961919",
+      "date": "2026-10-07",
+      "frozen_B_races": 144,
+      "tickets_sha": "1e85c6d93f916ccafe18a15f9622e8a300e06d4a965f7deb45cfdd8593638346"
+    }
+  ],
+  "official_run": "https://github.com/sasaharu0831/boatrace-ai/actions/runs/41206309377",
+  "methods": [
+    "baseline_local_motor",
+    "pair3_head3",
+    "pair4_head3"
+  ],
+  "tickets_per_race": 8,
+  "stake_per_ticket_yen_assumption": 100,
+  "heads_minimum_on_new_candidates": 3,
+  "predeclared_pair_representatives": [
+    3,
+    4
+  ],
+  "weights_fixed_from_previous_trials": true,
+  "K_or_odds_used_for_ticket_selection": false,
+  "policy_results": {
+    "baseline_local_motor": {
+      "K_marker_present": 3,
+      "head_count_sum": 1088,
+      "head_covered": 330,
+      "hits": 148,
+      "hypothetical_hit_rate": 0.37851662404092073,
+      "hypothetical_return_rate": 0.8014386189258312,
+      "mean_distinct_heads": 2.782608695652174,
+      "misses": {
+        "EXACT_HIT": 148,
+        "HEAD_ABSENT": 61,
+        "HEAD_PRESENT_SECOND_ABSENT": 71,
+        "HEAD_SECOND_PRESENT_THIRD_ABSENT": 95,
+        "SECOND_THIRD_SWAPPED": 16
+      },
+      "payout_yen": 250690,
+      "races": 391,
+      "stakes_yen": 312800,
+      "winner_head_coverage_rate": 0.8439897698209718
+    },
+    "pair3_head3": {
+      "K_marker_present": 3,
+      "head_count_sum": 1182,
+      "head_covered": 337,
+      "hits": 145,
+      "hypothetical_hit_rate": 0.37084398976982097,
+      "hypothetical_return_rate": 0.793190537084399,
+      "mean_distinct_heads": 3.023017902813299,
+      "misses": {
+        "EXACT_HIT": 145,
+        "HEAD_ABSENT": 54,
+        "HEAD_PRESENT_SECOND_ABSENT": 76,
+        "HEAD_SECOND_PRESENT_THIRD_ABSENT": 99,
+        "SECOND_THIRD_SWAPPED": 17
+      },
+      "payout_yen": 248110,
+      "races": 391,
+      "stakes_yen": 312800,
+      "winner_head_coverage_rate": 0.8618925831202046
+    },
+    "pair4_head3": {
+      "K_marker_present": 3,
+      "head_count_sum": 1182,
+      "head_covered": 337,
+      "hits": 146,
+      "hypothetical_hit_rate": 0.3734015345268542,
+      "hypothetical_return_rate": 0.8139705882352941,
+      "mean_distinct_heads": 3.023017902813299,
+      "misses": {
+        "EXACT_HIT": 146,
+        "HEAD_ABSENT": 54,
+        "HEAD_PRESENT_SECOND_ABSENT": 74,
+        "HEAD_SECOND_PRESENT_THIRD_ABSENT": 101,
+        "SECOND_THIRD_SWAPPED": 16
+      },
+      "payout_yen": 254610,
+      "races": 391,
+      "stakes_yen": 312800,
+      "winner_head_coverage_rate": 0.8618925831202046
+    }
+  },
+  "descriptive_baseline_15day_total": {
+    "historical_races": 1964,
+    "hits": 686,
+    "stakes_yen": 1571200,
+    "payout_yen": 1177890,
+    "hypothetical_hit_rate": 0.34928716904276985,
+    "hypothetical_return_rate": 0.7496754073319756
+  },
+  "comparison": {
+    "pair3_hit_delta": -3,
+    "pair3_payout_delta": -2580,
+    "pair4_hit_delta": -2,
+    "pair4_payout_delta": 3920,
+    "baseline_1st_covered": 330,
+    "pair3_1st_covered": 337,
+    "pair4_1st_covered": 337
+  },
+  "promotion_status": "NONE; pair4 improves hypothetical payout but reduces exact hits; pair3 improves neither",
+  "forward_verified_races": 0,
+  "caveats": [
+    "Official historical B/K were obtained after race completion; not genuine preclose Forward.",
+    "Accepted rows have consistent six finishers, not independently confirmed absence of every incident or special operation.",
+    "K markers are postrace descriptive categories only.",
+    "No raw official LZH or SQLite permanent backup has been established; only aggregate receipts persisted.",
+    "No strategy chosen or coefficients refitted based on this historical trial."
+  ]
+}
