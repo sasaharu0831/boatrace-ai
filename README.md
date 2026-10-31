@@ -9,7 +9,7 @@
 - 2026-10-28の106レースについて一時SQLiteにB 636艇行・K 636艇行を保存し、2回の取り込みでも重複0。
 - B由来の特徴量とK由来の結果・払戻を**別CSV**に出力。着順・払戻を予想入力に混ぜないチェック済み。
 - 異常な割合値、登録番号重複、距離不一致、出典ハッシュ変更、レース数の減少は隔離・自動置換拒否。
-- Pythonテスト108件成功。詳細: [GitHub Actions](https://github.com/sasaharu0831/boatrace-ai/actions/runs/41151005829)。
+- Pythonテスト120件成功。詳細: [GitHub Actions](https://github.com/sasaharu0831/boatrace-ai/actions/runs/41151005829)。
 - 3日分の件数・公式ファイルSHA-256・例外理由は [集計JSON](research/verified_coverage_2026-10-27_to_29.json) に記録（**生アーカイブは保存されていない**）。
 
 ## 追加の別期間SHADOW検証（2026-10-20〜22）
@@ -24,7 +24,7 @@
 
 - 報告書: [別期間406R・会場別・レース種別・K側特殊記載別・6日合算](research/independent_holdout_8pt_20261020_22.json)。
 - 公式データ実測ログ: https://github.com/sasaharu0831/boatrace-ai/actions/runs/41149550566
-- Python自動テスト108件成功: https://github.com/sasaharu0831/boatrace-ai/actions/runs/41151005829
+- Python自動テスト120件成功: https://github.com/sasaharu0831/boatrace-ai/actions/runs/41151005829
 - 新しい分母は**歴史的6艇整合レース406R**で、事故なし完全証明・真の未来予測ではありません。Kの特殊・事故関連の記載があるものを別集計し、記載なしも「安全確認済み」にはしません。
 - 3モデルすべて回収率100%未満／的中率50%未満。**本番モデルは変更せず採用保留**。会場別の小標本から勝ちパターンを後付け選定することは禁止。
 
@@ -50,7 +50,7 @@
 
 - 公式LZH・先行B買い目SHA・比較結果: [第4期間監査JSON](research/pair_protected_oct05_07_trial.json)
 - [1回限りの公式取得・検証ログ](https://github.com/sasaharu0831/boatrace-ai/actions/runs/41206309377)
-- [108件のPythonテスト成功ログ](https://github.com/sasaharu0831/boatrace-ai/actions/runs/41206246023)
+- [120件のPythonテスト成功ログ](https://github.com/sasaharu0831/boatrace-ai/actions/runs/41206246023)
 
 ## 3着候補の重複確保（2026-10-01〜03、歴史検証418R）
 
@@ -68,6 +68,25 @@
 - 実測ジョブログ: https://github.com/sasaharu0831/boatrace-ai/actions/runs/41207316059
 - 18日間での従来当地＋モーターの説明用合算は2,382R・825的中（34.6%）、仮想回収73.9%。真正Forwardの統計ではない。
 - 3着の重複枠を増やすと、1着候補や異なる1着―2着ペアの包含が減り得る。次の候補には**元のペア包含を維持する制約**が必要だが、現時点では未実証。
+
+## 1・2着ペア完全保護と3着再配分（2026-09-20〜27、2期間769R）
+
+`src/pair_invariant_third_candidate.py` で従来の当地＋モーター8点が持っている**全ての1着・2着ペアを保持**し、その範囲内で上位1ペアに3着3通り、または上位2ペアに3着2通りを確保する研究候補を事前固定。8点で制約が実現不可能なら従来8点を維持。K・オッズ・人気・払戻は買い目の入力に使わない。
+
+| 対象 | 従来8点 | 上位2ペア×3着2通り | 判定 |
+| --- | --- | --- | --- |
+| 9/25〜27（363R） | 122/363・79.5% | **126/363・82.0%** | 的中・回収とも改善 |
+| 9/20〜22（406R） | **150/406・78.7%** | 146/406・76.7% | 両方悪化 |
+| 2期間合算（769R） | 272/769・79.10% | 272/769・79.20% | 的中数同じ |
+
+※表は3連単8点・1点100円を仮定した**歴史的SHADOW**的中数と仮想回収率。事故なし確定の分母や真正Forwardではない。
+
+**独立した2期間の両方で改善する条件を満たしていないため採用しない。** `src/replication_gate.py` が同じ8点／同じ分母／予想ペア包含数／日付の非重複を確認し、的中数と回収率の両方が各期間で増加したか判定する。歴史的なゲートを通過しても真正Forwardの認証が無ければ、本番利用の許可にはならない。
+
+- [1回目363Rの原本と券面SHA](research/pair_invariant_20260925_27.json)
+- [2回目406Rの独立再検証結果](research/pair_invariant_20260920_22_replication.json)
+- [再現性判定（研究のみ／本番採用不可）](research/pair_invariant_replication_decision.json)
+- [1回目公式ログ](https://github.com/sasaharu0831/boatrace-ai/actions/runs/41209344512) ／ [2回目公式ログ](https://github.com/sasaharu0831/boatrace-ai/actions/runs/41209554995)
 
 ## 大切な区別
 
