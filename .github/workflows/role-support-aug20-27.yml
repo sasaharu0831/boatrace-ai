@@ -1,9 +1,6 @@
 name: One-time B-only head/pair support guarded roles Aug20-27
 on:
-  pull_request:
-    paths:
-      - '.github/workflows/role-support-aug20-27.yml'
-  workflow_dispatch:
+  workflow_dispatch: # Completed one-time historical run; manual approval for any future official requests
 permissions:
   contents: read
 concurrency:
