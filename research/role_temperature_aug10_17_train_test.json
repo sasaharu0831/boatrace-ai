@@ -1,0 +1,179 @@
+{
+  "report_type": "TRAIN_ONLY_ROLE_TEMPERATURE_HISTORICAL_HOLDOUT",
+  "mode": "HISTORICAL_NOT_FORWARD",
+  "training_dates": [
+    "2026-08-10",
+    "2026-08-11",
+    "2026-08-12"
+  ],
+  "first_holdout_dates": [
+    "2026-08-15",
+    "2026-08-16",
+    "2026-08-17"
+  ],
+  "train_provenance": [
+    {
+      "B_sha256": "8e0950d2c5a6488c8abb10e6c4cd2d3127cf401d2ed3d9698b83766b2af8770f",
+      "K_sha256": "d860b5fb3d546662ff2d9fcf25f49875a446f8c76d55e97793413d41b7fdce4e",
+      "date": "2026-08-10",
+      "excluded_positive_K_markers": 2,
+      "training_rows_excluding_positive_K_markers": 138
+    },
+    {
+      "B_sha256": "db017e377ae55a77008a2aadaab67e451cb392f1c8f264571b458d86cc2fb375",
+      "K_sha256": "c20fe9bbdae0debb4e85aeee730d776f2f8d04b8efb1a79cdb0666b343d3ed14",
+      "date": "2026-08-11",
+      "excluded_positive_K_markers": 3,
+      "training_rows_excluding_positive_K_markers": 143
+    },
+    {
+      "B_sha256": "bb75414ef8286b122b8685b8c8f29cd14a5cf7e7b107dccd3410c559f209112c",
+      "K_sha256": "226b945b01e3970f76dc8c7fbdfe2d4671e1be36da497210a515056602c5be33",
+      "date": "2026-08-12",
+      "excluded_positive_K_markers": 4,
+      "training_rows_excluding_positive_K_markers": 135
+    }
+  ],
+  "fit": {
+    "fit_target": "sum of sequential role negative log likelihood (no payout)",
+    "grid": [
+      0.5,
+      0.75,
+      1,
+      1.25,
+      1.5
+    ],
+    "not_genuine_forward": true,
+    "ridge_strength": 2,
+    "role_temperatures": {
+      "first": 1.5,
+      "second": 1,
+      "third": 0.75
+    },
+    "trained_on_K_outcomes_only_from_training_dates": true,
+    "training_eligible_races": 416,
+    "training_losses": {
+      "first": {
+        "0.5": 639.14446132,
+        "0.75": 601.69597031,
+        "1.0": 574.17008057,
+        "1.25": 555.88329227,
+        "1.5": 545.98194243
+      },
+      "second": {
+        "0.5": 617.66821803,
+        "0.75": 604.20308672,
+        "1.0": 598.51644525,
+        "1.25": 599.98636751,
+        "1.5": 607.87547059
+      },
+      "third": {
+        "0.5": 548.94674696,
+        "0.75": 545.67219677,
+        "1.0": 548.87589053,
+        "1.25": 557.95241319,
+        "1.5": 572.23548933
+      }
+    }
+  },
+  "trained_parameters_sha256": "a8660f259ab1c88b150aa63f5e663c199ad1d5a68be5484c6f9dfa7e83e4bcbf",
+  "first_holdout_receipts": [
+    {
+      "B_only_prediction_races": 190,
+      "B_sha256": "0c1d112672e24c6f9b82583b28c262bc50f7a2f793daa3adc9fafafc330cb257",
+      "K_sha256": "334999c7218d8d2fd1cf1fa1a7bd771d3faca66ae87af22ab19ad84fa5f967a9",
+      "date": "2026-08-15",
+      "evaluated_races": 175,
+      "predictions_and_120way_sha256": "81f535b1b0e37c43c559779f75ade7a119b138adae2c383e3db96b0da4fbcc8b"
+    },
+    {
+      "B_only_prediction_races": 179,
+      "B_sha256": "84078122018f5fbd9745d0b07c28a747920034410a5a30b675c0046d4590e9c9",
+      "K_sha256": "3c26c042834c83933795a21f19c85ef47f7f4ede3dbf5fc102bb6a72dea6141f",
+      "date": "2026-08-16",
+      "evaluated_races": 169,
+      "predictions_and_120way_sha256": "330aeaf760eaaa4f25fe8157950a8ecbafe715f4c2757cfa0fd6afebc28f9023"
+    },
+    {
+      "B_only_prediction_races": 154,
+      "B_sha256": "36f359161fcd0d094f419f6110e5c9204d74f85540ff4512ee1c74f930181532",
+      "K_sha256": "66135930dba15f86d2fa21af73f91b3bcb948f867bf4e52659d0b957a770efcd",
+      "date": "2026-08-17",
+      "evaluated_races": 143,
+      "predictions_and_120way_sha256": "4662696fe86a6cc77c650b667f125899ce962046e5321a3db0417d07be6ee7df"
+    }
+  ],
+  "first_holdout_models": {
+    "baseline_local_motor": {
+      "K_positive_markers": 8,
+      "average_brier_120": 0.9743556719141698,
+      "average_logloss": 4.158342590415927,
+      "brier_sum": 474.5112122222007,
+      "head_coverage": 0.8049281314168378,
+      "head_covered": 392,
+      "hits": 175,
+      "hypothetical_hit_rate": 0.3593429158110883,
+      "hypothetical_return_rate": 0.6041581108829569,
+      "logloss_sum": 2025.1128415325566,
+      "misses": {
+        "EXACT_HIT": 175,
+        "HEAD_ABSENT": 95,
+        "HEAD_PRESENT_SECOND_ABSENT": 93,
+        "HEAD_SECOND_PRESENT_THIRD_ABSENT": 101,
+        "SECOND_THIRD_SWAPPED": 23
+      },
+      "pair_coverage": 0.5790554414784395,
+      "pair_covered": 282,
+      "payout_yen": 235380,
+      "races": 487,
+      "stakes_yen": 389600
+    },
+    "training_calibrated_roles": {
+      "K_positive_markers": 8,
+      "average_brier_120": 0.9706396632881173,
+      "average_logloss": 4.0870974698488745,
+      "brier_sum": 472.7015160213131,
+      "head_coverage": 0.7002053388090349,
+      "head_covered": 341,
+      "hits": 191,
+      "hypothetical_hit_rate": 0.3921971252566735,
+      "hypothetical_return_rate": 0.6619866529774128,
+      "logloss_sum": 1990.4164678164018,
+      "misses": {
+        "EXACT_HIT": 191,
+        "HEAD_ABSENT": 146,
+        "HEAD_PRESENT_SECOND_ABSENT": 54,
+        "HEAD_SECOND_PRESENT_THIRD_ABSENT": 66,
+        "SECOND_THIRD_SWAPPED": 30
+      },
+      "pair_coverage": 0.5359342915811088,
+      "pair_covered": 261,
+      "payout_yen": 257910,
+      "races": 487,
+      "stakes_yen": 389600
+    }
+  },
+  "first_holdout_differences": {
+    "both_hits_and_roi": true,
+    "both_proper_scores": true,
+    "deltas": {
+      "exact_hits": 16,
+      "mean_brier_120": -0.0037160086260524805,
+      "mean_logloss": -0.07124512056705257,
+      "payout_yen": 22530
+    },
+    "forward_verified_races": 0,
+    "production_promoted": false
+  },
+  "source_ci": "https://github.com/sasaharu0831/boatrace-ai/actions/runs/41216430176",
+  "fixed_predeclared_temperature_grid": true,
+  "test_K_inaccessible_to_training_stage": true,
+  "production_promotion": false,
+  "forward_verified_races": 0,
+  "notes": [
+    "Only training K outcomes used to fit role temperatures; no payout used for training.",
+    "After fit, test B-only probability table and tickets frozen before K parsed.",
+    "These are historical post-race B/K archives, not predeadline Forward. No profitability claim.",
+    "No raw official source data saved permanently on ephemeral CI runner."
+  ]
+}
