@@ -59,6 +59,8 @@ def evaluate(record):
                 raise ValueError("invalid payout")
             if row["miss_reasons"]["EXACT_HIT"]!=row["hits"] or sum(row["miss_reasons"].values())!=n:
                 raise ValueError("not mutually exclusive miss classification")
+            if row["heads_covered"] != n - row["miss_reasons"]["HEAD_ABSENT"]:
+                raise ValueError("head-miss diagnosis contradicts 1st-boat coverage")
             if (row["gained_hits_vs_frozen"]-row["lost_hits_vs_frozen"]
                     !=row["hits"]-frozen["hits"]):
                 raise ValueError("hit transition counts do not reconcile")
