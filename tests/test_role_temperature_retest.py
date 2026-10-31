@@ -20,8 +20,14 @@ class FrozenRetestTests(unittest.TestCase):
     def test_verifies_original_model_sha_and_never_refits(self):
         coeff=checked_training_fit(self.receipt,self.dates)
         self.assertEqual(coeff,{"first":1.5,"second":1,"third":0.75})
+        fit=copy.deepcopy(self.receipt["fit"])
+        fit["grid"]=[float(x) for x in fit["grid"]]
+        fit["ridge_strength"]=float(fit["ridge_strength"])
+        fit["role_temperatures"]={k:float(v) for k,v in fit["role_temperatures"].items()}
+        fit["training_losses"]={k:{t:float(v) for t,v in group.items()}
+                                for k,group in fit["training_losses"].items()}
         self.assertEqual(self.receipt["trained_parameters_sha256"],
-                         freeze_digest({"fit":self.receipt["fit"],
+                         freeze_digest({"fit":fit,
                                         "train_receipts":self.receipt["train_provenance"]}))
 
     def test_modified_temperature_or_train_provenance_rejected(self):
