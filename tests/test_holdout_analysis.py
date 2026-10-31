@@ -7,7 +7,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from holdout_analysis import evaluate_day, analyze_holdout
+from holdout_analysis import evaluate_day, analyze_holdout, classify_ticket_miss, MISS_REASONS
 from test_historical_records import DAY, program, results
 
 
@@ -20,6 +20,33 @@ def k_report():
 
 
 class HoldoutTests(unittest.TestCase):
+    def test_miss_classes_are_mutually_exclusive(self):
+        base = ["1-2-3", "1-3-2", "1-4-2", "2-1-3",
+                "2-3-1", "3-1-2", "3-2-1", "4-1-2"]
+        self.assertEqual(classify_ticket_miss(base, "1-2-3"), "EXACT_HIT")
+        self.assertEqual(classify_ticket_miss(base, "6-1-2"), "HEAD_ABSENT")
+        self.assertEqual(classify_ticket_miss(base, "1-2-4"), "HEAD_SECOND_PRESENT_THIRD_ABSENT")
+        self.assertEqual(classify_ticket_miss(base, "1-4-3"), "HEAD_PRESENT_SECOND_ABSENT")
+        self.assertEqual(classify_ticket_miss(base, "1-2-4".replace("2-4", "2-4")), "HEAD_SECOND_PRESENT_THIRD_ABSENT")
+        self.assertEqual(classify_ticket_miss(base, "1-2-5"), "HEAD_SECOND_PRESENT_THIRD_ABSENT")
+        self.assertEqual(classify_ticket_miss(base, "1-3-4"), "HEAD_PRESENT_SECOND_ABSENT")
+        self.assertEqual(classify_ticket_miss(base, "1-4-3"), "HEAD_PRESENT_SECOND_ABSENT")
+        swapped = ["1-3-2", "1-5-2", "2-1-3", "2-3-1",
+                   "3-1-2", "3-2-1", "4-1-2", "5-1-2"]
+        self.assertEqual(classify_ticket_miss(swapped, "1-2-3"), "SECOND_THIRD_SWAPPED")
+        with self.assertRaises(ValueError):
+            classify_ticket_miss(base, "1-1-2")
+
+    def test_miss_diagnostics_sum_to_population(self):
+        report = evaluate_day(b_report(), k_report(), DAY)
+        for policy in report["groups"]:
+            n = report["groups"][policy]["overall"]["races"]
+            reasons = report["miss_diagnostics"][policy]["overall"]
+            self.assertEqual(set(reasons), set(MISS_REASONS))
+            self.assertEqual(sum(reasons.values()), n)
+            self.assertEqual(reasons["EXACT_HIT"],
+                             report["groups"][policy]["overall"]["hits"])
+
     def test_single_race_has_distinct_strata(self):
         report = evaluate_day(b_report(), k_report(), DAY)
         self.assertEqual(report["B_races_frozen_before_K"], 1)
