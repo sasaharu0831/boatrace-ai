@@ -1,0 +1,66 @@
+name: One-time B-only positional-role Sep01-03 historical holdout
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/positional-role-sep01-03.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: positional-role-sep01-03-once
+  cancel-in-progress: true
+jobs:
+  historical_role_trial:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: One-time official request gate
+        id: gate
+        env:
+          EVENT: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT" = "workflow_dispatch" ] || [ "$(git log -1 --pretty=%s)" = "Run one-time B-only Sep01-03 positional role trial" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "Do not poll official B/K on PR edits."
+          fi
+      - uses: actions/setup-python@v5
+        if: steps.gate.outputs.enabled == 'true'
+        with:
+          python-version: '3.12'
+      - name: Run all offline safety tests
+        if: steps.gate.outputs.enabled == 'true'
+        run: python -W error -m unittest discover -s tests -v
+      - name: Free p7zip LZH utility
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq p7zip-full
+      - name: Retrieve at most 6 official historical archives with bounded pacing
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python src/boat_free_lab.py collect --start 2026-09-01 --days 3 --root "$RUNNER_TEMP/roles" --sleep 2
+      - name: Freeze role hypotheses from B before opening K, then audit
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python src/positional_conditional_trial.py --root "$RUNNER_TEMP/roles" --dates 2026-09-01 2026-09-02 2026-09-03 > "$RUNNER_TEMP/report.json"
+          python - <<'PY'
+          import json,os
+          r=json.load(open(os.path.join(os.environ["RUNNER_TEMP"],"report.json"),encoding="utf-8"))
+          assert r["mode"]=="B_ONLY_POSITIONAL_CONDITIONAL_HISTORICAL_NOT_FORWARD"
+          assert r["forward_verified_races"]==0 and r["production_promoted"] is False
+          assert r["tickets_per_race"]==8 and r["fixed_coefficients"] is True
+          print("ROLE_DAYS",json.dumps(r["daily"],sort_keys=True))
+          for name,metric in r["aggregate"].items():
+              assert metric["races"]>0 and metric["stakes_yen"] == 800*metric["races"]
+              assert sum(metric["misses"].values()) == metric["races"]
+              assert metric["misses"]["EXACT_HIT"] == metric["hits"]
+              print("ROLE_POLICY",json.dumps({"policy":name,**metric},sort_keys=True))
+          PY
+      - name: No production promotion or raw file upload
+        if: always()
+        run: echo "Raw B/K remain ephemeral. Only aggregates & SHA256 in logs. No Forward claims."
