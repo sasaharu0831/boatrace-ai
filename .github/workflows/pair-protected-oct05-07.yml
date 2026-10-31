@@ -1,0 +1,71 @@
+name: One-time pair-protected B-only Oct05-07 holdout
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/pair-protected-oct05-07.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pair-protected-historical-oct05-07
+  cancel-in-progress: true
+jobs:
+  trial:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: One-off official retrieval gate
+        id: gate
+        env:
+          EVENT: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT" = "workflow_dispatch" ] || [ "$(git log -1 --pretty=%s)" = "Run one-time pair-protected Oct05-07 holdout" ]; then
+            echo "allowed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "allowed=false" >> "$GITHUB_OUTPUT"
+            echo "No external requests for subsequent PR edits."
+          fi
+      - uses: actions/setup-python@v5
+        if: steps.gate.outputs.allowed == 'true'
+        with:
+          python-version: '3.12'
+      - name: Offline safety checks
+        if: steps.gate.outputs.allowed == 'true'
+        run: python -W error -m unittest discover -s tests -v
+      - name: Install free LZH decoder
+        if: steps.gate.outputs.allowed == 'true'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq p7zip-full
+      - name: Retrieve six official archives bounded to Oct 05-07
+        if: steps.gate.outputs.allowed == 'true'
+        run: |
+          python src/boat_free_lab.py collect --start 2026-10-05 --days 3 --root "$RUNNER_TEMP/pair-trial" --sleep 2
+      - name: Freeze B-only fixed tickets before reading K, report aggregated score
+        if: steps.gate.outputs.allowed == 'true'
+        run: |
+          python src/pair_protected_trial.py --root "$RUNNER_TEMP/pair-trial" --dates 2026-10-05 2026-10-06 2026-10-07 > "$RUNNER_TEMP/report.json"
+          python - <<'PY'
+          import json,os
+          f=os.path.join(os.environ["RUNNER_TEMP"],"report.json")
+          r=json.load(open(f,encoding="utf-8"))
+          assert r["mode"]=="B_ONLY_PAIR_PRESERVATION_HISTORICAL_NOT_FORWARD"
+          assert r["forward_verified_races"]==0 and r["model_promoted"] is False
+          print("DAYS",json.dumps([
+              {"date":d["date"],"B_sha":d["B_archive_sha256"],
+               "K_sha":d["K_archive_sha256"],"tickets_sha":d["B_tickets_sha256"],
+               "frozen_B_races":d["frozen_B_races"]}
+              for d in r["day_receipts"]
+          ],sort_keys=True))
+          for name,stats in r["aggregate"].items():
+              assert stats["races"]>0 and stats["stakes_yen"]==800*stats["races"]
+              assert sum(stats["misses"].values())==stats["races"]
+              assert stats["misses"]["EXACT_HIT"]==stats["hits"]
+              print("POLICY",json.dumps({"name":name,**stats},sort_keys=True))
+          PY
+      - name: Never upload raw archives or alter production
+        if: always()
+        run: echo "Official raw B/K live only in ephemeral runner; research metrics in job logs."
