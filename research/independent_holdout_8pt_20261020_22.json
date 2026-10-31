@@ -1,0 +1,789 @@
+{
+  "report_type": "B_ONLY_FIXED_HEURISTICS_DISJOINT_HISTORICAL_HOLDOUT",
+  "holdout_dates": [
+    "2026-10-20",
+    "2026-10-21",
+    "2026-10-22"
+  ],
+  "prior_dates": [
+    "2026-10-27",
+    "2026-10-28",
+    "2026-10-29"
+  ],
+  "official_evidence_url": "https://github.com/sasaharu0831/boatrace-ai/actions/runs/41149550566",
+  "prior_evidence_url": "https://github.com/sasaharu0831/boatrace-ai/actions/runs/41095677893",
+  "source": "official BOAT RACE daily B program and K historical results",
+  "ticket_count_per_race": 8,
+  "stake_yen_per_ticket_assumed": 100,
+  "did_not_refit_existing_coefficients": true,
+  "odds_popularity_payout_not_used_to_choose_tickets": true,
+  "genuine_forward_eligible": 0,
+  "training_eligible_from_special_and_incident_certification": 0,
+  "trial_coverage": [
+    {
+      "date": "2026-10-20",
+      "B_archive_sha256": "fb7939615f77920c4dcaa6cc85caf46f8c1f928d346cc7182ef042a7a3f12254",
+      "K_archive_sha256": "09410993bfe747d393b52b55f4fe7b8a5ecbb35b5a3e496a29d13fb4f76224e1",
+      "B_ticket_sha256": "59d0fb85556931b1351729c13076c18af77c2e79c22540013ee4d4f6ee702f8c",
+      "B_races": 144,
+      "K_races": 144,
+      "paired_races": 144,
+      "historical_joined": 129,
+      "K_positive_marker_races_in_joined": 0
+    },
+    {
+      "date": "2026-10-21",
+      "B_archive_sha256": "358bca863d653bea0f642db9a0cce2a1741b6b1cec3d19e735d84052ec19aa4c",
+      "K_archive_sha256": "5831b9bcfe863d4b587665491c675054fb69b90cecf2d75572fb75420b1d5426",
+      "B_ticket_sha256": "8f2ffe39d7142512e741a49b58d8cb6ce9f4dc14c206630d6c81fc5e98d1741a",
+      "B_races": 156,
+      "K_races": 144,
+      "paired_races": 144,
+      "historical_joined": 128,
+      "K_positive_marker_races_in_joined": 0
+    },
+    {
+      "date": "2026-10-22",
+      "B_archive_sha256": "ec1f65cc04b2e4b04c01c5b952b7b88deb48391c6498f60e12de473e573e8200",
+      "K_archive_sha256": "c6a8ee47ac5331838a540c953cf14009a5811fa9fe81b07b9cbea5326ae00469",
+      "B_ticket_sha256": "e78a261479cc87b876c4e4fa299e475b6f3e1d0811d9170b42230255fa3f0c82",
+      "B_races": 168,
+      "K_races": 168,
+      "paired_races": 168,
+      "historical_joined": 149,
+      "K_positive_marker_races_in_joined": 2
+    }
+  ],
+  "holdout_models": {
+    "lane_only": {
+      "overall": {
+        "hits": 126,
+        "hypothetical_hit_rate": 0.3103448275862069,
+        "hypothetical_return_rate": 0.6786637931034483,
+        "payout_yen": 220430,
+        "races": 406,
+        "stakes_yen": 324800
+      },
+      "by_venue": {
+        "venue:01": {
+          "hits": 7,
+          "hypothetical_hit_rate": 0.30434782608695654,
+          "hypothetical_return_rate": 0.3375,
+          "payout_yen": 6210,
+          "races": 23,
+          "stakes_yen": 18400
+        },
+        "venue:03": {
+          "hits": 6,
+          "hypothetical_hit_rate": 0.2727272727272727,
+          "hypothetical_return_rate": 0.3926136363636364,
+          "payout_yen": 6910,
+          "races": 22,
+          "stakes_yen": 17600
+        },
+        "venue:04": {
+          "hits": 4,
+          "hypothetical_hit_rate": 0.3333333333333333,
+          "hypothetical_return_rate": 1.4322916666666667,
+          "payout_yen": 13750,
+          "races": 12,
+          "stakes_yen": 9600
+        },
+        "venue:05": {
+          "hits": 0,
+          "hypothetical_hit_rate": 0,
+          "hypothetical_return_rate": 0,
+          "payout_yen": 0,
+          "races": 8,
+          "stakes_yen": 6400
+        },
+        "venue:06": {
+          "hits": 7,
+          "hypothetical_hit_rate": 0.35,
+          "hypothetical_return_rate": 0.918125,
+          "payout_yen": 14690,
+          "races": 20,
+          "stakes_yen": 16000
+        },
+        "venue:08": {
+          "hits": 4,
+          "hypothetical_hit_rate": 0.36363636363636365,
+          "hypothetical_return_rate": 0.8829545454545454,
+          "payout_yen": 7770,
+          "races": 11,
+          "stakes_yen": 8800
+        },
+        "venue:09": {
+          "hits": 8,
+          "hypothetical_hit_rate": 0.34782608695652173,
+          "hypothetical_return_rate": 0.6081521739130434,
+          "payout_yen": 11190,
+          "races": 23,
+          "stakes_yen": 18400
+        },
+        "venue:10": {
+          "hits": 3,
+          "hypothetical_hit_rate": 0.25,
+          "hypothetical_return_rate": 0.24791666666666667,
+          "payout_yen": 2380,
+          "races": 12,
+          "stakes_yen": 9600
+        },
+        "venue:11": {
+          "hits": 4,
+          "hypothetical_hit_rate": 0.19047619047619047,
+          "hypothetical_return_rate": 0.7357142857142858,
+          "payout_yen": 12360,
+          "races": 21,
+          "stakes_yen": 16800
+        },
+        "venue:12": {
+          "hits": 10,
+          "hypothetical_hit_rate": 0.30303030303030304,
+          "hypothetical_return_rate": 0.5045454545454545,
+          "payout_yen": 13320,
+          "races": 33,
+          "stakes_yen": 26400
+        },
+        "venue:13": {
+          "hits": 8,
+          "hypothetical_hit_rate": 0.25806451612903225,
+          "hypothetical_return_rate": 0.39556451612903226,
+          "payout_yen": 9810,
+          "races": 31,
+          "stakes_yen": 24800
+        },
+        "venue:14": {
+          "hits": 9,
+          "hypothetical_hit_rate": 0.45,
+          "hypothetical_return_rate": 0.718125,
+          "payout_yen": 11490,
+          "races": 20,
+          "stakes_yen": 16000
+        },
+        "venue:16": {
+          "hits": 9,
+          "hypothetical_hit_rate": 0.2571428571428571,
+          "hypothetical_return_rate": 0.5703571428571429,
+          "payout_yen": 15970,
+          "races": 35,
+          "stakes_yen": 28000
+        },
+        "venue:17": {
+          "hits": 11,
+          "hypothetical_hit_rate": 0.39285714285714285,
+          "hypothetical_return_rate": 1.1794642857142856,
+          "payout_yen": 26420,
+          "races": 28,
+          "stakes_yen": 22400
+        },
+        "venue:18": {
+          "hits": 10,
+          "hypothetical_hit_rate": 0.29411764705882354,
+          "hypothetical_return_rate": 0.7194852941176471,
+          "payout_yen": 19570,
+          "races": 34,
+          "stakes_yen": 27200
+        },
+        "venue:19": {
+          "hits": 3,
+          "hypothetical_hit_rate": 0.2727272727272727,
+          "hypothetical_return_rate": 0.5965909090909091,
+          "payout_yen": 5250,
+          "races": 11,
+          "stakes_yen": 8800
+        },
+        "venue:20": {
+          "hits": 6,
+          "hypothetical_hit_rate": 0.3,
+          "hypothetical_return_rate": 0.709375,
+          "payout_yen": 11350,
+          "races": 20,
+          "stakes_yen": 16000
+        },
+        "venue:23": {
+          "hits": 12,
+          "hypothetical_hit_rate": 0.4,
+          "hypothetical_return_rate": 0.99,
+          "payout_yen": 23760,
+          "races": 30,
+          "stakes_yen": 24000
+        },
+        "venue:24": {
+          "hits": 5,
+          "hypothetical_hit_rate": 0.4166666666666667,
+          "hypothetical_return_rate": 0.8572916666666667,
+          "payout_yen": 8230,
+          "races": 12,
+          "stakes_yen": 9600
+        }
+      },
+      "by_stage": {
+        "stage:FINAL": {
+          "hits": 2,
+          "hypothetical_hit_rate": 0.2857142857142857,
+          "hypothetical_return_rate": 0.275,
+          "payout_yen": 1540,
+          "races": 7,
+          "stakes_yen": 5600
+        },
+        "stage:GENERAL": {
+          "hits": 24,
+          "hypothetical_hit_rate": 0.2823529411764706,
+          "hypothetical_return_rate": 0.5147058823529411,
+          "payout_yen": 35000,
+          "races": 85,
+          "stakes_yen": 68000
+        },
+        "stage:QUALIFYING": {
+          "hits": 60,
+          "hypothetical_hit_rate": 0.3076923076923077,
+          "hypothetical_return_rate": 0.8420512820512821,
+          "payout_yen": 131360,
+          "races": 195,
+          "stakes_yen": 156000
+        },
+        "stage:SELECTION": {
+          "hits": 8,
+          "hypothetical_hit_rate": 0.47058823529411764,
+          "hypothetical_return_rate": 0.6852941176470588,
+          "payout_yen": 9320,
+          "races": 17,
+          "stakes_yen": 13600
+        },
+        "stage:SEMIFINAL": {
+          "hits": 5,
+          "hypothetical_hit_rate": 0.3125,
+          "hypothetical_return_rate": 0.43203125,
+          "payout_yen": 5530,
+          "races": 16,
+          "stakes_yen": 12800
+        },
+        "stage:UNSPECIFIED": {
+          "hits": 27,
+          "hypothetical_hit_rate": 0.313953488372093,
+          "hypothetical_return_rate": 0.5476744186046512,
+          "payout_yen": 37680,
+          "races": 86,
+          "stakes_yen": 68800
+        }
+      },
+      "by_K_marker": {
+        "marker:K_MARKER_PRESENT": {
+          "hits": 0,
+          "hypothetical_hit_rate": 0,
+          "hypothetical_return_rate": 0,
+          "payout_yen": 0,
+          "races": 2,
+          "stakes_yen": 1600
+        },
+        "marker:NO_K_MARKER_UNVERIFIED": {
+          "hits": 126,
+          "hypothetical_hit_rate": 0.3118811881188119,
+          "hypothetical_return_rate": 0.6820235148514852,
+          "payout_yen": 220430,
+          "races": 404,
+          "stakes_yen": 323200
+        }
+      }
+    },
+    "local_only": {
+      "overall": {
+        "hits": 151,
+        "hypothetical_hit_rate": 0.37192118226600984,
+        "hypothetical_return_rate": 0.8305726600985222,
+        "payout_yen": 269770,
+        "races": 406,
+        "stakes_yen": 324800
+      },
+      "by_venue": {
+        "venue:01": {
+          "hits": 4,
+          "hypothetical_hit_rate": 0.17391304347826086,
+          "hypothetical_return_rate": 0.46304347826086956,
+          "payout_yen": 8520,
+          "races": 23,
+          "stakes_yen": 18400
+        },
+        "venue:03": {
+          "hits": 6,
+          "hypothetical_hit_rate": 0.2727272727272727,
+          "hypothetical_return_rate": 0.3926136363636364,
+          "payout_yen": 6910,
+          "races": 22,
+          "stakes_yen": 17600
+        },
+        "venue:04": {
+          "hits": 4,
+          "hypothetical_hit_rate": 0.3333333333333333,
+          "hypothetical_return_rate": 0.696875,
+          "payout_yen": 6690,
+          "races": 12,
+          "stakes_yen": 9600
+        },
+        "venue:05": {
+          "hits": 2,
+          "hypothetical_hit_rate": 0.25,
+          "hypothetical_return_rate": 0.40625,
+          "payout_yen": 2600,
+          "races": 8,
+          "stakes_yen": 6400
+        },
+        "venue:06": {
+          "hits": 9,
+          "hypothetical_hit_rate": 0.45,
+          "hypothetical_return_rate": 1.16,
+          "payout_yen": 18560,
+          "races": 20,
+          "stakes_yen": 16000
+        },
+        "venue:08": {
+          "hits": 6,
+          "hypothetical_hit_rate": 0.5454545454545454,
+          "hypothetical_return_rate": 1.325,
+          "payout_yen": 11660,
+          "races": 11,
+          "stakes_yen": 8800
+        },
+        "venue:09": {
+          "hits": 11,
+          "hypothetical_hit_rate": 0.4782608695652174,
+          "hypothetical_return_rate": 0.5119565217391304,
+          "payout_yen": 9420,
+          "races": 23,
+          "stakes_yen": 18400
+        },
+        "venue:10": {
+          "hits": 3,
+          "hypothetical_hit_rate": 0.25,
+          "hypothetical_return_rate": 0.26145833333333335,
+          "payout_yen": 2510,
+          "races": 12,
+          "stakes_yen": 9600
+        },
+        "venue:11": {
+          "hits": 8,
+          "hypothetical_hit_rate": 0.38095238095238093,
+          "hypothetical_return_rate": 1.1416666666666666,
+          "payout_yen": 19180,
+          "races": 21,
+          "stakes_yen": 16800
+        },
+        "venue:12": {
+          "hits": 13,
+          "hypothetical_hit_rate": 0.3939393939393939,
+          "hypothetical_return_rate": 0.9037878787878788,
+          "payout_yen": 23860,
+          "races": 33,
+          "stakes_yen": 26400
+        },
+        "venue:13": {
+          "hits": 7,
+          "hypothetical_hit_rate": 0.22580645161290322,
+          "hypothetical_return_rate": 0.6157258064516129,
+          "payout_yen": 15270,
+          "races": 31,
+          "stakes_yen": 24800
+        },
+        "venue:14": {
+          "hits": 9,
+          "hypothetical_hit_rate": 0.45,
+          "hypothetical_return_rate": 0.734375,
+          "payout_yen": 11750,
+          "races": 20,
+          "stakes_yen": 16000
+        },
+        "venue:16": {
+          "hits": 15,
+          "hypothetical_hit_rate": 0.42857142857142855,
+          "hypothetical_return_rate": 1.2135714285714285,
+          "payout_yen": 33980,
+          "races": 35,
+          "stakes_yen": 28000
+        },
+        "venue:17": {
+          "hits": 14,
+          "hypothetical_hit_rate": 0.5,
+          "hypothetical_return_rate": 1.339732142857143,
+          "payout_yen": 30010,
+          "races": 28,
+          "stakes_yen": 22400
+        },
+        "venue:18": {
+          "hits": 9,
+          "hypothetical_hit_rate": 0.2647058823529412,
+          "hypothetical_return_rate": 0.41323529411764703,
+          "payout_yen": 11240,
+          "races": 34,
+          "stakes_yen": 27200
+        },
+        "venue:19": {
+          "hits": 5,
+          "hypothetical_hit_rate": 0.45454545454545453,
+          "hypothetical_return_rate": 1.231818181818182,
+          "payout_yen": 10840,
+          "races": 11,
+          "stakes_yen": 8800
+        },
+        "venue:20": {
+          "hits": 8,
+          "hypothetical_hit_rate": 0.4,
+          "hypothetical_return_rate": 0.73,
+          "payout_yen": 11680,
+          "races": 20,
+          "stakes_yen": 16000
+        },
+        "venue:23": {
+          "hits": 12,
+          "hypothetical_hit_rate": 0.4,
+          "hypothetical_return_rate": 1.1529166666666666,
+          "payout_yen": 27670,
+          "races": 30,
+          "stakes_yen": 24000
+        },
+        "venue:24": {
+          "hits": 6,
+          "hypothetical_hit_rate": 0.5,
+          "hypothetical_return_rate": 0.7729166666666667,
+          "payout_yen": 7420,
+          "races": 12,
+          "stakes_yen": 9600
+        }
+      },
+      "by_stage": {
+        "stage:FINAL": {
+          "hits": 2,
+          "hypothetical_hit_rate": 0.2857142857142857,
+          "hypothetical_return_rate": 0.275,
+          "payout_yen": 1540,
+          "races": 7,
+          "stakes_yen": 5600
+        },
+        "stage:GENERAL": {
+          "hits": 34,
+          "hypothetical_hit_rate": 0.4,
+          "hypothetical_return_rate": 0.7116176470588236,
+          "payout_yen": 48390,
+          "races": 85,
+          "stakes_yen": 68000
+        },
+        "stage:QUALIFYING": {
+          "hits": 73,
+          "hypothetical_hit_rate": 0.37435897435897436,
+          "hypothetical_return_rate": 0.955448717948718,
+          "payout_yen": 149050,
+          "races": 195,
+          "stakes_yen": 156000
+        },
+        "stage:SELECTION": {
+          "hits": 8,
+          "hypothetical_hit_rate": 0.47058823529411764,
+          "hypothetical_return_rate": 0.6808823529411765,
+          "payout_yen": 9260,
+          "races": 17,
+          "stakes_yen": 13600
+        },
+        "stage:SEMIFINAL": {
+          "hits": 4,
+          "hypothetical_hit_rate": 0.25,
+          "hypothetical_return_rate": 0.33125,
+          "payout_yen": 4240,
+          "races": 16,
+          "stakes_yen": 12800
+        },
+        "stage:UNSPECIFIED": {
+          "hits": 30,
+          "hypothetical_hit_rate": 0.3488372093023256,
+          "hypothetical_return_rate": 0.8327034883720931,
+          "payout_yen": 57290,
+          "races": 86,
+          "stakes_yen": 68800
+        }
+      },
+      "by_K_marker": {
+        "marker:K_MARKER_PRESENT": {
+          "hits": 1,
+          "hypothetical_hit_rate": 0.5,
+          "hypothetical_return_rate": 2.8125,
+          "payout_yen": 4500,
+          "races": 2,
+          "stakes_yen": 1600
+        },
+        "marker:NO_K_MARKER_UNVERIFIED": {
+          "hits": 150,
+          "hypothetical_hit_rate": 0.3712871287128713,
+          "hypothetical_return_rate": 0.8207611386138614,
+          "payout_yen": 265270,
+          "races": 404,
+          "stakes_yen": 323200
+        }
+      }
+    },
+    "local_motor": {
+      "overall": {
+        "hits": 150,
+        "hypothetical_hit_rate": 0.3694581280788177,
+        "hypothetical_return_rate": 0.8486145320197044,
+        "payout_yen": 275630,
+        "races": 406,
+        "stakes_yen": 324800
+      },
+      "by_venue": {
+        "venue:01": {
+          "hits": 4,
+          "hypothetical_hit_rate": 0.17391304347826086,
+          "hypothetical_return_rate": 0.46304347826086956,
+          "payout_yen": 8520,
+          "races": 23,
+          "stakes_yen": 18400
+        },
+        "venue:03": {
+          "hits": 7,
+          "hypothetical_hit_rate": 0.3181818181818182,
+          "hypothetical_return_rate": 0.4369318181818182,
+          "payout_yen": 7690,
+          "races": 22,
+          "stakes_yen": 17600
+        },
+        "venue:04": {
+          "hits": 4,
+          "hypothetical_hit_rate": 0.3333333333333333,
+          "hypothetical_return_rate": 0.696875,
+          "payout_yen": 6690,
+          "races": 12,
+          "stakes_yen": 9600
+        },
+        "venue:05": {
+          "hits": 2,
+          "hypothetical_hit_rate": 0.25,
+          "hypothetical_return_rate": 0.40625,
+          "payout_yen": 2600,
+          "races": 8,
+          "stakes_yen": 6400
+        },
+        "venue:06": {
+          "hits": 10,
+          "hypothetical_hit_rate": 0.5,
+          "hypothetical_return_rate": 1.351875,
+          "payout_yen": 21630,
+          "races": 20,
+          "stakes_yen": 16000
+        },
+        "venue:08": {
+          "hits": 5,
+          "hypothetical_hit_rate": 0.45454545454545453,
+          "hypothetical_return_rate": 0.8681818181818182,
+          "payout_yen": 7640,
+          "races": 11,
+          "stakes_yen": 8800
+        },
+        "venue:09": {
+          "hits": 13,
+          "hypothetical_hit_rate": 0.5652173913043478,
+          "hypothetical_return_rate": 0.8706521739130435,
+          "payout_yen": 16020,
+          "races": 23,
+          "stakes_yen": 18400
+        },
+        "venue:10": {
+          "hits": 3,
+          "hypothetical_hit_rate": 0.25,
+          "hypothetical_return_rate": 0.26145833333333335,
+          "payout_yen": 2510,
+          "races": 12,
+          "stakes_yen": 9600
+        },
+        "venue:11": {
+          "hits": 7,
+          "hypothetical_hit_rate": 0.3333333333333333,
+          "hypothetical_return_rate": 1.0892857142857142,
+          "payout_yen": 18300,
+          "races": 21,
+          "stakes_yen": 16800
+        },
+        "venue:12": {
+          "hits": 13,
+          "hypothetical_hit_rate": 0.3939393939393939,
+          "hypothetical_return_rate": 0.8765151515151515,
+          "payout_yen": 23140,
+          "races": 33,
+          "stakes_yen": 26400
+        },
+        "venue:13": {
+          "hits": 8,
+          "hypothetical_hit_rate": 0.25806451612903225,
+          "hypothetical_return_rate": 0.6403225806451613,
+          "payout_yen": 15880,
+          "races": 31,
+          "stakes_yen": 24800
+        },
+        "venue:14": {
+          "hits": 9,
+          "hypothetical_hit_rate": 0.45,
+          "hypothetical_return_rate": 0.90375,
+          "payout_yen": 14460,
+          "races": 20,
+          "stakes_yen": 16000
+        },
+        "venue:16": {
+          "hits": 14,
+          "hypothetical_hit_rate": 0.4,
+          "hypothetical_return_rate": 1.1675,
+          "payout_yen": 32690,
+          "races": 35,
+          "stakes_yen": 28000
+        },
+        "venue:17": {
+          "hits": 14,
+          "hypothetical_hit_rate": 0.5,
+          "hypothetical_return_rate": 1.339732142857143,
+          "payout_yen": 30010,
+          "races": 28,
+          "stakes_yen": 22400
+        },
+        "venue:18": {
+          "hits": 9,
+          "hypothetical_hit_rate": 0.2647058823529412,
+          "hypothetical_return_rate": 0.40147058823529413,
+          "payout_yen": 10920,
+          "races": 34,
+          "stakes_yen": 27200
+        },
+        "venue:19": {
+          "hits": 5,
+          "hypothetical_hit_rate": 0.45454545454545453,
+          "hypothetical_return_rate": 1.4318181818181819,
+          "payout_yen": 12600,
+          "races": 11,
+          "stakes_yen": 8800
+        },
+        "venue:20": {
+          "hits": 9,
+          "hypothetical_hit_rate": 0.45,
+          "hypothetical_return_rate": 1.113125,
+          "payout_yen": 17810,
+          "races": 20,
+          "stakes_yen": 16000
+        },
+        "venue:23": {
+          "hits": 10,
+          "hypothetical_hit_rate": 0.3333333333333333,
+          "hypothetical_return_rate": 0.8975,
+          "payout_yen": 21540,
+          "races": 30,
+          "stakes_yen": 24000
+        },
+        "venue:24": {
+          "hits": 4,
+          "hypothetical_hit_rate": 0.3333333333333333,
+          "hypothetical_return_rate": 0.51875,
+          "payout_yen": 4980,
+          "races": 12,
+          "stakes_yen": 9600
+        }
+      },
+      "by_stage": {
+        "stage:FINAL": {
+          "hits": 2,
+          "hypothetical_hit_rate": 0.2857142857142857,
+          "hypothetical_return_rate": 0.275,
+          "payout_yen": 1540,
+          "races": 7,
+          "stakes_yen": 5600
+        },
+        "stage:GENERAL": {
+          "hits": 38,
+          "hypothetical_hit_rate": 0.4470588235294118,
+          "hypothetical_return_rate": 0.9863235294117647,
+          "payout_yen": 67070,
+          "races": 85,
+          "stakes_yen": 68000
+        },
+        "stage:QUALIFYING": {
+          "hits": 67,
+          "hypothetical_hit_rate": 0.3435897435897436,
+          "hypothetical_return_rate": 0.8703846153846154,
+          "payout_yen": 135780,
+          "races": 195,
+          "stakes_yen": 156000
+        },
+        "stage:SELECTION": {
+          "hits": 8,
+          "hypothetical_hit_rate": 0.47058823529411764,
+          "hypothetical_return_rate": 0.6808823529411765,
+          "payout_yen": 9260,
+          "races": 17,
+          "stakes_yen": 13600
+        },
+        "stage:SEMIFINAL": {
+          "hits": 4,
+          "hypothetical_hit_rate": 0.25,
+          "hypothetical_return_rate": 0.33125,
+          "payout_yen": 4240,
+          "races": 16,
+          "stakes_yen": 12800
+        },
+        "stage:UNSPECIFIED": {
+          "hits": 31,
+          "hypothetical_hit_rate": 0.36046511627906974,
+          "hypothetical_return_rate": 0.8392441860465116,
+          "payout_yen": 57740,
+          "races": 86,
+          "stakes_yen": 68800
+        }
+      },
+      "by_K_marker": {
+        "marker:K_MARKER_PRESENT": {
+          "hits": 1,
+          "hypothetical_hit_rate": 0.5,
+          "hypothetical_return_rate": 2.8125,
+          "payout_yen": 4500,
+          "races": 2,
+          "stakes_yen": 1600
+        },
+        "marker:NO_K_MARKER_UNVERIFIED": {
+          "hits": 149,
+          "hypothetical_hit_rate": 0.3688118811881188,
+          "hypothetical_return_rate": 0.8388923267326732,
+          "payout_yen": 271130,
+          "races": 404,
+          "stakes_yen": 323200
+        }
+      }
+    }
+  },
+  "combined_descriptive_six_day_totals": {
+    "lane_only": {
+      "historical_races": 769,
+      "hits": 237,
+      "stakes_yen": 615200,
+      "payout_yen": 420680,
+      "hypothetical_hit_rate": 0.3081924577373212,
+      "hypothetical_return_rate": 0.6838101430429129
+    },
+    "local_only": {
+      "historical_races": 769,
+      "hits": 265,
+      "stakes_yen": 615200,
+      "payout_yen": 439550,
+      "hypothetical_hit_rate": 0.34460338101430427,
+      "hypothetical_return_rate": 0.7144830949284785
+    },
+    "local_motor": {
+      "historical_races": 769,
+      "hits": 261,
+      "stakes_yen": 615200,
+      "payout_yen": 443320,
+      "hypothetical_hit_rate": 0.33940182054616386,
+      "hypothetical_return_rate": 0.7206111833550065
+    }
+  },
+  "adoption_status": "NOT_PROMOTED",
+  "caveats": [
+    "Historical B archives were acquired after the races. K is outcome-only.",
+    "Two separate 3-day splits are descriptive, not enough to prove stable future profitability.",
+    "Six finishing boats and absence of positive K keywords do not prove accident-free status.",
+    "Venue-level results have small denominators and cannot be selected based on this same data without new OOS testing.",
+    "No result/payout/odds were used to fit or change the fixed eight-ticket generators."
+  ]
+}
