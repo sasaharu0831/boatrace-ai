@@ -55,11 +55,11 @@ class FrozenGuardReplicationGateTests(unittest.TestCase):
             baseline=cohort["results"]["frozen_temperature"]
             candidate=cohort["results"]["frozen_head_support"]
             hits=baseline["hits"]+1
+            difference=hits-candidate["hits"]
             candidate["hits"]=hits
             candidate["payout_yen"]=baseline["payout_yen"]+100
-            candidate["miss_reasons"]=dict(baseline["miss_reasons"])
-            candidate["miss_reasons"]["EXACT_HIT"]=hits
-            candidate["miss_reasons"]["HEAD_ABSENT"]-=1
+            candidate["miss_reasons"]["EXACT_HIT"]+=difference
+            candidate["miss_reasons"]["HEAD_SECOND_PRESENT_THIRD_ABSENT"]-=difference
             candidate["gained_hits_vs_frozen"]=1
             candidate["lost_hits_vs_frozen"]=0
         result=evaluate(trial)
