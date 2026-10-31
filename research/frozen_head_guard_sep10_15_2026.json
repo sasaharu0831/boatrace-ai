@@ -1,0 +1,339 @@
+{
+  "mode": "B_ONLY_FROZEN_HEAD_GUARD_TWO_COHORT_HISTORICAL",
+  "tickets_per_race": 8,
+  "stake_yen_per_ticket_assumed": 100,
+  "training_dates": [
+    "2026-08-10",
+    "2026-08-11",
+    "2026-08-12"
+  ],
+  "trained_parameters_sha256": "a8660f259ab1c88b150aa63f5e663c199ad1d5a68be5484c6f9dfa7e83e4bcbf",
+  "frozen_role_temperatures": {
+    "first": 1.5,
+    "second": 1,
+    "third": 0.75
+  },
+  "first_and_second_cohort_sources": [
+    "https://github.com/sasaharu0831/boatrace-ai/actions/runs/41226142927"
+  ],
+  "cohorts": [
+    {
+      "test_dates": [
+        "2026-09-10",
+        "2026-09-11",
+        "2026-09-12"
+      ],
+      "daily_receipts": [
+        {
+          "B_races_frozen": 120,
+          "B_sha256": "b30071f7b71fcaaf8fb8ed36bea7f0a0c503ee3a0903893b8ddef23e2bfc5eac",
+          "K_sha256": "23dc4d0ebf14d995b8455814f3f2d152288c47ad9eedaffaa95568f4e286936e",
+          "day": "2026-09-10",
+          "evaluated": 117,
+          "frozen_predictions_sha256": "659a802e40446196fdd1f1072dfacb808a3bcceaa1d16649f80228919946f04f"
+        },
+        {
+          "B_races_frozen": 132,
+          "B_sha256": "eab5f549f9867632d836ff61d70f13e6eeb86deedf918fc18b2820ca9e261cd8",
+          "K_sha256": "0400233a03bc74a8816a475c1f3124a95427319c4e28a35f0c6596f9fa758a88",
+          "day": "2026-09-11",
+          "evaluated": 123,
+          "frozen_predictions_sha256": "a3e7c381c2abd29a3a86a0382235c981c7882a00f8a79797836a01bdc9336fda"
+        },
+        {
+          "B_races_frozen": 144,
+          "B_sha256": "81a1198f4acbed53d8bed52901723fd9856aaa1069fd7487216399ce71eb4798",
+          "K_sha256": "ed0945b510933063432f7ac0ad33155169d68443ab692872beea2cf5db60ac85",
+          "day": "2026-09-12",
+          "evaluated": 134,
+          "frozen_predictions_sha256": "5509bc2df8232c589f824187f33f66d5577e33e1bfb95f5e7fbe9f8853e2d1d8"
+        }
+      ],
+      "probability_scores": {
+        "baseline": {
+          "average_brier_120": 0.9756599153610933,
+          "average_logloss": 4.16533958985443
+        },
+        "calibrated": {
+          "average_brier_120": 0.971547477513434,
+          "average_logloss": 4.061283309241756
+        }
+      },
+      "results": {
+        "baseline_local_motor": {
+          "K_positive_markers": 3,
+          "changed_tickets": 366,
+          "gained_hits_vs_frozen": 6,
+          "head_coverage_rate": 0.8422459893048129,
+          "heads_covered": 315,
+          "hits": 130,
+          "hypothetical_hit_rate": 0.34759358288770054,
+          "hypothetical_return_rate": 0.8429144385026738,
+          "lost_hits_vs_frozen": 21,
+          "miss_reasons": {
+            "EXACT_HIT": 130,
+            "HEAD_ABSENT": 59,
+            "HEAD_PRESENT_SECOND_ABSENT": 83,
+            "HEAD_SECOND_PRESENT_THIRD_ABSENT": 86,
+            "SECOND_THIRD_SWAPPED": 16
+          },
+          "pair_coverage_rate": 0.5882352941176471,
+          "pairs_covered": 220,
+          "payout_yen": 252200,
+          "races": 374,
+          "stakes_yen": 299200
+        },
+        "frozen_temperature": {
+          "K_positive_markers": 3,
+          "changed_tickets": 0,
+          "gained_hits_vs_frozen": 0,
+          "head_coverage_rate": 0.7433155080213903,
+          "heads_covered": 278,
+          "hits": 145,
+          "hypothetical_hit_rate": 0.3877005347593583,
+          "hypothetical_return_rate": 0.8714906417112299,
+          "lost_hits_vs_frozen": 0,
+          "miss_reasons": {
+            "EXACT_HIT": 145,
+            "HEAD_ABSENT": 96,
+            "HEAD_PRESENT_SECOND_ABSENT": 60,
+            "HEAD_SECOND_PRESENT_THIRD_ABSENT": 56,
+            "SECOND_THIRD_SWAPPED": 17
+          },
+          "pair_coverage_rate": 0.5427807486631016,
+          "pairs_covered": 203,
+          "payout_yen": 260750,
+          "races": 374,
+          "stakes_yen": 299200
+        },
+        "frozen_head_support": {
+          "K_positive_markers": 3,
+          "changed_tickets": 262,
+          "gained_hits_vs_frozen": 5,
+          "head_coverage_rate": 0.8422459893048129,
+          "heads_covered": 315,
+          "hits": 137,
+          "hypothetical_hit_rate": 0.3663101604278075,
+          "hypothetical_return_rate": 0.8274398395721925,
+          "lost_hits_vs_frozen": 13,
+          "miss_reasons": {
+            "EXACT_HIT": 137,
+            "HEAD_ABSENT": 59,
+            "HEAD_PRESENT_SECOND_ABSENT": 83,
+            "HEAD_SECOND_PRESENT_THIRD_ABSENT": 72,
+            "SECOND_THIRD_SWAPPED": 23
+          },
+          "pair_coverage_rate": 0.5668449197860963,
+          "pairs_covered": 212,
+          "payout_yen": 247570,
+          "races": 374,
+          "stakes_yen": 299200
+        },
+        "frozen_pair_support": {
+          "K_positive_markers": 3,
+          "changed_tickets": 332,
+          "gained_hits_vs_frozen": 6,
+          "head_coverage_rate": 0.8422459893048129,
+          "heads_covered": 315,
+          "hits": 134,
+          "hypothetical_hit_rate": 0.3582887700534759,
+          "hypothetical_return_rate": 0.8228275401069519,
+          "lost_hits_vs_frozen": 17,
+          "miss_reasons": {
+            "EXACT_HIT": 134,
+            "HEAD_ABSENT": 59,
+            "HEAD_PRESENT_SECOND_ABSENT": 82,
+            "HEAD_SECOND_PRESENT_THIRD_ABSENT": 82,
+            "SECOND_THIRD_SWAPPED": 17
+          },
+          "pair_coverage_rate": 0.5882352941176471,
+          "pairs_covered": 220,
+          "payout_yen": 246190,
+          "races": 374,
+          "stakes_yen": 299200
+        }
+      }
+    },
+    {
+      "test_dates": [
+        "2026-09-13",
+        "2026-09-14",
+        "2026-09-15"
+      ],
+      "daily_receipts": [
+        {
+          "B_races_frozen": 156,
+          "B_sha256": "31256a1a06bd419a2a80e66189d175586c03eec714a5f7dfd1cb695af79589d2",
+          "K_sha256": "53d2bb52ae8c25a817060914f713f03abdaf7a1e98954f0ee23754ae102569c0",
+          "day": "2026-09-13",
+          "evaluated": 145,
+          "frozen_predictions_sha256": "3842387e6c4b707df0221c4b2c41352a26818a879535604bf56bef881a09e0c0"
+        },
+        {
+          "B_races_frozen": 144,
+          "B_sha256": "95f75d46c1b5db03404c37f86154871caac7775face021252d43abc3a66f9c30",
+          "K_sha256": "479af519d2de24e4bfd4528ad1e214f305f30fb0c792476a5d5ef2b219b5496e",
+          "day": "2026-09-14",
+          "evaluated": 136,
+          "frozen_predictions_sha256": "abd2a01b9f53a260df23b81583087445c499c23a9d9d8fc7560799beb97f17e1"
+        },
+        {
+          "B_races_frozen": 144,
+          "B_sha256": "c0b4d23d9c08b9b9a39935f4c2f5b0af4a770cbd31930ad7df74260636ff2362",
+          "K_sha256": "97a9e01cd3dc7501d1f182d488b7818a1ce31cd4d53c32ad8738ba4ed7f88aaa",
+          "day": "2026-09-15",
+          "evaluated": 124,
+          "frozen_predictions_sha256": "057ed752ff44857f532796a6125343cacd34db9719cb655897fe04989e66ea30"
+        }
+      ],
+      "probability_scores": {
+        "baseline": {
+          "average_brier_120": 0.976787992079949,
+          "average_logloss": 4.196903876046859
+        },
+        "calibrated": {
+          "average_brier_120": 0.9742184302150227,
+          "average_logloss": 4.121465801045141
+        }
+      },
+      "results": {
+        "baseline_local_motor": {
+          "K_positive_markers": 5,
+          "changed_tickets": 396,
+          "gained_hits_vs_frozen": 18,
+          "head_coverage_rate": 0.8320987654320988,
+          "heads_covered": 337,
+          "hits": 149,
+          "hypothetical_hit_rate": 0.36790123456790125,
+          "hypothetical_return_rate": 0.8125617283950617,
+          "lost_hits_vs_frozen": 17,
+          "miss_reasons": {
+            "EXACT_HIT": 149,
+            "HEAD_ABSENT": 68,
+            "HEAD_PRESENT_SECOND_ABSENT": 79,
+            "HEAD_SECOND_PRESENT_THIRD_ABSENT": 85,
+            "SECOND_THIRD_SWAPPED": 24
+          },
+          "pair_coverage_rate": 0.582716049382716,
+          "pairs_covered": 236,
+          "payout_yen": 263270,
+          "races": 405,
+          "stakes_yen": 324000
+        },
+        "frozen_temperature": {
+          "K_positive_markers": 5,
+          "changed_tickets": 0,
+          "gained_hits_vs_frozen": 0,
+          "head_coverage_rate": 0.7111111111111111,
+          "heads_covered": 288,
+          "hits": 148,
+          "hypothetical_hit_rate": 0.3654320987654321,
+          "hypothetical_return_rate": 0.7498148148148148,
+          "lost_hits_vs_frozen": 0,
+          "miss_reasons": {
+            "EXACT_HIT": 148,
+            "HEAD_ABSENT": 117,
+            "HEAD_PRESENT_SECOND_ABSENT": 54,
+            "HEAD_SECOND_PRESENT_THIRD_ABSENT": 59,
+            "SECOND_THIRD_SWAPPED": 27
+          },
+          "pair_coverage_rate": 0.5160493827160494,
+          "pairs_covered": 209,
+          "payout_yen": 242940,
+          "races": 405,
+          "stakes_yen": 324000
+        },
+        "frozen_head_support": {
+          "K_positive_markers": 5,
+          "changed_tickets": 259,
+          "gained_hits_vs_frozen": 10,
+          "head_coverage_rate": 0.8320987654320988,
+          "heads_covered": 337,
+          "hits": 151,
+          "hypothetical_hit_rate": 0.3728395061728395,
+          "hypothetical_return_rate": 0.8102160493827161,
+          "lost_hits_vs_frozen": 7,
+          "miss_reasons": {
+            "EXACT_HIT": 151,
+            "HEAD_ABSENT": 68,
+            "HEAD_PRESENT_SECOND_ABSENT": 81,
+            "HEAD_SECOND_PRESENT_THIRD_ABSENT": 73,
+            "SECOND_THIRD_SWAPPED": 32
+          },
+          "pair_coverage_rate": 0.5580246913580247,
+          "pairs_covered": 226,
+          "payout_yen": 262510,
+          "races": 405,
+          "stakes_yen": 324000
+        },
+        "frozen_pair_support": {
+          "K_positive_markers": 5,
+          "changed_tickets": 334,
+          "gained_hits_vs_frozen": 15,
+          "head_coverage_rate": 0.8320987654320988,
+          "heads_covered": 337,
+          "hits": 150,
+          "hypothetical_hit_rate": 0.37037037037037035,
+          "hypothetical_return_rate": 0.807067901234568,
+          "lost_hits_vs_frozen": 13,
+          "miss_reasons": {
+            "EXACT_HIT": 150,
+            "HEAD_ABSENT": 68,
+            "HEAD_PRESENT_SECOND_ABSENT": 77,
+            "HEAD_SECOND_PRESENT_THIRD_ABSENT": 83,
+            "SECOND_THIRD_SWAPPED": 27
+          },
+          "pair_coverage_rate": 0.582716049382716,
+          "pairs_covered": 236,
+          "payout_yen": 261490,
+          "races": 405,
+          "stakes_yen": 324000
+        }
+      }
+    }
+  ],
+  "combined_descriptive_totals": {
+    "baseline_local_motor": {
+      "races": 779,
+      "hits": 279,
+      "stakes_yen": 623200,
+      "payout_yen": 515470,
+      "hit_rate": 0.3581514762516046,
+      "hypothetical_return_rate": 0.8271341463414634
+    },
+    "frozen_temperature": {
+      "races": 779,
+      "hits": 293,
+      "stakes_yen": 623200,
+      "payout_yen": 503690,
+      "hit_rate": 0.3761232349165597,
+      "hypothetical_return_rate": 0.8082317073170732
+    },
+    "frozen_head_support": {
+      "races": 779,
+      "hits": 288,
+      "stakes_yen": 623200,
+      "payout_yen": 510080,
+      "hit_rate": 0.36970474967907574,
+      "hypothetical_return_rate": 0.8184852374839537
+    },
+    "frozen_pair_support": {
+      "races": 779,
+      "hits": 284,
+      "stakes_yen": 623200,
+      "payout_yen": 507680,
+      "hit_rate": 0.3645699614890886,
+      "hypothetical_return_rate": 0.8146341463414634
+    }
+  },
+  "study_only": true,
+  "forward_verified_races": 0,
+  "production_promoted": false,
+  "caveats": [
+    "Historical B/K official archives were acquired postrace, not genuine preclose Forward.",
+    "Frozen August 10-12 trained model was not re-fitted on either September cohort.",
+    "The 120-way proper scoring distribution is unchanged for head-guard/pair-guard; their tickets alone differ.",
+    "Accepted six-finisher joins do not establish absence of all incidents or operational specials.",
+    "No paid API; ephemeral runner raw LZH was not durably archived."
+  ]
+}
