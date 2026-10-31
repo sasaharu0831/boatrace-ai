@@ -1,9 +1,6 @@
 name: One-time train-only role calibration Aug10-17 historical trial
 on:
-  pull_request:
-    paths:
-      - '.github/workflows/role-temperature-aug10-17.yml'
-  workflow_dispatch:
+  workflow_dispatch: # First official calibration finished; future use only by explicit manual action
 permissions:
   contents: read
 concurrency:
