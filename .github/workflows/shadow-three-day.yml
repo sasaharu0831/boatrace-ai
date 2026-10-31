@@ -1,0 +1,50 @@
+name: Fixed B-only shadow 3-day historical audit
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/shadow-three-day.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  shadow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Guard repeated external requests
+        id: guard
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT_NAME" = "workflow_dispatch" ] || [ "$(git log -1 --pretty=%s)" = "Run one-time B-only historical shadow audit" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "No network: this commit is not the explicit one-time shadow audit."
+          fi
+      - uses: actions/setup-python@v5
+        if: steps.guard.outputs.run == 'true'
+        with:
+          python-version: '3.12'
+      - name: Offline safety unit tests
+        if: steps.guard.outputs.run == 'true'
+        run: python -m unittest discover -s tests -v
+      - name: Install free LZH extractor
+        if: steps.guard.outputs.run == 'true'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq p7zip-full
+      - name: Download at most six official past B/K archives
+        if: steps.guard.outputs.run == 'true'
+        run: |
+          python src/boat_free_lab.py collect --start 2026-10-27 --days 3 --root "$RUNNER_TEMP/b-only-3days" --sleep 2
+      - name: Freeze B-only eight-ticket predictions before K parsing and report SHADOW
+        if: steps.guard.outputs.run == 'true'
+        run: |
+          python src/shadow_baseline.py --root "$RUNNER_TEMP/b-only-3days" --dates 2026-10-27 2026-10-28 2026-10-29
+      - name: No archived data publication
+        if: always()
+        run: echo "Official B/K files remain on the disposable runner. Only model aggregates and hashes appear in job logs."

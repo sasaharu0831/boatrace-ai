@@ -1,0 +1,3201 @@
+{
+  "mode": "HISTORICAL_B_ONLY_VENUE_STAGE_TWO_COHORT_DIAGNOSTIC_NOT_FORWARD",
+  "source_ci": "https://github.com/sasaharu0831/boatrace-ai/actions/runs/41228275358",
+  "fit_sha256": "a8660f259ab1c88b150aa63f5e663c199ad1d5a68be5484c6f9dfa7e83e4bcbf",
+  "model": "training_calibrated_roles",
+  "baseline": "baseline_local_motor",
+  "tickets_per_race": 8,
+  "identical_frozen_1_5_1_0_0_75_weights": true,
+  "train_dates": [
+    "2026-08-10",
+    "2026-08-11",
+    "2026-08-12"
+  ],
+  "cohorts": [
+    {
+      "dates": [
+        "2026-09-28",
+        "2026-09-29",
+        "2026-09-30"
+      ],
+      "source_receipts": [
+        {
+          "B_races_frozen": 132,
+          "B_sha256": "08d9efe10a8200007138c61a33fedc63706fd1c30792a582b2aea0c8757b0735",
+          "K_sha256": "0798a14db0d9141b6aef09256c021ae6f23f1b51fce1840454fe4f86624fb9db",
+          "day": "2026-09-28",
+          "frozen_120way_SHA256": "340619c2fb951e533e1136654df1c2f86a00a2453cd32fe92f262d578c623444",
+          "historical_scored": 126
+        },
+        {
+          "B_races_frozen": 132,
+          "B_sha256": "d7054808ffde30ae0316a4b6c61d788936d6b6d84e4dc6f1f880c90b62ed0b18",
+          "K_sha256": "8216b0ff0f271a4aa905f4c81f34a60d3d28e72ac85da88b328d1c5a52fcf216",
+          "day": "2026-09-29",
+          "frozen_120way_SHA256": "77e2db59664e75256759dbdadc02e95d1f6a2a600a4064712cbdb8c83240f611",
+          "historical_scored": 124
+        },
+        {
+          "B_races_frozen": 144,
+          "B_sha256": "bcdfce16cd665a922677826588d917b440d46b043a6c32d607684986b981961b",
+          "K_sha256": "01e5697b0faf701f0bfe65d6b4c7d246f127144516479a50770717617870131b",
+          "day": "2026-09-30",
+          "frozen_120way_SHA256": "67e517508d849632a975ac14272a98c698f58c5c3b573028004495ac1c57c4b2",
+          "historical_scored": 137
+        }
+      ],
+      "groups": {
+        "K_marker:ABSENT_UNVERIFIED": {
+          "baseline": {
+            "brier_sum": 370.7011138886596,
+            "head_coverage": 0.8052631578947368,
+            "heads_covered": 306,
+            "hit_rate": 0.3526315789473684,
+            "hits": 134,
+            "hypothetical_return": 0.7073026315789473,
+            "logloss_sum": 1576.6386702584841,
+            "mean_brier_120": 0.9755292470754201,
+            "mean_logloss": 4.149049132259169,
+            "misses": {
+              "EXACT_HIT": 134,
+              "HEAD_ABSENT": 74,
+              "HEAD_PRESENT_SECOND_ABSENT": 72,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 82,
+              "SECOND_THIRD_SWAPPED": 18
+            },
+            "pair_coverage": 0.5684210526315789,
+            "pairs_covered": 216,
+            "payout_yen": 215020,
+            "races": 380,
+            "stakes_yen": 304000
+          },
+          "calibrated": {
+            "brier_sum": 369.494358023285,
+            "head_coverage": 0.6921052631578948,
+            "heads_covered": 263,
+            "hit_rate": 0.37105263157894736,
+            "hits": 141,
+            "hypothetical_return": 0.7,
+            "logloss_sum": 1547.3694822093364,
+            "mean_brier_120": 0.9723535737454868,
+            "mean_logloss": 4.072024953182464,
+            "misses": {
+              "EXACT_HIT": 141,
+              "HEAD_ABSENT": 117,
+              "HEAD_PRESENT_SECOND_ABSENT": 47,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 52,
+              "SECOND_THIRD_SWAPPED": 23
+            },
+            "pair_coverage": 0.5131578947368421,
+            "pairs_covered": 195,
+            "payout_yen": 212800,
+            "races": 380,
+            "stakes_yen": 304000
+          },
+          "delta_avg_brier": -0.003175673329933293,
+          "delta_avg_logloss": -0.07702417907670434,
+          "delta_exact_hits": 7,
+          "delta_return_pp": -0.7302631578947394,
+          "descriptive_only": true,
+          "n": 380,
+          "sufficient_for_descriptive_comparison": true
+        },
+        "K_marker:POSITIVE": {
+          "baseline": {
+            "brier_sum": 6.79317948623292,
+            "head_coverage": 1,
+            "heads_covered": 7,
+            "hit_rate": 0.5714285714285714,
+            "hits": 4,
+            "hypothetical_return": 1.5392857142857144,
+            "logloss_sum": 28.145949831075292,
+            "mean_brier_120": 0.9704542123189885,
+            "mean_logloss": 4.020849975867899,
+            "misses": {
+              "EXACT_HIT": 4,
+              "HEAD_ABSENT": 0,
+              "HEAD_PRESENT_SECOND_ABSENT": 2,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 1,
+              "SECOND_THIRD_SWAPPED": 0
+            },
+            "pair_coverage": 0.7142857142857143,
+            "pairs_covered": 5,
+            "payout_yen": 8620,
+            "races": 7,
+            "stakes_yen": 5600
+          },
+          "calibrated": {
+            "brier_sum": 6.730674356487189,
+            "head_coverage": 1,
+            "heads_covered": 7,
+            "hit_rate": 0.5714285714285714,
+            "hits": 4,
+            "hypothetical_return": 1.5392857142857144,
+            "logloss_sum": 26.282191821768066,
+            "mean_brier_120": 0.9615249080695983,
+            "mean_logloss": 3.7545988316811525,
+            "misses": {
+              "EXACT_HIT": 4,
+              "HEAD_ABSENT": 0,
+              "HEAD_PRESENT_SECOND_ABSENT": 2,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 1,
+              "SECOND_THIRD_SWAPPED": 0
+            },
+            "pair_coverage": 0.7142857142857143,
+            "pairs_covered": 5,
+            "payout_yen": 8620,
+            "races": 7,
+            "stakes_yen": 5600
+          },
+          "delta_avg_brier": -0.008929304249390202,
+          "delta_avg_logloss": -0.2662511441867461,
+          "delta_exact_hits": 0,
+          "delta_return_pp": 0,
+          "descriptive_only": true,
+          "n": 7,
+          "sufficient_for_descriptive_comparison": false
+        },
+        "overall": {
+          "baseline": {
+            "brier_sum": 377.4942933748925,
+            "head_coverage": 0.8087855297157622,
+            "heads_covered": 313,
+            "hit_rate": 0.35658914728682173,
+            "hits": 138,
+            "hypothetical_return": 0.7223514211886305,
+            "logloss_sum": 1604.7846200895592,
+            "mean_brier_120": 0.9754374505811175,
+            "mean_logloss": 4.146730284469145,
+            "misses": {
+              "EXACT_HIT": 138,
+              "HEAD_ABSENT": 74,
+              "HEAD_PRESENT_SECOND_ABSENT": 74,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 83,
+              "SECOND_THIRD_SWAPPED": 18
+            },
+            "pair_coverage": 0.5710594315245479,
+            "pairs_covered": 221,
+            "payout_yen": 223640,
+            "races": 387,
+            "stakes_yen": 309600
+          },
+          "calibrated": {
+            "brier_sum": 376.2250323797722,
+            "head_coverage": 0.6976744186046512,
+            "heads_covered": 270,
+            "hit_rate": 0.37467700258397935,
+            "hits": 145,
+            "hypothetical_return": 0.7151808785529715,
+            "logloss_sum": 1573.6516740311044,
+            "mean_brier_120": 0.9721577064076801,
+            "mean_logloss": 4.066283395429211,
+            "misses": {
+              "EXACT_HIT": 145,
+              "HEAD_ABSENT": 117,
+              "HEAD_PRESENT_SECOND_ABSENT": 49,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 53,
+              "SECOND_THIRD_SWAPPED": 23
+            },
+            "pair_coverage": 0.5167958656330749,
+            "pairs_covered": 200,
+            "payout_yen": 221420,
+            "races": 387,
+            "stakes_yen": 309600
+          },
+          "delta_avg_brier": -0.00327974417343746,
+          "delta_avg_logloss": -0.08044688903993436,
+          "delta_exact_hits": 7,
+          "delta_return_pp": -0.7170542635658972,
+          "descriptive_only": false,
+          "n": 387,
+          "sufficient_for_descriptive_comparison": true
+        },
+        "stage:FINAL": {
+          "baseline": {
+            "brier_sum": 3.806544124702303,
+            "head_coverage": 1,
+            "heads_covered": 4,
+            "hit_rate": 0.75,
+            "hits": 3,
+            "hypothetical_return": 0.6625,
+            "logloss_sum": 14.100919972425139,
+            "mean_brier_120": 0.9516360311755757,
+            "mean_logloss": 3.5252299931062847,
+            "misses": {
+              "EXACT_HIT": 3,
+              "HEAD_ABSENT": 0,
+              "HEAD_PRESENT_SECOND_ABSENT": 0,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 1,
+              "SECOND_THIRD_SWAPPED": 0
+            },
+            "pair_coverage": 1,
+            "pairs_covered": 4,
+            "payout_yen": 2120,
+            "races": 4,
+            "stakes_yen": 3200
+          },
+          "calibrated": {
+            "brier_sum": 3.7628456553877134,
+            "head_coverage": 1,
+            "heads_covered": 4,
+            "hit_rate": 0.75,
+            "hits": 3,
+            "hypothetical_return": 0.6625,
+            "logloss_sum": 13.217656695292817,
+            "mean_brier_120": 0.9407114138469284,
+            "mean_logloss": 3.3044141738232042,
+            "misses": {
+              "EXACT_HIT": 3,
+              "HEAD_ABSENT": 0,
+              "HEAD_PRESENT_SECOND_ABSENT": 0,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 1,
+              "SECOND_THIRD_SWAPPED": 0
+            },
+            "pair_coverage": 1,
+            "pairs_covered": 4,
+            "payout_yen": 2120,
+            "races": 4,
+            "stakes_yen": 3200
+          },
+          "delta_avg_brier": -0.010924617328647357,
+          "delta_avg_logloss": -0.22081581928308047,
+          "delta_exact_hits": 0,
+          "delta_return_pp": 0,
+          "descriptive_only": true,
+          "n": 4,
+          "sufficient_for_descriptive_comparison": false
+        },
+        "stage:GENERAL": {
+          "baseline": {
+            "brier_sum": 81.01918111784673,
+            "head_coverage": 0.7951807228915663,
+            "heads_covered": 66,
+            "hit_rate": 0.3493975903614458,
+            "hits": 29,
+            "hypothetical_return": 0.7210843373493976,
+            "logloss_sum": 346.6106875431834,
+            "mean_brier_120": 0.9761347122632136,
+            "mean_logloss": 4.176032380038355,
+            "misses": {
+              "EXACT_HIT": 29,
+              "HEAD_ABSENT": 17,
+              "HEAD_PRESENT_SECOND_ABSENT": 16,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 17,
+              "SECOND_THIRD_SWAPPED": 4
+            },
+            "pair_coverage": 0.5542168674698795,
+            "pairs_covered": 46,
+            "payout_yen": 47880,
+            "races": 83,
+            "stakes_yen": 66400
+          },
+          "calibrated": {
+            "brier_sum": 80.7666825635688,
+            "head_coverage": 0.6746987951807228,
+            "heads_covered": 56,
+            "hit_rate": 0.3493975903614458,
+            "hits": 29,
+            "hypothetical_return": 0.6257530120481928,
+            "logloss_sum": 339.91953856122535,
+            "mean_brier_120": 0.9730925610068532,
+            "mean_logloss": 4.095416127243679,
+            "misses": {
+              "EXACT_HIT": 29,
+              "HEAD_ABSENT": 27,
+              "HEAD_PRESENT_SECOND_ABSENT": 12,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 10,
+              "SECOND_THIRD_SWAPPED": 5
+            },
+            "pair_coverage": 0.46987951807228917,
+            "pairs_covered": 39,
+            "payout_yen": 41550,
+            "races": 83,
+            "stakes_yen": 66400
+          },
+          "delta_avg_brier": -0.003042151256360426,
+          "delta_avg_logloss": -0.08061625279467588,
+          "delta_exact_hits": 0,
+          "delta_return_pp": -9.533132530120481,
+          "descriptive_only": true,
+          "n": 83,
+          "sufficient_for_descriptive_comparison": true
+        },
+        "stage:QUALIFYING": {
+          "baseline": {
+            "brier_sum": 188.82481708108736,
+            "head_coverage": 0.7772020725388601,
+            "heads_covered": 150,
+            "hit_rate": 0.32642487046632124,
+            "hits": 63,
+            "hypothetical_return": 0.7117227979274612,
+            "logloss_sum": 822.796819358937,
+            "mean_brier_120": 0.9783669278812817,
+            "mean_logloss": 4.263195955227653,
+            "misses": {
+              "EXACT_HIT": 63,
+              "HEAD_ABSENT": 43,
+              "HEAD_PRESENT_SECOND_ABSENT": 38,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 41,
+              "SECOND_THIRD_SWAPPED": 8
+            },
+            "pair_coverage": 0.538860103626943,
+            "pairs_covered": 104,
+            "payout_yen": 109890,
+            "races": 193,
+            "stakes_yen": 154400
+          },
+          "calibrated": {
+            "brier_sum": 188.41970489603716,
+            "head_coverage": 0.6476683937823834,
+            "heads_covered": 125,
+            "hit_rate": 0.3316062176165803,
+            "hits": 64,
+            "hypothetical_return": 0.6648963730569948,
+            "logloss_sum": 812.7701033366484,
+            "mean_brier_120": 0.9762679010157366,
+            "mean_logloss": 4.211244058739111,
+            "misses": {
+              "EXACT_HIT": 64,
+              "HEAD_ABSENT": 68,
+              "HEAD_PRESENT_SECOND_ABSENT": 25,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 26,
+              "SECOND_THIRD_SWAPPED": 10
+            },
+            "pair_coverage": 0.47150259067357514,
+            "pairs_covered": 91,
+            "payout_yen": 102660,
+            "races": 193,
+            "stakes_yen": 154400
+          },
+          "delta_avg_brier": -0.002099026865545084,
+          "delta_avg_logloss": -0.05195189648854193,
+          "delta_exact_hits": 1,
+          "delta_return_pp": -4.68264248704664,
+          "descriptive_only": true,
+          "n": 193,
+          "sufficient_for_descriptive_comparison": true
+        },
+        "stage:SELECTION": {
+          "baseline": {
+            "brier_sum": 17.64201263923195,
+            "head_coverage": 0.9444444444444444,
+            "heads_covered": 17,
+            "hit_rate": 0.16666666666666666,
+            "hits": 3,
+            "hypothetical_return": 0.17847222222222223,
+            "logloss_sum": 74.29124858468694,
+            "mean_brier_120": 0.9801118132906639,
+            "mean_logloss": 4.1272915880381635,
+            "misses": {
+              "EXACT_HIT": 3,
+              "HEAD_ABSENT": 1,
+              "HEAD_PRESENT_SECOND_ABSENT": 3,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 10,
+              "SECOND_THIRD_SWAPPED": 1
+            },
+            "pair_coverage": 0.7222222222222222,
+            "pairs_covered": 13,
+            "payout_yen": 2570,
+            "races": 18,
+            "stakes_yen": 14400
+          },
+          "calibrated": {
+            "brier_sum": 17.492919666088433,
+            "head_coverage": 0.8333333333333334,
+            "heads_covered": 15,
+            "hit_rate": 0.5,
+            "hits": 9,
+            "hypothetical_return": 0.9847222222222223,
+            "logloss_sum": 70.08267849312247,
+            "mean_brier_120": 0.9718288703382463,
+            "mean_logloss": 3.893482138506804,
+            "misses": {
+              "EXACT_HIT": 9,
+              "HEAD_ABSENT": 3,
+              "HEAD_PRESENT_SECOND_ABSENT": 1,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 3,
+              "SECOND_THIRD_SWAPPED": 2
+            },
+            "pair_coverage": 0.6666666666666666,
+            "pairs_covered": 12,
+            "payout_yen": 14180,
+            "races": 18,
+            "stakes_yen": 14400
+          },
+          "delta_avg_brier": -0.008282942952417605,
+          "delta_avg_logloss": -0.23380944953135963,
+          "delta_exact_hits": 6,
+          "delta_return_pp": 80.625,
+          "descriptive_only": true,
+          "n": 18,
+          "sufficient_for_descriptive_comparison": false
+        },
+        "stage:SEMIFINAL": {
+          "baseline": {
+            "brier_sum": 15.352556994605344,
+            "head_coverage": 1,
+            "heads_covered": 16,
+            "hit_rate": 0.625,
+            "hits": 10,
+            "hypothetical_return": 1.109375,
+            "logloss_sum": 58.84432405608306,
+            "mean_brier_120": 0.959534812162834,
+            "mean_logloss": 3.6777702535051913,
+            "misses": {
+              "EXACT_HIT": 10,
+              "HEAD_ABSENT": 0,
+              "HEAD_PRESENT_SECOND_ABSENT": 3,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 2,
+              "SECOND_THIRD_SWAPPED": 1
+            },
+            "pair_coverage": 0.75,
+            "pairs_covered": 12,
+            "payout_yen": 14200,
+            "races": 16,
+            "stakes_yen": 12800
+          },
+          "calibrated": {
+            "brier_sum": 15.201894851336583,
+            "head_coverage": 0.9375,
+            "heads_covered": 15,
+            "hit_rate": 0.625,
+            "hits": 10,
+            "hypothetical_return": 1.109375,
+            "logloss_sum": 55.26138484777451,
+            "mean_brier_120": 0.9501184282085364,
+            "mean_logloss": 3.4538365529859067,
+            "misses": {
+              "EXACT_HIT": 10,
+              "HEAD_ABSENT": 1,
+              "HEAD_PRESENT_SECOND_ABSENT": 1,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 3,
+              "SECOND_THIRD_SWAPPED": 1
+            },
+            "pair_coverage": 0.8125,
+            "pairs_covered": 13,
+            "payout_yen": 14200,
+            "races": 16,
+            "stakes_yen": 12800
+          },
+          "delta_avg_brier": -0.009416383954297558,
+          "delta_avg_logloss": -0.22393370051928452,
+          "delta_exact_hits": 0,
+          "delta_return_pp": 0,
+          "descriptive_only": true,
+          "n": 16,
+          "sufficient_for_descriptive_comparison": false
+        },
+        "stage:UNSPECIFIED": {
+          "baseline": {
+            "brier_sum": 70.8491814174188,
+            "head_coverage": 0.821917808219178,
+            "heads_covered": 60,
+            "hit_rate": 0.410958904109589,
+            "hits": 30,
+            "hypothetical_return": 0.8044520547945205,
+            "logloss_sum": 288.1406205742441,
+            "mean_brier_120": 0.9705367317454631,
+            "mean_logloss": 3.9471317886882753,
+            "misses": {
+              "EXACT_HIT": 30,
+              "HEAD_ABSENT": 13,
+              "HEAD_PRESENT_SECOND_ABSENT": 14,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 12,
+              "SECOND_THIRD_SWAPPED": 4
+            },
+            "pair_coverage": 0.5753424657534246,
+            "pairs_covered": 42,
+            "payout_yen": 46980,
+            "races": 73,
+            "stakes_yen": 58400
+          },
+          "calibrated": {
+            "brier_sum": 70.58098474735344,
+            "head_coverage": 0.7534246575342466,
+            "heads_covered": 55,
+            "hit_rate": 0.410958904109589,
+            "hits": 30,
+            "hypothetical_return": 0.7998287671232877,
+            "logloss_sum": 282.4003120970411,
+            "mean_brier_120": 0.9668628047582664,
+            "mean_logloss": 3.868497425986864,
+            "misses": {
+              "EXACT_HIT": 30,
+              "HEAD_ABSENT": 18,
+              "HEAD_PRESENT_SECOND_ABSENT": 10,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 10,
+              "SECOND_THIRD_SWAPPED": 5
+            },
+            "pair_coverage": 0.5616438356164384,
+            "pairs_covered": 41,
+            "payout_yen": 46710,
+            "races": 73,
+            "stakes_yen": 58400
+          },
+          "delta_avg_brier": -0.0036739269871967073,
+          "delta_avg_logloss": -0.07863436270141122,
+          "delta_exact_hits": 0,
+          "delta_return_pp": -0.46232876712328785,
+          "descriptive_only": true,
+          "n": 73,
+          "sufficient_for_descriptive_comparison": true
+        },
+        "venue:02": {
+          "baseline": {
+            "brier_sum": 32.11344884650077,
+            "head_coverage": 0.7878787878787878,
+            "heads_covered": 26,
+            "hit_rate": 0.3939393939393939,
+            "hits": 13,
+            "hypothetical_return": 0.7477272727272727,
+            "logloss_sum": 134.6004697853868,
+            "mean_brier_120": 0.9731348135303265,
+            "mean_logloss": 4.078802114708691,
+            "misses": {
+              "EXACT_HIT": 13,
+              "HEAD_ABSENT": 7,
+              "HEAD_PRESENT_SECOND_ABSENT": 4,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 6,
+              "SECOND_THIRD_SWAPPED": 3
+            },
+            "pair_coverage": 0.5757575757575758,
+            "pairs_covered": 19,
+            "payout_yen": 19740,
+            "races": 33,
+            "stakes_yen": 26400
+          },
+          "calibrated": {
+            "brier_sum": 31.965143762396476,
+            "head_coverage": 0.6363636363636364,
+            "heads_covered": 21,
+            "hit_rate": 0.3939393939393939,
+            "hits": 13,
+            "hypothetical_return": 0.6420454545454546,
+            "logloss_sum": 131.22000986456328,
+            "mean_brier_120": 0.9686407200726205,
+            "mean_logloss": 3.9763639352897964,
+            "misses": {
+              "EXACT_HIT": 13,
+              "HEAD_ABSENT": 12,
+              "HEAD_PRESENT_SECOND_ABSENT": 1,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 3,
+              "SECOND_THIRD_SWAPPED": 4
+            },
+            "pair_coverage": 0.48484848484848486,
+            "pairs_covered": 16,
+            "payout_yen": 16950,
+            "races": 33,
+            "stakes_yen": 26400
+          },
+          "delta_avg_brier": -0.0044940934577060165,
+          "delta_avg_logloss": -0.10243817941889466,
+          "delta_exact_hits": 0,
+          "delta_return_pp": -10.56818181818181,
+          "descriptive_only": true,
+          "n": 33,
+          "sufficient_for_descriptive_comparison": true
+        },
+        "venue:03": {
+          "baseline": {
+            "brier_sum": 32.22743723316082,
+            "head_coverage": 0.8181818181818182,
+            "heads_covered": 27,
+            "hit_rate": 0.42424242424242425,
+            "hits": 14,
+            "hypothetical_return": 1.2378787878787878,
+            "logloss_sum": 138.3851210260403,
+            "mean_brier_120": 0.9765890070654795,
+            "mean_logloss": 4.193488515940615,
+            "misses": {
+              "EXACT_HIT": 14,
+              "HEAD_ABSENT": 6,
+              "HEAD_PRESENT_SECOND_ABSENT": 6,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 6,
+              "SECOND_THIRD_SWAPPED": 1
+            },
+            "pair_coverage": 0.6060606060606061,
+            "pairs_covered": 20,
+            "payout_yen": 32680,
+            "races": 33,
+            "stakes_yen": 26400
+          },
+          "calibrated": {
+            "brier_sum": 32.14670749432494,
+            "head_coverage": 0.7272727272727273,
+            "heads_covered": 24,
+            "hit_rate": 0.3333333333333333,
+            "hits": 11,
+            "hypothetical_return": 0.6424242424242425,
+            "logloss_sum": 136.20338062727365,
+            "mean_brier_120": 0.9741426513431801,
+            "mean_logloss": 4.127375170523444,
+            "misses": {
+              "EXACT_HIT": 11,
+              "HEAD_ABSENT": 9,
+              "HEAD_PRESENT_SECOND_ABSENT": 4,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 6,
+              "SECOND_THIRD_SWAPPED": 3
+            },
+            "pair_coverage": 0.5151515151515151,
+            "pairs_covered": 17,
+            "payout_yen": 16960,
+            "races": 33,
+            "stakes_yen": 26400
+          },
+          "delta_avg_brier": -0.0024463557222993426,
+          "delta_avg_logloss": -0.06611334541717095,
+          "delta_exact_hits": -3,
+          "delta_return_pp": -59.54545454545453,
+          "descriptive_only": true,
+          "n": 33,
+          "sufficient_for_descriptive_comparison": true
+        },
+        "venue:04": {
+          "baseline": {
+            "brier_sum": 31.442814914966917,
+            "head_coverage": 0.75,
+            "heads_covered": 24,
+            "hit_rate": 0.25,
+            "hits": 8,
+            "hypothetical_return": 0.398046875,
+            "logloss_sum": 143.50112442616194,
+            "mean_brier_120": 0.9825879660927161,
+            "mean_logloss": 4.4844101383175605,
+            "misses": {
+              "EXACT_HIT": 8,
+              "HEAD_ABSENT": 8,
+              "HEAD_PRESENT_SECOND_ABSENT": 7,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 7,
+              "SECOND_THIRD_SWAPPED": 2
+            },
+            "pair_coverage": 0.46875,
+            "pairs_covered": 15,
+            "payout_yen": 10190,
+            "races": 32,
+            "stakes_yen": 25600
+          },
+          "calibrated": {
+            "brier_sum": 31.430947672883974,
+            "head_coverage": 0.5625,
+            "heads_covered": 18,
+            "hit_rate": 0.28125,
+            "hits": 9,
+            "hypothetical_return": 0.5046875,
+            "logloss_sum": 143.47228726018358,
+            "mean_brier_120": 0.9822171147776242,
+            "mean_logloss": 4.483508976880737,
+            "misses": {
+              "EXACT_HIT": 9,
+              "HEAD_ABSENT": 14,
+              "HEAD_PRESENT_SECOND_ABSENT": 4,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 3,
+              "SECOND_THIRD_SWAPPED": 2
+            },
+            "pair_coverage": 0.40625,
+            "pairs_covered": 13,
+            "payout_yen": 12920,
+            "races": 32,
+            "stakes_yen": 25600
+          },
+          "delta_avg_brier": -0.0003708513150919579,
+          "delta_avg_logloss": -0.0009011614368237275,
+          "delta_exact_hits": 1,
+          "delta_return_pp": 10.664062499999993,
+          "descriptive_only": true,
+          "n": 32,
+          "sufficient_for_descriptive_comparison": true
+        },
+        "venue:05": {
+          "baseline": {
+            "brier_sum": 34.92982348438061,
+            "head_coverage": 0.8055555555555556,
+            "heads_covered": 29,
+            "hit_rate": 0.3333333333333333,
+            "hits": 12,
+            "hypothetical_return": 0.6350694444444445,
+            "logloss_sum": 149.12886869797396,
+            "mean_brier_120": 0.9702728745661281,
+            "mean_logloss": 4.142468574943721,
+            "misses": {
+              "EXACT_HIT": 12,
+              "HEAD_ABSENT": 7,
+              "HEAD_PRESENT_SECOND_ABSENT": 7,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 7,
+              "SECOND_THIRD_SWAPPED": 3
+            },
+            "pair_coverage": 0.5277777777777778,
+            "pairs_covered": 19,
+            "payout_yen": 18290,
+            "races": 36,
+            "stakes_yen": 28800
+          },
+          "calibrated": {
+            "brier_sum": 34.81603898263623,
+            "head_coverage": 0.75,
+            "heads_covered": 27,
+            "hit_rate": 0.3888888888888889,
+            "hits": 14,
+            "hypothetical_return": 0.7493055555555556,
+            "logloss_sum": 147.8401985032571,
+            "mean_brier_120": 0.9671121939621175,
+            "mean_logloss": 4.106672180646031,
+            "misses": {
+              "EXACT_HIT": 14,
+              "HEAD_ABSENT": 9,
+              "HEAD_PRESENT_SECOND_ABSENT": 7,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 4,
+              "SECOND_THIRD_SWAPPED": 2
+            },
+            "pair_coverage": 0.5,
+            "pairs_covered": 18,
+            "payout_yen": 21580,
+            "races": 36,
+            "stakes_yen": 28800
+          },
+          "delta_avg_brier": -0.003160680604010646,
+          "delta_avg_logloss": -0.03579639429768999,
+          "delta_exact_hits": 2,
+          "delta_return_pp": 11.423611111111109,
+          "descriptive_only": true,
+          "n": 36,
+          "sufficient_for_descriptive_comparison": true
+        },
+        "venue:06": {
+          "baseline": {
+            "brier_sum": 10.701657687358987,
+            "head_coverage": 0.9090909090909091,
+            "heads_covered": 10,
+            "hit_rate": 0.36363636363636365,
+            "hits": 4,
+            "hypothetical_return": 1.3852272727272728,
+            "logloss_sum": 43.084255017664574,
+            "mean_brier_120": 0.9728779715780896,
+            "mean_logloss": 3.916750456151325,
+            "misses": {
+              "EXACT_HIT": 4,
+              "HEAD_ABSENT": 1,
+              "HEAD_PRESENT_SECOND_ABSENT": 2,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 2,
+              "SECOND_THIRD_SWAPPED": 2
+            },
+            "pair_coverage": 0.5454545454545454,
+            "pairs_covered": 6,
+            "payout_yen": 12190,
+            "races": 11,
+            "stakes_yen": 8800
+          },
+          "calibrated": {
+            "brier_sum": 10.63569055392326,
+            "head_coverage": 0.8181818181818182,
+            "heads_covered": 9,
+            "hit_rate": 0.2727272727272727,
+            "hits": 3,
+            "hypothetical_return": 1.0488636363636363,
+            "logloss_sum": 41.26890040087857,
+            "mean_brier_120": 0.966880959447569,
+            "mean_logloss": 3.751718218261688,
+            "misses": {
+              "EXACT_HIT": 3,
+              "HEAD_ABSENT": 2,
+              "HEAD_PRESENT_SECOND_ABSENT": 1,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 2,
+              "SECOND_THIRD_SWAPPED": 3
+            },
+            "pair_coverage": 0.5454545454545454,
+            "pairs_covered": 6,
+            "payout_yen": 9230,
+            "races": 11,
+            "stakes_yen": 8800
+          },
+          "delta_avg_brier": -0.005997012130520618,
+          "delta_avg_logloss": -0.16503223788963695,
+          "delta_exact_hits": -1,
+          "delta_return_pp": -33.63636363636364,
+          "descriptive_only": true,
+          "n": 11,
+          "sufficient_for_descriptive_comparison": false
+        },
+        "venue:07": {
+          "baseline": {
+            "brier_sum": 23.52175324985877,
+            "head_coverage": 0.8333333333333334,
+            "heads_covered": 20,
+            "hit_rate": 0.3333333333333333,
+            "hits": 8,
+            "hypothetical_return": 0.41354166666666664,
+            "logloss_sum": 104.05142784029856,
+            "mean_brier_120": 0.9800730520774487,
+            "mean_logloss": 4.33547616001244,
+            "misses": {
+              "EXACT_HIT": 8,
+              "HEAD_ABSENT": 4,
+              "HEAD_PRESENT_SECOND_ABSENT": 7,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 5,
+              "SECOND_THIRD_SWAPPED": 0
+            },
+            "pair_coverage": 0.5416666666666666,
+            "pairs_covered": 13,
+            "payout_yen": 7940,
+            "races": 24,
+            "stakes_yen": 19200
+          },
+          "calibrated": {
+            "brier_sum": 23.425976452136783,
+            "head_coverage": 0.7083333333333334,
+            "heads_covered": 17,
+            "hit_rate": 0.3333333333333333,
+            "hits": 8,
+            "hypothetical_return": 0.41354166666666664,
+            "logloss_sum": 101.72781400881891,
+            "mean_brier_120": 0.9760823521723659,
+            "mean_logloss": 4.238658917034122,
+            "misses": {
+              "EXACT_HIT": 8,
+              "HEAD_ABSENT": 7,
+              "HEAD_PRESENT_SECOND_ABSENT": 4,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 5,
+              "SECOND_THIRD_SWAPPED": 0
+            },
+            "pair_coverage": 0.5416666666666666,
+            "pairs_covered": 13,
+            "payout_yen": 7940,
+            "races": 24,
+            "stakes_yen": 19200
+          },
+          "delta_avg_brier": -0.0039906999050827174,
+          "delta_avg_logloss": -0.09681724297831806,
+          "delta_exact_hits": 0,
+          "delta_return_pp": 0,
+          "descriptive_only": true,
+          "n": 24,
+          "sufficient_for_descriptive_comparison": false
+        },
+        "venue:09": {
+          "baseline": {
+            "brier_sum": 22.272849039434774,
+            "head_coverage": 0.9565217391304348,
+            "heads_covered": 22,
+            "hit_rate": 0.391304347826087,
+            "hits": 9,
+            "hypothetical_return": 0.6766304347826086,
+            "logloss_sum": 88.35594661331105,
+            "mean_brier_120": 0.9683847408449902,
+            "mean_logloss": 3.841562896230915,
+            "misses": {
+              "EXACT_HIT": 9,
+              "HEAD_ABSENT": 1,
+              "HEAD_PRESENT_SECOND_ABSENT": 6,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 5,
+              "SECOND_THIRD_SWAPPED": 2
+            },
+            "pair_coverage": 0.6086956521739131,
+            "pairs_covered": 14,
+            "payout_yen": 12450,
+            "races": 23,
+            "stakes_yen": 18400
+          },
+          "calibrated": {
+            "brier_sum": 22.144624440984177,
+            "head_coverage": 0.782608695652174,
+            "heads_covered": 18,
+            "hit_rate": 0.4782608695652174,
+            "hits": 11,
+            "hypothetical_return": 0.6293478260869565,
+            "logloss_sum": 85.145701367908,
+            "mean_brier_120": 0.9628097583036599,
+            "mean_logloss": 3.701987015996,
+            "misses": {
+              "EXACT_HIT": 11,
+              "HEAD_ABSENT": 5,
+              "HEAD_PRESENT_SECOND_ABSENT": 2,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 3,
+              "SECOND_THIRD_SWAPPED": 2
+            },
+            "pair_coverage": 0.6086956521739131,
+            "pairs_covered": 14,
+            "payout_yen": 11580,
+            "races": 23,
+            "stakes_yen": 18400
+          },
+          "delta_avg_brier": -0.0055749825413302645,
+          "delta_avg_logloss": -0.13957588023491496,
+          "delta_exact_hits": 2,
+          "delta_return_pp": -4.728260869565215,
+          "descriptive_only": true,
+          "n": 23,
+          "sufficient_for_descriptive_comparison": false
+        },
+        "venue:13": {
+          "baseline": {
+            "brier_sum": 23.241664296204604,
+            "head_coverage": 0.875,
+            "heads_covered": 21,
+            "hit_rate": 0.4583333333333333,
+            "hits": 11,
+            "hypothetical_return": 0.5671875,
+            "logloss_sum": 92.20383305683185,
+            "mean_brier_120": 0.9684026790085252,
+            "mean_logloss": 3.841826377367994,
+            "misses": {
+              "EXACT_HIT": 11,
+              "HEAD_ABSENT": 3,
+              "HEAD_PRESENT_SECOND_ABSENT": 2,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 6,
+              "SECOND_THIRD_SWAPPED": 2
+            },
+            "pair_coverage": 0.7083333333333334,
+            "pairs_covered": 17,
+            "payout_yen": 10890,
+            "races": 24,
+            "stakes_yen": 19200
+          },
+          "calibrated": {
+            "brier_sum": 23.1095498374142,
+            "head_coverage": 0.8333333333333334,
+            "heads_covered": 20,
+            "hit_rate": 0.5416666666666666,
+            "hits": 13,
+            "hypothetical_return": 0.8026041666666667,
+            "logloss_sum": 89.32725963551627,
+            "mean_brier_120": 0.9628979098922583,
+            "mean_logloss": 3.7219691514798448,
+            "misses": {
+              "EXACT_HIT": 13,
+              "HEAD_ABSENT": 4,
+              "HEAD_PRESENT_SECOND_ABSENT": 3,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 2,
+              "SECOND_THIRD_SWAPPED": 2
+            },
+            "pair_coverage": 0.625,
+            "pairs_covered": 15,
+            "payout_yen": 15410,
+            "races": 24,
+            "stakes_yen": 19200
+          },
+          "delta_avg_brier": -0.00550476911626685,
+          "delta_avg_logloss": -0.11985722588814918,
+          "delta_exact_hits": 2,
+          "delta_return_pp": 23.54166666666667,
+          "descriptive_only": true,
+          "n": 24,
+          "sufficient_for_descriptive_comparison": false
+        },
+        "venue:14": {
+          "baseline": {
+            "brier_sum": 34.44721812791011,
+            "head_coverage": 0.6285714285714286,
+            "heads_covered": 22,
+            "hit_rate": 0.22857142857142856,
+            "hits": 8,
+            "hypothetical_return": 0.4982142857142857,
+            "logloss_sum": 151.88173072164003,
+            "mean_brier_120": 0.9842062322260032,
+            "mean_logloss": 4.339478020618286,
+            "misses": {
+              "EXACT_HIT": 8,
+              "HEAD_ABSENT": 13,
+              "HEAD_PRESENT_SECOND_ABSENT": 5,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 9,
+              "SECOND_THIRD_SWAPPED": 0
+            },
+            "pair_coverage": 0.4857142857142857,
+            "pairs_covered": 17,
+            "payout_yen": 13950,
+            "races": 35,
+            "stakes_yen": 28000
+          },
+          "calibrated": {
+            "brier_sum": 34.398753805851285,
+            "head_coverage": 0.5428571428571428,
+            "heads_covered": 19,
+            "hit_rate": 0.22857142857142856,
+            "hits": 8,
+            "hypothetical_return": 0.6028571428571429,
+            "logloss_sum": 152.115701436348,
+            "mean_brier_120": 0.9828215373100367,
+            "mean_logloss": 4.346162898181372,
+            "misses": {
+              "EXACT_HIT": 8,
+              "HEAD_ABSENT": 16,
+              "HEAD_PRESENT_SECOND_ABSENT": 5,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 6,
+              "SECOND_THIRD_SWAPPED": 0
+            },
+            "pair_coverage": 0.4,
+            "pairs_covered": 14,
+            "payout_yen": 16880,
+            "races": 35,
+            "stakes_yen": 28000
+          },
+          "delta_avg_brier": -0.001384694915966489,
+          "delta_avg_logloss": 0.006684877563085223,
+          "delta_exact_hits": 0,
+          "delta_return_pp": 10.464285714285715,
+          "descriptive_only": true,
+          "n": 35,
+          "sufficient_for_descriptive_comparison": true
+        },
+        "venue:15": {
+          "baseline": {
+            "brier_sum": 30.24244628365426,
+            "head_coverage": 0.8064516129032258,
+            "heads_covered": 25,
+            "hit_rate": 0.3870967741935484,
+            "hits": 12,
+            "hypothetical_return": 0.6068548387096774,
+            "logloss_sum": 125.55461986547797,
+            "mean_brier_120": 0.9755627833436858,
+            "mean_logloss": 4.0501490279186445,
+            "misses": {
+              "EXACT_HIT": 12,
+              "HEAD_ABSENT": 6,
+              "HEAD_PRESENT_SECOND_ABSENT": 8,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 4,
+              "SECOND_THIRD_SWAPPED": 1
+            },
+            "pair_coverage": 0.5161290322580645,
+            "pairs_covered": 16,
+            "payout_yen": 15050,
+            "races": 31,
+            "stakes_yen": 24800
+          },
+          "calibrated": {
+            "brier_sum": 30.127044819160446,
+            "head_coverage": 0.7096774193548387,
+            "heads_covered": 22,
+            "hit_rate": 0.3548387096774194,
+            "hits": 11,
+            "hypothetical_return": 0.5419354838709678,
+            "logloss_sum": 122.334620497593,
+            "mean_brier_120": 0.9718401554567886,
+            "mean_logloss": 3.9462780805675157,
+            "misses": {
+              "EXACT_HIT": 11,
+              "HEAD_ABSENT": 9,
+              "HEAD_PRESENT_SECOND_ABSENT": 4,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 6,
+              "SECOND_THIRD_SWAPPED": 1
+            },
+            "pair_coverage": 0.5483870967741935,
+            "pairs_covered": 17,
+            "payout_yen": 13440,
+            "races": 31,
+            "stakes_yen": 24800
+          },
+          "delta_avg_brier": -0.003722627886897256,
+          "delta_avg_logloss": -0.10387094735112878,
+          "delta_exact_hits": -1,
+          "delta_return_pp": -6.491935483870959,
+          "descriptive_only": true,
+          "n": 31,
+          "sufficient_for_descriptive_comparison": true
+        },
+        "venue:16": {
+          "baseline": {
+            "brier_sum": 33.414597696145194,
+            "head_coverage": 0.8235294117647058,
+            "heads_covered": 28,
+            "hit_rate": 0.20588235294117646,
+            "hits": 7,
+            "hypothetical_return": 0.2933823529411765,
+            "logloss_sum": 148.11555333515074,
+            "mean_brier_120": 0.982782285180741,
+            "mean_logloss": 4.356339803975022,
+            "misses": {
+              "EXACT_HIT": 7,
+              "HEAD_ABSENT": 6,
+              "HEAD_PRESENT_SECOND_ABSENT": 10,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 10,
+              "SECOND_THIRD_SWAPPED": 1
+            },
+            "pair_coverage": 0.5,
+            "pairs_covered": 17,
+            "payout_yen": 7980,
+            "races": 34,
+            "stakes_yen": 27200
+          },
+          "calibrated": {
+            "brier_sum": 33.31115898478917,
+            "head_coverage": 0.6176470588235294,
+            "heads_covered": 21,
+            "hit_rate": 0.29411764705882354,
+            "hits": 10,
+            "hypothetical_return": 0.45992647058823527,
+            "logloss_sum": 143.7677952755144,
+            "mean_brier_120": 0.9797399701408578,
+            "mean_logloss": 4.2284645669268945,
+            "misses": {
+              "EXACT_HIT": 10,
+              "HEAD_ABSENT": 13,
+              "HEAD_PRESENT_SECOND_ABSENT": 5,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 4,
+              "SECOND_THIRD_SWAPPED": 2
+            },
+            "pair_coverage": 0.4117647058823529,
+            "pairs_covered": 14,
+            "payout_yen": 12510,
+            "races": 34,
+            "stakes_yen": 27200
+          },
+          "delta_avg_brier": -0.00304231503988317,
+          "delta_avg_logloss": -0.1278752370481273,
+          "delta_exact_hits": 3,
+          "delta_return_pp": 16.654411764705877,
+          "descriptive_only": true,
+          "n": 34,
+          "sufficient_for_descriptive_comparison": true
+        },
+        "venue:19": {
+          "baseline": {
+            "brier_sum": 22.51346438779636,
+            "head_coverage": 0.7391304347826086,
+            "heads_covered": 17,
+            "hit_rate": 0.30434782608695654,
+            "hits": 7,
+            "hypothetical_return": 0.3934782608695652,
+            "logloss_sum": 97.85706304829853,
+            "mean_brier_120": 0.9788462777302765,
+            "mean_logloss": 4.254654915143414,
+            "misses": {
+              "EXACT_HIT": 7,
+              "HEAD_ABSENT": 6,
+              "HEAD_PRESENT_SECOND_ABSENT": 4,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 6,
+              "SECOND_THIRD_SWAPPED": 0
+            },
+            "pair_coverage": 0.5652173913043478,
+            "pairs_covered": 13,
+            "payout_yen": 7240,
+            "races": 23,
+            "stakes_yen": 18400
+          },
+          "calibrated": {
+            "brier_sum": 22.422596453479287,
+            "head_coverage": 0.6521739130434783,
+            "heads_covered": 15,
+            "hit_rate": 0.34782608695652173,
+            "hits": 8,
+            "hypothetical_return": 0.5532608695652174,
+            "logloss_sum": 96.53415817450184,
+            "mean_brier_120": 0.9748954979773603,
+            "mean_logloss": 4.1971373119348625,
+            "misses": {
+              "EXACT_HIT": 8,
+              "HEAD_ABSENT": 8,
+              "HEAD_PRESENT_SECOND_ABSENT": 3,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 3,
+              "SECOND_THIRD_SWAPPED": 1
+            },
+            "pair_coverage": 0.4782608695652174,
+            "pairs_covered": 11,
+            "payout_yen": 10180,
+            "races": 23,
+            "stakes_yen": 18400
+          },
+          "delta_avg_brier": -0.003950779752916245,
+          "delta_avg_logloss": -0.05751760320855137,
+          "delta_exact_hits": 1,
+          "delta_return_pp": 15.978260869565213,
+          "descriptive_only": true,
+          "n": 23,
+          "sufficient_for_descriptive_comparison": false
+        },
+        "venue:23": {
+          "baseline": {
+            "brier_sum": 11.730801407401403,
+            "head_coverage": 0.8333333333333334,
+            "heads_covered": 10,
+            "hit_rate": 0.5,
+            "hits": 6,
+            "hypothetical_return": 1.753125,
+            "logloss_sum": 51.44305327054378,
+            "mean_brier_120": 0.9775667839501169,
+            "mean_logloss": 4.2869211058786485,
+            "misses": {
+              "EXACT_HIT": 6,
+              "HEAD_ABSENT": 2,
+              "HEAD_PRESENT_SECOND_ABSENT": 3,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 0,
+              "SECOND_THIRD_SWAPPED": 1
+            },
+            "pair_coverage": 0.5,
+            "pairs_covered": 6,
+            "payout_yen": 16830,
+            "races": 12,
+            "stakes_yen": 9600
+          },
+          "calibrated": {
+            "brier_sum": 11.76321656122821,
+            "head_coverage": 0.75,
+            "heads_covered": 9,
+            "hit_rate": 0.4166666666666667,
+            "hits": 5,
+            "hypothetical_return": 1.6114583333333334,
+            "logloss_sum": 50.72458273031311,
+            "mean_brier_120": 0.9802680467690176,
+            "mean_logloss": 4.2270485608594255,
+            "misses": {
+              "EXACT_HIT": 5,
+              "HEAD_ABSENT": 3,
+              "HEAD_PRESENT_SECOND_ABSENT": 3,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 0,
+              "SECOND_THIRD_SWAPPED": 1
+            },
+            "pair_coverage": 0.4166666666666667,
+            "pairs_covered": 5,
+            "payout_yen": 15470,
+            "races": 12,
+            "stakes_yen": 9600
+          },
+          "delta_avg_brier": 0.002701262818900707,
+          "delta_avg_logloss": -0.05987254501922301,
+          "delta_exact_hits": -1,
+          "delta_return_pp": -14.16666666666666,
+          "descriptive_only": true,
+          "n": 12,
+          "sufficient_for_descriptive_comparison": false
+        },
+        "venue:24": {
+          "baseline": {
+            "brier_sum": 34.69431672011892,
+            "head_coverage": 0.8888888888888888,
+            "heads_covered": 32,
+            "hit_rate": 0.5277777777777778,
+            "hits": 19,
+            "hypothetical_return": 1.3270833333333334,
+            "logloss_sum": 136.62155338477953,
+            "mean_brier_120": 0.9637310200033034,
+            "mean_logloss": 3.795043149577209,
+            "misses": {
+              "EXACT_HIT": 19,
+              "HEAD_ABSENT": 4,
+              "HEAD_PRESENT_SECOND_ABSENT": 3,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 10,
+              "SECOND_THIRD_SWAPPED": 0
+            },
+            "pair_coverage": 0.8055555555555556,
+            "pairs_covered": 29,
+            "payout_yen": 38220,
+            "races": 36,
+            "stakes_yen": 28800
+          },
+          "calibrated": {
+            "brier_sum": 34.52758255856372,
+            "head_coverage": 0.8333333333333334,
+            "heads_covered": 30,
+            "hit_rate": 0.5833333333333334,
+            "hits": 21,
+            "hypothetical_return": 1.401736111111111,
+            "logloss_sum": 131.96926424843497,
+            "mean_brier_120": 0.959099515515659,
+            "mean_logloss": 3.6658128957898604,
+            "misses": {
+              "EXACT_HIT": 21,
+              "HEAD_ABSENT": 6,
+              "HEAD_PRESENT_SECOND_ABSENT": 3,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 6,
+              "SECOND_THIRD_SWAPPED": 0
+            },
+            "pair_coverage": 0.75,
+            "pairs_covered": 27,
+            "payout_yen": 40370,
+            "races": 36,
+            "stakes_yen": 28800
+          },
+          "delta_avg_brier": -0.004631504487644378,
+          "delta_avg_logloss": -0.12923025378734865,
+          "delta_exact_hits": 2,
+          "delta_return_pp": 7.465277777777768,
+          "descriptive_only": true,
+          "n": 36,
+          "sufficient_for_descriptive_comparison": true
+        }
+      }
+    },
+    {
+      "dates": [
+        "2026-10-24",
+        "2026-10-25",
+        "2026-10-26"
+      ],
+      "source_receipts": [
+        {
+          "B_races_frozen": 141,
+          "B_sha256": "85d7d8236fb0a2827ecb3c845146341ae27ee02ca4a3ed2f70e227619cac1537",
+          "K_sha256": "1c75b1f8ee711d9b1f1dab3dffde47b9d264c3f11a4dbc4e4e9f860aa16d50bc",
+          "day": "2026-10-24",
+          "frozen_120way_SHA256": "37703651645927fccb744901f83049265028fc72d40c1524e210ed30469daf3c",
+          "historical_scored": 137
+        },
+        {
+          "B_races_frozen": 140,
+          "B_sha256": "f4bebf682c5f2a269088091a79d314d3cc42cc45b49706abafaf0f62f49f5f3e",
+          "K_sha256": "f214e4f0d0910d820ef68d52cd6efe2d11c4b008d21c089dac5852045edbf3dd",
+          "day": "2026-10-25",
+          "frozen_120way_SHA256": "8f99b6f57aeb4d40d5f181c4875e3750571c1ff11782bfcf16ed0283f77670f9",
+          "historical_scored": 126
+        },
+        {
+          "B_races_frozen": 118,
+          "B_sha256": "2c615b5350757374d33c0700c4ff71e363b9f82f620c1629d5ac60f7b7100a92",
+          "K_sha256": "f9d258acf249eeb3c6527a57030f5a606f1ee2956a0488c580594fcabdc8f56b",
+          "day": "2026-10-26",
+          "frozen_120way_SHA256": "c00b32a30ed046edd3434099133d29ab2c976151589bd8152969c34b6684c5c7",
+          "historical_scored": 113
+        }
+      ],
+      "groups": {
+        "K_marker:ABSENT_UNVERIFIED": {
+          "baseline": {
+            "brier_sum": 359.44230618956357,
+            "head_coverage": 0.8405405405405405,
+            "heads_covered": 311,
+            "hit_rate": 0.3945945945945946,
+            "hits": 146,
+            "hypothetical_return": 0.8205743243243243,
+            "logloss_sum": 1503.3343358268826,
+            "mean_brier_120": 0.9714656924042259,
+            "mean_logloss": 4.063065772505088,
+            "misses": {
+              "EXACT_HIT": 146,
+              "HEAD_ABSENT": 59,
+              "HEAD_PRESENT_SECOND_ABSENT": 60,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 87,
+              "SECOND_THIRD_SWAPPED": 18
+            },
+            "pair_coverage": 0.6324324324324324,
+            "pairs_covered": 234,
+            "payout_yen": 242890,
+            "races": 370,
+            "stakes_yen": 296000
+          },
+          "calibrated": {
+            "brier_sum": 358.13890264869235,
+            "head_coverage": 0.745945945945946,
+            "heads_covered": 276,
+            "hit_rate": 0.43513513513513513,
+            "hits": 161,
+            "hypothetical_return": 0.841081081081081,
+            "logloss_sum": 1470.4529162649442,
+            "mean_brier_120": 0.967942980131601,
+            "mean_logloss": 3.9741970709863357,
+            "misses": {
+              "EXACT_HIT": 161,
+              "HEAD_ABSENT": 94,
+              "HEAD_PRESENT_SECOND_ABSENT": 43,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 51,
+              "SECOND_THIRD_SWAPPED": 21
+            },
+            "pair_coverage": 0.5864864864864865,
+            "pairs_covered": 217,
+            "payout_yen": 248960,
+            "races": 370,
+            "stakes_yen": 296000
+          },
+          "delta_avg_brier": -0.003522712272624906,
+          "delta_avg_logloss": -0.08886870151875259,
+          "delta_exact_hits": 15,
+          "delta_return_pp": 2.0506756756756728,
+          "descriptive_only": true,
+          "n": 370,
+          "sufficient_for_descriptive_comparison": true
+        },
+        "K_marker:POSITIVE": {
+          "baseline": {
+            "brier_sum": 5.739969866677619,
+            "head_coverage": 0.6666666666666666,
+            "heads_covered": 4,
+            "hit_rate": 0.5,
+            "hits": 3,
+            "hypothetical_return": 0.75,
+            "logloss_sum": 20.887092422441285,
+            "mean_brier_120": 0.9566616444462698,
+            "mean_logloss": 3.4811820704068808,
+            "misses": {
+              "EXACT_HIT": 3,
+              "HEAD_ABSENT": 2,
+              "HEAD_PRESENT_SECOND_ABSENT": 0,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 1,
+              "SECOND_THIRD_SWAPPED": 0
+            },
+            "pair_coverage": 0.6666666666666666,
+            "pairs_covered": 4,
+            "payout_yen": 3600,
+            "races": 6,
+            "stakes_yen": 4800
+          },
+          "calibrated": {
+            "brier_sum": 5.727181874381516,
+            "head_coverage": 0.6666666666666666,
+            "heads_covered": 4,
+            "hit_rate": 0.6666666666666666,
+            "hits": 4,
+            "hypothetical_return": 0.8895833333333333,
+            "logloss_sum": 21.009626071735536,
+            "mean_brier_120": 0.9545303123969194,
+            "mean_logloss": 3.501604345289256,
+            "misses": {
+              "EXACT_HIT": 4,
+              "HEAD_ABSENT": 2,
+              "HEAD_PRESENT_SECOND_ABSENT": 0,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 0,
+              "SECOND_THIRD_SWAPPED": 0
+            },
+            "pair_coverage": 0.6666666666666666,
+            "pairs_covered": 4,
+            "payout_yen": 4270,
+            "races": 6,
+            "stakes_yen": 4800
+          },
+          "delta_avg_brier": -0.002131332049350343,
+          "delta_avg_logloss": 0.020422274882375024,
+          "delta_exact_hits": 1,
+          "delta_return_pp": 13.958333333333329,
+          "descriptive_only": true,
+          "n": 6,
+          "sufficient_for_descriptive_comparison": false
+        },
+        "overall": {
+          "baseline": {
+            "brier_sum": 365.1822760562412,
+            "head_coverage": 0.8377659574468085,
+            "heads_covered": 315,
+            "hit_rate": 0.3962765957446808,
+            "hits": 149,
+            "hypothetical_return": 0.8194481382978723,
+            "logloss_sum": 1524.2214282493237,
+            "mean_brier_120": 0.9712294575963862,
+            "mean_logloss": 4.053780394280116,
+            "misses": {
+              "EXACT_HIT": 149,
+              "HEAD_ABSENT": 61,
+              "HEAD_PRESENT_SECOND_ABSENT": 60,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 88,
+              "SECOND_THIRD_SWAPPED": 18
+            },
+            "pair_coverage": 0.6329787234042553,
+            "pairs_covered": 238,
+            "payout_yen": 246490,
+            "races": 376,
+            "stakes_yen": 300800
+          },
+          "calibrated": {
+            "brier_sum": 363.8660845230738,
+            "head_coverage": 0.7446808510638298,
+            "heads_covered": 280,
+            "hit_rate": 0.43882978723404253,
+            "hits": 165,
+            "hypothetical_return": 0.8418550531914893,
+            "logloss_sum": 1491.4625423366797,
+            "mean_brier_120": 0.9677289481996644,
+            "mean_logloss": 3.9666556977039353,
+            "misses": {
+              "EXACT_HIT": 165,
+              "HEAD_ABSENT": 96,
+              "HEAD_PRESENT_SECOND_ABSENT": 43,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 51,
+              "SECOND_THIRD_SWAPPED": 21
+            },
+            "pair_coverage": 0.5877659574468085,
+            "pairs_covered": 221,
+            "payout_yen": 253230,
+            "races": 376,
+            "stakes_yen": 300800
+          },
+          "delta_avg_brier": -0.0035005093967218626,
+          "delta_avg_logloss": -0.0871246965761805,
+          "delta_exact_hits": 16,
+          "delta_return_pp": 2.2406914893617014,
+          "descriptive_only": false,
+          "n": 376,
+          "sufficient_for_descriptive_comparison": true
+        },
+        "stage:FINAL": {
+          "baseline": {
+            "brier_sum": 6.676221935547165,
+            "head_coverage": 0.8571428571428571,
+            "heads_covered": 6,
+            "hit_rate": 0.5714285714285714,
+            "hits": 4,
+            "hypothetical_return": 0.5571428571428572,
+            "logloss_sum": 24.613414128242834,
+            "mean_brier_120": 0.9537459907924521,
+            "mean_logloss": 3.516202018320405,
+            "misses": {
+              "EXACT_HIT": 4,
+              "HEAD_ABSENT": 1,
+              "HEAD_PRESENT_SECOND_ABSENT": 0,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 1,
+              "SECOND_THIRD_SWAPPED": 1
+            },
+            "pair_coverage": 0.8571428571428571,
+            "pairs_covered": 6,
+            "payout_yen": 3120,
+            "races": 7,
+            "stakes_yen": 5600
+          },
+          "calibrated": {
+            "brier_sum": 6.603911059255962,
+            "head_coverage": 0.8571428571428571,
+            "heads_covered": 6,
+            "hit_rate": 0.7142857142857143,
+            "hits": 5,
+            "hypothetical_return": 0.8,
+            "logloss_sum": 23.54417955644511,
+            "mean_brier_120": 0.9434158656079946,
+            "mean_logloss": 3.363454222349301,
+            "misses": {
+              "EXACT_HIT": 5,
+              "HEAD_ABSENT": 1,
+              "HEAD_PRESENT_SECOND_ABSENT": 0,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 0,
+              "SECOND_THIRD_SWAPPED": 1
+            },
+            "pair_coverage": 0.8571428571428571,
+            "pairs_covered": 6,
+            "payout_yen": 4480,
+            "races": 7,
+            "stakes_yen": 5600
+          },
+          "delta_avg_brier": -0.010330125184457528,
+          "delta_avg_logloss": -0.15274779597110388,
+          "delta_exact_hits": 1,
+          "delta_return_pp": 24.28571428571429,
+          "descriptive_only": true,
+          "n": 7,
+          "sufficient_for_descriptive_comparison": false
+        },
+        "stage:GENERAL": {
+          "baseline": {
+            "brier_sum": 100.64436378417437,
+            "head_coverage": 0.8076923076923077,
+            "heads_covered": 84,
+            "hit_rate": 0.41346153846153844,
+            "hits": 43,
+            "hypothetical_return": 1.0030048076923077,
+            "logloss_sum": 410.37019722822595,
+            "mean_brier_120": 0.9677342671555228,
+            "mean_logloss": 3.945867281040634,
+            "misses": {
+              "EXACT_HIT": 43,
+              "HEAD_ABSENT": 20,
+              "HEAD_PRESENT_SECOND_ABSENT": 15,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 19,
+              "SECOND_THIRD_SWAPPED": 7
+            },
+            "pair_coverage": 0.5961538461538461,
+            "pairs_covered": 62,
+            "payout_yen": 83450,
+            "races": 104,
+            "stakes_yen": 83200
+          },
+          "calibrated": {
+            "brier_sum": 100.42326863505664,
+            "head_coverage": 0.7211538461538461,
+            "heads_covered": 75,
+            "hit_rate": 0.47115384615384615,
+            "hits": 49,
+            "hypothetical_return": 1.040625,
+            "logloss_sum": 404.36878262015745,
+            "mean_brier_120": 0.9656083522601601,
+            "mean_logloss": 3.888161371347668,
+            "misses": {
+              "EXACT_HIT": 49,
+              "HEAD_ABSENT": 29,
+              "HEAD_PRESENT_SECOND_ABSENT": 10,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 9,
+              "SECOND_THIRD_SWAPPED": 7
+            },
+            "pair_coverage": 0.5673076923076923,
+            "pairs_covered": 59,
+            "payout_yen": 86580,
+            "races": 104,
+            "stakes_yen": 83200
+          },
+          "delta_avg_brier": -0.002125914895362735,
+          "delta_avg_logloss": -0.057705909692966184,
+          "delta_exact_hits": 6,
+          "delta_return_pp": 3.76201923076922,
+          "descriptive_only": true,
+          "n": 104,
+          "sufficient_for_descriptive_comparison": true
+        },
+        "stage:QUALIFYING": {
+          "baseline": {
+            "brier_sum": 153.14572504198983,
+            "head_coverage": 0.802547770700637,
+            "heads_covered": 126,
+            "hit_rate": 0.34394904458598724,
+            "hits": 54,
+            "hypothetical_return": 0.8115445859872611,
+            "logloss_sum": 652.0426111750551,
+            "mean_brier_120": 0.9754504779744575,
+            "mean_logloss": 4.153137650796529,
+            "misses": {
+              "EXACT_HIT": 54,
+              "HEAD_ABSENT": 31,
+              "HEAD_PRESENT_SECOND_ABSENT": 26,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 41,
+              "SECOND_THIRD_SWAPPED": 5
+            },
+            "pair_coverage": 0.6050955414012739,
+            "pairs_covered": 95,
+            "payout_yen": 101930,
+            "races": 157,
+            "stakes_yen": 125600
+          },
+          "calibrated": {
+            "brier_sum": 152.67676290235673,
+            "head_coverage": 0.732484076433121,
+            "heads_covered": 115,
+            "hit_rate": 0.39490445859872614,
+            "hits": 62,
+            "hypothetical_return": 0.8102707006369426,
+            "logloss_sum": 640.7593025678532,
+            "mean_brier_120": 0.9724634579767945,
+            "mean_logloss": 4.081269443107345,
+            "misses": {
+              "EXACT_HIT": 62,
+              "HEAD_ABSENT": 42,
+              "HEAD_PRESENT_SECOND_ABSENT": 23,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 25,
+              "SECOND_THIRD_SWAPPED": 5
+            },
+            "pair_coverage": 0.5668789808917197,
+            "pairs_covered": 89,
+            "payout_yen": 101770,
+            "races": 157,
+            "stakes_yen": 125600
+          },
+          "delta_avg_brier": -0.002987019997663043,
+          "delta_avg_logloss": -0.07186820768918345,
+          "delta_exact_hits": 8,
+          "delta_return_pp": -0.1273885350318471,
+          "descriptive_only": true,
+          "n": 157,
+          "sufficient_for_descriptive_comparison": true
+        },
+        "stage:SELECTION": {
+          "baseline": {
+            "brier_sum": 15.600303911012144,
+            "head_coverage": 0.875,
+            "heads_covered": 14,
+            "hit_rate": 0.3125,
+            "hits": 5,
+            "hypothetical_return": 0.51875,
+            "logloss_sum": 67.44039322765488,
+            "mean_brier_120": 0.975018994438259,
+            "mean_logloss": 4.21502457672843,
+            "misses": {
+              "EXACT_HIT": 5,
+              "HEAD_ABSENT": 2,
+              "HEAD_PRESENT_SECOND_ABSENT": 4,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 4,
+              "SECOND_THIRD_SWAPPED": 1
+            },
+            "pair_coverage": 0.5625,
+            "pairs_covered": 9,
+            "payout_yen": 6640,
+            "races": 16,
+            "stakes_yen": 12800
+          },
+          "calibrated": {
+            "brier_sum": 15.50986373022314,
+            "head_coverage": 0.875,
+            "heads_covered": 14,
+            "hit_rate": 0.375,
+            "hits": 6,
+            "hypothetical_return": 0.7015625,
+            "logloss_sum": 64.57217131777675,
+            "mean_brier_120": 0.9693664831389462,
+            "mean_logloss": 4.035760707361047,
+            "misses": {
+              "EXACT_HIT": 6,
+              "HEAD_ABSENT": 2,
+              "HEAD_PRESENT_SECOND_ABSENT": 3,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 3,
+              "SECOND_THIRD_SWAPPED": 2
+            },
+            "pair_coverage": 0.5625,
+            "pairs_covered": 9,
+            "payout_yen": 8980,
+            "races": 16,
+            "stakes_yen": 12800
+          },
+          "delta_avg_brier": -0.005652511299312768,
+          "delta_avg_logloss": -0.17926386936738314,
+          "delta_exact_hits": 1,
+          "delta_return_pp": 18.281249999999993,
+          "descriptive_only": true,
+          "n": 16,
+          "sufficient_for_descriptive_comparison": false
+        },
+        "stage:SEMIFINAL": {
+          "baseline": {
+            "brier_sum": 21.18532820793797,
+            "head_coverage": 0.9545454545454546,
+            "heads_covered": 21,
+            "hit_rate": 0.5,
+            "hits": 11,
+            "hypothetical_return": 0.6823863636363636,
+            "logloss_sum": 84.65571151659611,
+            "mean_brier_120": 0.9629694639971805,
+            "mean_logloss": 3.847986887118005,
+            "misses": {
+              "EXACT_HIT": 11,
+              "HEAD_ABSENT": 1,
+              "HEAD_PRESENT_SECOND_ABSENT": 3,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 6,
+              "SECOND_THIRD_SWAPPED": 1
+            },
+            "pair_coverage": 0.7727272727272727,
+            "pairs_covered": 17,
+            "payout_yen": 12010,
+            "races": 22,
+            "stakes_yen": 17600
+          },
+          "calibrated": {
+            "brier_sum": 20.995638950118984,
+            "head_coverage": 0.8636363636363636,
+            "heads_covered": 19,
+            "hit_rate": 0.5,
+            "hits": 11,
+            "hypothetical_return": 0.6823863636363636,
+            "logloss_sum": 79.97574025555284,
+            "mean_brier_120": 0.9543472250054084,
+            "mean_logloss": 3.6352609207069473,
+            "misses": {
+              "EXACT_HIT": 11,
+              "HEAD_ABSENT": 3,
+              "HEAD_PRESENT_SECOND_ABSENT": 1,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 5,
+              "SECOND_THIRD_SWAPPED": 2
+            },
+            "pair_coverage": 0.7272727272727273,
+            "pairs_covered": 16,
+            "payout_yen": 12010,
+            "races": 22,
+            "stakes_yen": 17600
+          },
+          "delta_avg_brier": -0.008622238991772169,
+          "delta_avg_logloss": -0.21272596641105768,
+          "delta_exact_hits": 0,
+          "delta_return_pp": 0,
+          "descriptive_only": true,
+          "n": 22,
+          "sufficient_for_descriptive_comparison": false
+        },
+        "stage:UNSPECIFIED": {
+          "baseline": {
+            "brier_sum": 67.93033317557979,
+            "head_coverage": 0.9142857142857143,
+            "heads_covered": 64,
+            "hit_rate": 0.45714285714285713,
+            "hits": 32,
+            "hypothetical_return": 0.7025,
+            "logloss_sum": 285.0991009735492,
+            "mean_brier_120": 0.9704333310797113,
+            "mean_logloss": 4.0728442996221315,
+            "misses": {
+              "EXACT_HIT": 32,
+              "HEAD_ABSENT": 6,
+              "HEAD_PRESENT_SECOND_ABSENT": 12,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 17,
+              "SECOND_THIRD_SWAPPED": 3
+            },
+            "pair_coverage": 0.7,
+            "pairs_covered": 49,
+            "payout_yen": 39340,
+            "races": 70,
+            "stakes_yen": 56000
+          },
+          "calibrated": {
+            "brier_sum": 67.65663924606237,
+            "head_coverage": 0.7285714285714285,
+            "heads_covered": 51,
+            "hit_rate": 0.45714285714285713,
+            "hits": 32,
+            "hypothetical_return": 0.70375,
+            "logloss_sum": 278.2423660188946,
+            "mean_brier_120": 0.966523417800891,
+            "mean_logloss": 3.9748909431270656,
+            "misses": {
+              "EXACT_HIT": 32,
+              "HEAD_ABSENT": 19,
+              "HEAD_PRESENT_SECOND_ABSENT": 6,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 9,
+              "SECOND_THIRD_SWAPPED": 4
+            },
+            "pair_coverage": 0.6,
+            "pairs_covered": 42,
+            "payout_yen": 39410,
+            "races": 70,
+            "stakes_yen": 56000
+          },
+          "delta_avg_brier": -0.003909913278820287,
+          "delta_avg_logloss": -0.09795335649506587,
+          "delta_exact_hits": 0,
+          "delta_return_pp": 0.12499999999999734,
+          "descriptive_only": true,
+          "n": 70,
+          "sufficient_for_descriptive_comparison": true
+        },
+        "venue:01": {
+          "baseline": {
+            "brier_sum": 21.551994874760947,
+            "head_coverage": 0.8181818181818182,
+            "heads_covered": 18,
+            "hit_rate": 0.36363636363636365,
+            "hits": 8,
+            "hypothetical_return": 0.39943181818181817,
+            "logloss_sum": 95.26120154745936,
+            "mean_brier_120": 0.9796361306709521,
+            "mean_logloss": 4.330054615793608,
+            "misses": {
+              "EXACT_HIT": 8,
+              "HEAD_ABSENT": 4,
+              "HEAD_PRESENT_SECOND_ABSENT": 7,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 3,
+              "SECOND_THIRD_SWAPPED": 0
+            },
+            "pair_coverage": 0.5,
+            "pairs_covered": 11,
+            "payout_yen": 7030,
+            "races": 22,
+            "stakes_yen": 17600
+          },
+          "calibrated": {
+            "brier_sum": 21.487741115924905,
+            "head_coverage": 0.7272727272727273,
+            "heads_covered": 16,
+            "hit_rate": 0.4090909090909091,
+            "hits": 9,
+            "hypothetical_return": 0.4738636363636364,
+            "logloss_sum": 94.89146514560161,
+            "mean_brier_120": 0.9767155052693138,
+            "mean_logloss": 4.313248415709165,
+            "misses": {
+              "EXACT_HIT": 9,
+              "HEAD_ABSENT": 6,
+              "HEAD_PRESENT_SECOND_ABSENT": 5,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 2,
+              "SECOND_THIRD_SWAPPED": 0
+            },
+            "pair_coverage": 0.5,
+            "pairs_covered": 11,
+            "payout_yen": 8340,
+            "races": 22,
+            "stakes_yen": 17600
+          },
+          "delta_avg_brier": -0.002920625401638288,
+          "delta_avg_logloss": -0.016806200084443113,
+          "delta_exact_hits": 1,
+          "delta_return_pp": 7.443181818181821,
+          "descriptive_only": true,
+          "n": 22,
+          "sufficient_for_descriptive_comparison": false
+        },
+        "venue:04": {
+          "baseline": {
+            "brier_sum": 33.227943724022644,
+            "head_coverage": 0.7647058823529411,
+            "heads_covered": 26,
+            "hit_rate": 0.3235294117647059,
+            "hits": 11,
+            "hypothetical_return": 1.2970588235294118,
+            "logloss_sum": 140.83858891923413,
+            "mean_brier_120": 0.9772924624712542,
+            "mean_logloss": 4.142311438801004,
+            "misses": {
+              "EXACT_HIT": 11,
+              "HEAD_ABSENT": 8,
+              "HEAD_PRESENT_SECOND_ABSENT": 3,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 9,
+              "SECOND_THIRD_SWAPPED": 3
+            },
+            "pair_coverage": 0.5882352941176471,
+            "pairs_covered": 20,
+            "payout_yen": 35280,
+            "races": 34,
+            "stakes_yen": 27200
+          },
+          "calibrated": {
+            "brier_sum": 33.22680047369775,
+            "head_coverage": 0.6176470588235294,
+            "heads_covered": 21,
+            "hit_rate": 0.35294117647058826,
+            "hits": 12,
+            "hypothetical_return": 1.3698529411764706,
+            "logloss_sum": 140.23375208335898,
+            "mean_brier_120": 0.9772588374616985,
+            "mean_logloss": 4.124522120098794,
+            "misses": {
+              "EXACT_HIT": 12,
+              "HEAD_ABSENT": 13,
+              "HEAD_PRESENT_SECOND_ABSENT": 3,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 6,
+              "SECOND_THIRD_SWAPPED": 0
+            },
+            "pair_coverage": 0.5294117647058824,
+            "pairs_covered": 18,
+            "payout_yen": 37260,
+            "races": 34,
+            "stakes_yen": 27200
+          },
+          "delta_avg_brier": -0.00003362500955572667,
+          "delta_avg_logloss": -0.01778931870221001,
+          "delta_exact_hits": 1,
+          "delta_return_pp": 7.279411764705879,
+          "descriptive_only": true,
+          "n": 34,
+          "sufficient_for_descriptive_comparison": true
+        },
+        "venue:05": {
+          "baseline": {
+            "brier_sum": 29.918167249291145,
+            "head_coverage": 0.9354838709677419,
+            "heads_covered": 29,
+            "hit_rate": 0.41935483870967744,
+            "hits": 13,
+            "hypothetical_return": 0.7201612903225807,
+            "logloss_sum": 122.02749384149004,
+            "mean_brier_120": 0.9651021693319725,
+            "mean_logloss": 3.936370769080324,
+            "misses": {
+              "EXACT_HIT": 13,
+              "HEAD_ABSENT": 2,
+              "HEAD_PRESENT_SECOND_ABSENT": 10,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 5,
+              "SECOND_THIRD_SWAPPED": 1
+            },
+            "pair_coverage": 0.5806451612903226,
+            "pairs_covered": 18,
+            "payout_yen": 17860,
+            "races": 31,
+            "stakes_yen": 24800
+          },
+          "calibrated": {
+            "brier_sum": 29.767034199611864,
+            "head_coverage": 0.8709677419354839,
+            "heads_covered": 27,
+            "hit_rate": 0.5161290322580645,
+            "hits": 16,
+            "hypothetical_return": 0.9814516129032258,
+            "logloss_sum": 118.0943113013268,
+            "mean_brier_120": 0.9602269096648989,
+            "mean_logloss": 3.8094939129460257,
+            "misses": {
+              "EXACT_HIT": 16,
+              "HEAD_ABSENT": 4,
+              "HEAD_PRESENT_SECOND_ABSENT": 8,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 2,
+              "SECOND_THIRD_SWAPPED": 1
+            },
+            "pair_coverage": 0.5806451612903226,
+            "pairs_covered": 18,
+            "payout_yen": 24340,
+            "races": 31,
+            "stakes_yen": 24800
+          },
+          "delta_avg_brier": -0.004875259667073584,
+          "delta_avg_logloss": -0.12687685613429833,
+          "delta_exact_hits": 3,
+          "delta_return_pp": 26.129032258064512,
+          "descriptive_only": true,
+          "n": 31,
+          "sufficient_for_descriptive_comparison": true
+        },
+        "venue:06": {
+          "baseline": {
+            "brier_sum": 30.15174060431343,
+            "head_coverage": 0.9032258064516129,
+            "heads_covered": 28,
+            "hit_rate": 0.3870967741935484,
+            "hits": 12,
+            "hypothetical_return": 1.0129032258064516,
+            "logloss_sum": 126.22657784317327,
+            "mean_brier_120": 0.9726367936875301,
+            "mean_logloss": 4.071825091715267,
+            "misses": {
+              "EXACT_HIT": 12,
+              "HEAD_ABSENT": 3,
+              "HEAD_PRESENT_SECOND_ABSENT": 3,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 10,
+              "SECOND_THIRD_SWAPPED": 3
+            },
+            "pair_coverage": 0.7419354838709677,
+            "pairs_covered": 23,
+            "payout_yen": 25120,
+            "races": 31,
+            "stakes_yen": 24800
+          },
+          "calibrated": {
+            "brier_sum": 29.973730306051685,
+            "head_coverage": 0.8064516129032258,
+            "heads_covered": 25,
+            "hit_rate": 0.45161290322580644,
+            "hits": 14,
+            "hypothetical_return": 1.0495967741935484,
+            "logloss_sum": 121.49820126251879,
+            "mean_brier_120": 0.9668945260016673,
+            "mean_logloss": 3.919296814919961,
+            "misses": {
+              "EXACT_HIT": 14,
+              "HEAD_ABSENT": 6,
+              "HEAD_PRESENT_SECOND_ABSENT": 3,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 6,
+              "SECOND_THIRD_SWAPPED": 2
+            },
+            "pair_coverage": 0.6774193548387096,
+            "pairs_covered": 21,
+            "payout_yen": 26030,
+            "races": 31,
+            "stakes_yen": 24800
+          },
+          "delta_avg_brier": -0.005742267685862834,
+          "delta_avg_logloss": -0.152528276795306,
+          "delta_exact_hits": 2,
+          "delta_return_pp": 3.669354838709671,
+          "descriptive_only": true,
+          "n": 31,
+          "sufficient_for_descriptive_comparison": true
+        },
+        "venue:08": {
+          "baseline": {
+            "brier_sum": 20.339279767591634,
+            "head_coverage": 0.8571428571428571,
+            "heads_covered": 18,
+            "hit_rate": 0.38095238095238093,
+            "hits": 8,
+            "hypothetical_return": 0.6375,
+            "logloss_sum": 88.23559840307942,
+            "mean_brier_120": 0.9685371317900778,
+            "mean_logloss": 4.201695162051401,
+            "misses": {
+              "EXACT_HIT": 8,
+              "HEAD_ABSENT": 3,
+              "HEAD_PRESENT_SECOND_ABSENT": 2,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 7,
+              "SECOND_THIRD_SWAPPED": 1
+            },
+            "pair_coverage": 0.7142857142857143,
+            "pairs_covered": 15,
+            "payout_yen": 10710,
+            "races": 21,
+            "stakes_yen": 16800
+          },
+          "calibrated": {
+            "brier_sum": 20.203899621447093,
+            "head_coverage": 0.7619047619047619,
+            "heads_covered": 16,
+            "hit_rate": 0.47619047619047616,
+            "hits": 10,
+            "hypothetical_return": 0.8053571428571429,
+            "logloss_sum": 85.57846257168676,
+            "mean_brier_120": 0.9620904581641473,
+            "mean_logloss": 4.075164884366036,
+            "misses": {
+              "EXACT_HIT": 10,
+              "HEAD_ABSENT": 5,
+              "HEAD_PRESENT_SECOND_ABSENT": 1,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 4,
+              "SECOND_THIRD_SWAPPED": 1
+            },
+            "pair_coverage": 0.6666666666666666,
+            "pairs_covered": 14,
+            "payout_yen": 13530,
+            "races": 21,
+            "stakes_yen": 16800
+          },
+          "delta_avg_brier": -0.0064466736259305435,
+          "delta_avg_logloss": -0.1265302776853643,
+          "delta_exact_hits": 2,
+          "delta_return_pp": 16.785714285714292,
+          "descriptive_only": true,
+          "n": 21,
+          "sufficient_for_descriptive_comparison": false
+        },
+        "venue:09": {
+          "baseline": {
+            "brier_sum": 33.27251278052868,
+            "head_coverage": 0.8823529411764706,
+            "heads_covered": 30,
+            "hit_rate": 0.3235294117647059,
+            "hits": 11,
+            "hypothetical_return": 1.0003676470588236,
+            "logloss_sum": 141.9698401089567,
+            "mean_brier_120": 0.9786033170743729,
+            "mean_logloss": 4.175583532616374,
+            "misses": {
+              "EXACT_HIT": 11,
+              "HEAD_ABSENT": 4,
+              "HEAD_PRESENT_SECOND_ABSENT": 6,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 11,
+              "SECOND_THIRD_SWAPPED": 2
+            },
+            "pair_coverage": 0.6470588235294118,
+            "pairs_covered": 22,
+            "payout_yen": 27210,
+            "races": 34,
+            "stakes_yen": 27200
+          },
+          "calibrated": {
+            "brier_sum": 33.22388914421802,
+            "head_coverage": 0.7941176470588235,
+            "heads_covered": 27,
+            "hit_rate": 0.3235294117647059,
+            "hits": 11,
+            "hypothetical_return": 0.7599264705882353,
+            "logloss_sum": 137.99663633971343,
+            "mean_brier_120": 0.9771732101240594,
+            "mean_logloss": 4.058724598226866,
+            "misses": {
+              "EXACT_HIT": 11,
+              "HEAD_ABSENT": 7,
+              "HEAD_PRESENT_SECOND_ABSENT": 6,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 10,
+              "SECOND_THIRD_SWAPPED": 0
+            },
+            "pair_coverage": 0.6176470588235294,
+            "pairs_covered": 21,
+            "payout_yen": 20670,
+            "races": 34,
+            "stakes_yen": 27200
+          },
+          "delta_avg_brier": -0.0014301069503134256,
+          "delta_avg_logloss": -0.11685893438950767,
+          "delta_exact_hits": 0,
+          "delta_return_pp": -24.044117647058837,
+          "descriptive_only": true,
+          "n": 34,
+          "sufficient_for_descriptive_comparison": true
+        },
+        "venue:10": {
+          "baseline": {
+            "brier_sum": 35.40772677584174,
+            "head_coverage": 0.75,
+            "heads_covered": 27,
+            "hit_rate": 0.2777777777777778,
+            "hits": 10,
+            "hypothetical_return": 0.5427083333333333,
+            "logloss_sum": 159.65705641727507,
+            "mean_brier_120": 0.9835479659956038,
+            "mean_logloss": 4.434918233813196,
+            "misses": {
+              "EXACT_HIT": 10,
+              "HEAD_ABSENT": 9,
+              "HEAD_PRESENT_SECOND_ABSENT": 6,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 9,
+              "SECOND_THIRD_SWAPPED": 2
+            },
+            "pair_coverage": 0.5277777777777778,
+            "pairs_covered": 19,
+            "payout_yen": 15630,
+            "races": 36,
+            "stakes_yen": 28800
+          },
+          "calibrated": {
+            "brier_sum": 35.3428705853252,
+            "head_coverage": 0.5833333333333334,
+            "heads_covered": 21,
+            "hit_rate": 0.2777777777777778,
+            "hits": 10,
+            "hypothetical_return": 0.5822916666666667,
+            "logloss_sum": 157.85926916218858,
+            "mean_brier_120": 0.9817464051479222,
+            "mean_logloss": 4.3849796989496825,
+            "misses": {
+              "EXACT_HIT": 10,
+              "HEAD_ABSENT": 15,
+              "HEAD_PRESENT_SECOND_ABSENT": 5,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 2,
+              "SECOND_THIRD_SWAPPED": 4
+            },
+            "pair_coverage": 0.3611111111111111,
+            "pairs_covered": 13,
+            "payout_yen": 16770,
+            "races": 36,
+            "stakes_yen": 28800
+          },
+          "delta_avg_brier": -0.0018015608476815714,
+          "delta_avg_logloss": -0.04993853486351352,
+          "delta_exact_hits": 0,
+          "delta_return_pp": 3.9583333333333304,
+          "descriptive_only": true,
+          "n": 36,
+          "sufficient_for_descriptive_comparison": true
+        },
+        "venue:11": {
+          "baseline": {
+            "brier_sum": 34.30688016608025,
+            "head_coverage": 0.7142857142857143,
+            "heads_covered": 25,
+            "hit_rate": 0.2857142857142857,
+            "hits": 10,
+            "hypothetical_return": 0.6903571428571429,
+            "logloss_sum": 150.94264478987407,
+            "mean_brier_120": 0.9801965761737214,
+            "mean_logloss": 4.312646993996402,
+            "misses": {
+              "EXACT_HIT": 10,
+              "HEAD_ABSENT": 10,
+              "HEAD_PRESENT_SECOND_ABSENT": 8,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 6,
+              "SECOND_THIRD_SWAPPED": 1
+            },
+            "pair_coverage": 0.45714285714285713,
+            "pairs_covered": 16,
+            "payout_yen": 19330,
+            "races": 35,
+            "stakes_yen": 28000
+          },
+          "calibrated": {
+            "brier_sum": 34.22995533613632,
+            "head_coverage": 0.6285714285714286,
+            "heads_covered": 22,
+            "hit_rate": 0.34285714285714286,
+            "hits": 12,
+            "hypothetical_return": 0.8517857142857143,
+            "logloss_sum": 148.149149903475,
+            "mean_brier_120": 0.9779987238896092,
+            "mean_logloss": 4.232832854385,
+            "misses": {
+              "EXACT_HIT": 12,
+              "HEAD_ABSENT": 13,
+              "HEAD_PRESENT_SECOND_ABSENT": 4,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 3,
+              "SECOND_THIRD_SWAPPED": 3
+            },
+            "pair_coverage": 0.42857142857142855,
+            "pairs_covered": 15,
+            "payout_yen": 23850,
+            "races": 35,
+            "stakes_yen": 28000
+          },
+          "delta_avg_brier": -0.0021978522841121784,
+          "delta_avg_logloss": -0.07981413961140138,
+          "delta_exact_hits": 2,
+          "delta_return_pp": 16.142857142857135,
+          "descriptive_only": true,
+          "n": 35,
+          "sufficient_for_descriptive_comparison": true
+        },
+        "venue:12": {
+          "baseline": {
+            "brier_sum": 10.553261077747257,
+            "head_coverage": 1,
+            "heads_covered": 11,
+            "hit_rate": 0.36363636363636365,
+            "hits": 4,
+            "hypothetical_return": 0.5409090909090909,
+            "logloss_sum": 39.798229660908724,
+            "mean_brier_120": 0.959387370704296,
+            "mean_logloss": 3.6180208782644296,
+            "misses": {
+              "EXACT_HIT": 4,
+              "HEAD_ABSENT": 0,
+              "HEAD_PRESENT_SECOND_ABSENT": 1,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 5,
+              "SECOND_THIRD_SWAPPED": 1
+            },
+            "pair_coverage": 0.8181818181818182,
+            "pairs_covered": 9,
+            "payout_yen": 4760,
+            "races": 11,
+            "stakes_yen": 8800
+          },
+          "calibrated": {
+            "brier_sum": 10.485092622263352,
+            "head_coverage": 1,
+            "heads_covered": 11,
+            "hit_rate": 0.45454545454545453,
+            "hits": 5,
+            "hypothetical_return": 0.8068181818181818,
+            "logloss_sum": 37.73302647235734,
+            "mean_brier_120": 0.9531902383875774,
+            "mean_logloss": 3.430275133850667,
+            "misses": {
+              "EXACT_HIT": 5,
+              "HEAD_ABSENT": 0,
+              "HEAD_PRESENT_SECOND_ABSENT": 0,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 3,
+              "SECOND_THIRD_SWAPPED": 3
+            },
+            "pair_coverage": 0.8181818181818182,
+            "pairs_covered": 9,
+            "payout_yen": 7100,
+            "races": 11,
+            "stakes_yen": 8800
+          },
+          "delta_avg_brier": -0.00619713231671859,
+          "delta_avg_logloss": -0.18774574441376268,
+          "delta_exact_hits": 1,
+          "delta_return_pp": 26.590909090909086,
+          "descriptive_only": true,
+          "n": 11,
+          "sufficient_for_descriptive_comparison": false
+        },
+        "venue:13": {
+          "baseline": {
+            "brier_sum": 11.552686454364734,
+            "head_coverage": 0.6666666666666666,
+            "heads_covered": 8,
+            "hit_rate": 0.5,
+            "hits": 6,
+            "hypothetical_return": 0.5645833333333333,
+            "logloss_sum": 47.25770946588654,
+            "mean_brier_120": 0.9627238711970612,
+            "mean_logloss": 3.9381424554905453,
+            "misses": {
+              "EXACT_HIT": 6,
+              "HEAD_ABSENT": 4,
+              "HEAD_PRESENT_SECOND_ABSENT": 0,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 1,
+              "SECOND_THIRD_SWAPPED": 1
+            },
+            "pair_coverage": 0.5833333333333334,
+            "pairs_covered": 7,
+            "payout_yen": 5420,
+            "races": 12,
+            "stakes_yen": 9600
+          },
+          "calibrated": {
+            "brier_sum": 11.548832730370574,
+            "head_coverage": 0.5833333333333334,
+            "heads_covered": 7,
+            "hit_rate": 0.5,
+            "hits": 6,
+            "hypothetical_return": 0.7708333333333334,
+            "logloss_sum": 47.61064899045652,
+            "mean_brier_120": 0.9624027275308812,
+            "mean_logloss": 3.9675540825380433,
+            "misses": {
+              "EXACT_HIT": 6,
+              "HEAD_ABSENT": 5,
+              "HEAD_PRESENT_SECOND_ABSENT": 0,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 0,
+              "SECOND_THIRD_SWAPPED": 1
+            },
+            "pair_coverage": 0.5,
+            "pairs_covered": 6,
+            "payout_yen": 7400,
+            "races": 12,
+            "stakes_yen": 9600
+          },
+          "delta_avg_brier": -0.00032114366617996826,
+          "delta_avg_logloss": 0.029411627047498,
+          "delta_exact_hits": 0,
+          "delta_return_pp": 20.625000000000004,
+          "descriptive_only": true,
+          "n": 12,
+          "sufficient_for_descriptive_comparison": false
+        },
+        "venue:14": {
+          "baseline": {
+            "brier_sum": 21.042042162042883,
+            "head_coverage": 0.8181818181818182,
+            "heads_covered": 18,
+            "hit_rate": 0.5454545454545454,
+            "hits": 12,
+            "hypothetical_return": 1.13125,
+            "logloss_sum": 81.85097670674085,
+            "mean_brier_120": 0.9564564619110402,
+            "mean_logloss": 3.720498941215493,
+            "misses": {
+              "EXACT_HIT": 12,
+              "HEAD_ABSENT": 4,
+              "HEAD_PRESENT_SECOND_ABSENT": 1,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 4,
+              "SECOND_THIRD_SWAPPED": 1
+            },
+            "pair_coverage": 0.7272727272727273,
+            "pairs_covered": 16,
+            "payout_yen": 19910,
+            "races": 22,
+            "stakes_yen": 17600
+          },
+          "calibrated": {
+            "brier_sum": 20.880191489604094,
+            "head_coverage": 0.7727272727272727,
+            "heads_covered": 17,
+            "hit_rate": 0.5454545454545454,
+            "hits": 12,
+            "hypothetical_return": 0.7761363636363636,
+            "logloss_sum": 79.84553017687239,
+            "mean_brier_120": 0.9490996131638224,
+            "mean_logloss": 3.629342280766927,
+            "misses": {
+              "EXACT_HIT": 12,
+              "HEAD_ABSENT": 5,
+              "HEAD_PRESENT_SECOND_ABSENT": 1,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 3,
+              "SECOND_THIRD_SWAPPED": 1
+            },
+            "pair_coverage": 0.6818181818181818,
+            "pairs_covered": 15,
+            "payout_yen": 13660,
+            "races": 22,
+            "stakes_yen": 17600
+          },
+          "delta_avg_brier": -0.007356848747217759,
+          "delta_avg_logloss": -0.0911566604485663,
+          "delta_exact_hits": 0,
+          "delta_return_pp": -35.51136363636365,
+          "descriptive_only": true,
+          "n": 22,
+          "sufficient_for_descriptive_comparison": false
+        },
+        "venue:15": {
+          "baseline": {
+            "brier_sum": 10.859803667807364,
+            "head_coverage": 0.8181818181818182,
+            "heads_covered": 9,
+            "hit_rate": 0.18181818181818182,
+            "hits": 2,
+            "hypothetical_return": 0.6738636363636363,
+            "logloss_sum": 48.428067418178415,
+            "mean_brier_120": 0.9872548788915786,
+            "mean_logloss": 4.402551583470765,
+            "misses": {
+              "EXACT_HIT": 2,
+              "HEAD_ABSENT": 2,
+              "HEAD_PRESENT_SECOND_ABSENT": 3,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 4,
+              "SECOND_THIRD_SWAPPED": 0
+            },
+            "pair_coverage": 0.5454545454545454,
+            "pairs_covered": 6,
+            "payout_yen": 5930,
+            "races": 11,
+            "stakes_yen": 8800
+          },
+          "calibrated": {
+            "brier_sum": 10.870886452129476,
+            "head_coverage": 0.7272727272727273,
+            "heads_covered": 8,
+            "hit_rate": 0.2727272727272727,
+            "hits": 3,
+            "hypothetical_return": 0.7920454545454545,
+            "logloss_sum": 48.19781899939707,
+            "mean_brier_120": 0.9882624047390433,
+            "mean_logloss": 4.381619909036098,
+            "misses": {
+              "EXACT_HIT": 3,
+              "HEAD_ABSENT": 3,
+              "HEAD_PRESENT_SECOND_ABSENT": 2,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 2,
+              "SECOND_THIRD_SWAPPED": 1
+            },
+            "pair_coverage": 0.5454545454545454,
+            "pairs_covered": 6,
+            "payout_yen": 6970,
+            "races": 11,
+            "stakes_yen": 8800
+          },
+          "delta_avg_brier": 0.0010075258474646631,
+          "delta_avg_logloss": -0.020931674434667258,
+          "delta_exact_hits": 1,
+          "delta_return_pp": 11.818181818181817,
+          "descriptive_only": true,
+          "n": 11,
+          "sufficient_for_descriptive_comparison": false
+        },
+        "venue:17": {
+          "baseline": {
+            "brier_sum": 18.132313090010776,
+            "head_coverage": 1,
+            "heads_covered": 19,
+            "hit_rate": 0.631578947368421,
+            "hits": 12,
+            "hypothetical_return": 0.9888157894736842,
+            "logloss_sum": 67.09923300419048,
+            "mean_brier_120": 0.954332267895304,
+            "mean_logloss": 3.53153857916792,
+            "misses": {
+              "EXACT_HIT": 12,
+              "HEAD_ABSENT": 0,
+              "HEAD_PRESENT_SECOND_ABSENT": 3,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 2,
+              "SECOND_THIRD_SWAPPED": 2
+            },
+            "pair_coverage": 0.7368421052631579,
+            "pairs_covered": 14,
+            "payout_yen": 15030,
+            "races": 19,
+            "stakes_yen": 15200
+          },
+          "calibrated": {
+            "brier_sum": 18.02325504612862,
+            "head_coverage": 1,
+            "heads_covered": 19,
+            "hit_rate": 0.631578947368421,
+            "hits": 12,
+            "hypothetical_return": 0.9888157894736842,
+            "logloss_sum": 64.20720618460564,
+            "mean_brier_120": 0.9485923708488748,
+            "mean_logloss": 3.379326641295034,
+            "misses": {
+              "EXACT_HIT": 12,
+              "HEAD_ABSENT": 0,
+              "HEAD_PRESENT_SECOND_ABSENT": 3,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 2,
+              "SECOND_THIRD_SWAPPED": 2
+            },
+            "pair_coverage": 0.7368421052631579,
+            "pairs_covered": 14,
+            "payout_yen": 15030,
+            "races": 19,
+            "stakes_yen": 15200
+          },
+          "delta_avg_brier": -0.005739897046429188,
+          "delta_avg_logloss": -0.15221193787288634,
+          "delta_exact_hits": 0,
+          "delta_return_pp": 0,
+          "descriptive_only": true,
+          "n": 19,
+          "sufficient_for_descriptive_comparison": false
+        },
+        "venue:20": {
+          "baseline": {
+            "brier_sum": 20.259267467743342,
+            "head_coverage": 0.8095238095238095,
+            "heads_covered": 17,
+            "hit_rate": 0.5238095238095238,
+            "hits": 11,
+            "hypothetical_return": 1.1666666666666667,
+            "logloss_sum": 82.08919386410977,
+            "mean_brier_120": 0.9647270222734925,
+            "mean_logloss": 3.909009231624275,
+            "misses": {
+              "EXACT_HIT": 11,
+              "HEAD_ABSENT": 4,
+              "HEAD_PRESENT_SECOND_ABSENT": 3,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 3,
+              "SECOND_THIRD_SWAPPED": 0
+            },
+            "pair_coverage": 0.6666666666666666,
+            "pairs_covered": 14,
+            "payout_yen": 19600,
+            "races": 21,
+            "stakes_yen": 16800
+          },
+          "calibrated": {
+            "brier_sum": 20.246328767061357,
+            "head_coverage": 0.6190476190476191,
+            "heads_covered": 13,
+            "hit_rate": 0.47619047619047616,
+            "hits": 10,
+            "hypothetical_return": 0.7160714285714286,
+            "logloss_sum": 81.28669886263305,
+            "mean_brier_120": 0.9641108936695885,
+            "mean_logloss": 3.870795183934907,
+            "misses": {
+              "EXACT_HIT": 10,
+              "HEAD_ABSENT": 8,
+              "HEAD_PRESENT_SECOND_ABSENT": 1,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 2,
+              "SECOND_THIRD_SWAPPED": 0
+            },
+            "pair_coverage": 0.5714285714285714,
+            "pairs_covered": 12,
+            "payout_yen": 12030,
+            "races": 21,
+            "stakes_yen": 16800
+          },
+          "delta_avg_brier": -0.0006161286039040315,
+          "delta_avg_logloss": -0.03821404768936798,
+          "delta_exact_hits": -1,
+          "delta_return_pp": -45.05952380952382,
+          "descriptive_only": true,
+          "n": 21,
+          "sufficient_for_descriptive_comparison": false
+        },
+        "venue:24": {
+          "baseline": {
+            "brier_sum": 34.60665619409446,
+            "head_coverage": 0.8888888888888888,
+            "heads_covered": 32,
+            "hit_rate": 0.5277777777777778,
+            "hits": 19,
+            "hypothetical_return": 0.6135416666666667,
+            "logloss_sum": 132.53901625876713,
+            "mean_brier_120": 0.9612960053915128,
+            "mean_logloss": 3.6816393405213095,
+            "misses": {
+              "EXACT_HIT": 19,
+              "HEAD_ABSENT": 4,
+              "HEAD_PRESENT_SECOND_ABSENT": 4,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 9,
+              "SECOND_THIRD_SWAPPED": 0
+            },
+            "pair_coverage": 0.7777777777777778,
+            "pairs_covered": 28,
+            "payout_yen": 17670,
+            "races": 36,
+            "stakes_yen": 28800
+          },
+          "calibrated": {
+            "brier_sum": 34.35557663310351,
+            "head_coverage": 0.8333333333333334,
+            "heads_covered": 30,
+            "hit_rate": 0.6388888888888888,
+            "hits": 23,
+            "hypothetical_return": 0.703125,
+            "logloss_sum": 128.28036488048792,
+            "mean_brier_120": 0.9543215731417641,
+            "mean_logloss": 3.5633434689024424,
+            "misses": {
+              "EXACT_HIT": 23,
+              "HEAD_ABSENT": 6,
+              "HEAD_PRESENT_SECOND_ABSENT": 1,
+              "HEAD_SECOND_PRESENT_THIRD_ABSENT": 4,
+              "SECOND_THIRD_SWAPPED": 2
+            },
+            "pair_coverage": 0.7777777777777778,
+            "pairs_covered": 28,
+            "payout_yen": 20250,
+            "races": 36,
+            "stakes_yen": 28800
+          },
+          "delta_avg_brier": -0.006974432249748697,
+          "delta_avg_logloss": -0.11829587161886712,
+          "delta_exact_hits": 4,
+          "delta_return_pp": 8.958333333333336,
+          "descriptive_only": true,
+          "n": 36,
+          "sufficient_for_descriptive_comparison": true
+        }
+      }
+    }
+  ],
+  "summaries": [
+    {
+      "dates": [
+        "2026-09-28",
+        "2026-09-29",
+        "2026-09-30"
+      ],
+      "n": 387,
+      "baseline": {
+        "hits": 138,
+        "payout": 223640,
+        "hit_rate": 0.35658914728682173,
+        "roi": 0.7223514211886305,
+        "nll": 4.146730284469145,
+        "brier": 0.9754374505811175
+      },
+      "calibrated": {
+        "hits": 145,
+        "payout": 221420,
+        "hit_rate": 0.37467700258397935,
+        "roi": 0.7151808785529715,
+        "nll": 4.066283395429211,
+        "brier": 0.9721577064076801
+      },
+      "diff": {
+        "hits": 7,
+        "roi_pp": -0.7170542635658972,
+        "nll": -0.08044688903993436,
+        "brier": -0.00327974417343746
+      },
+      "venue_count": 14,
+      "stage_count": 6
+    },
+    {
+      "dates": [
+        "2026-10-24",
+        "2026-10-25",
+        "2026-10-26"
+      ],
+      "n": 376,
+      "baseline": {
+        "hits": 149,
+        "payout": 246490,
+        "hit_rate": 0.3962765957446808,
+        "roi": 0.8194481382978723,
+        "nll": 4.053780394280116,
+        "brier": 0.9712294575963862
+      },
+      "calibrated": {
+        "hits": 165,
+        "payout": 253230,
+        "hit_rate": 0.43882978723404253,
+        "roi": 0.8418550531914893,
+        "nll": 3.9666556977039353,
+        "brier": 0.9677289481996644
+      },
+      "diff": {
+        "hits": 16,
+        "roi_pp": 2.2406914893617014,
+        "nll": -0.0871246965761805,
+        "brier": -0.0035005093967218626
+      },
+      "venue_count": 15,
+      "stage_count": 6
+    }
+  ],
+  "stage_descriptive_comparison": [
+    {
+      "stage": "stage:FINAL",
+      "cohorts": [
+        {
+          "n": 4,
+          "delta_hits": 0,
+          "roi_pp": 0,
+          "nll": -0.22081581928308047,
+          "brier": -0.010924617328647357,
+          "adequate": false
+        },
+        {
+          "n": 7,
+          "delta_hits": 1,
+          "roi_pp": 24.28571428571429,
+          "nll": -0.15274779597110388,
+          "brier": -0.010330125184457528,
+          "adequate": false
+        }
+      ]
+    },
+    {
+      "stage": "stage:GENERAL",
+      "cohorts": [
+        {
+          "n": 83,
+          "delta_hits": 0,
+          "roi_pp": -9.533132530120481,
+          "nll": -0.08061625279467588,
+          "brier": -0.003042151256360426,
+          "adequate": true
+        },
+        {
+          "n": 104,
+          "delta_hits": 6,
+          "roi_pp": 3.76201923076922,
+          "nll": -0.057705909692966184,
+          "brier": -0.002125914895362735,
+          "adequate": true
+        }
+      ]
+    },
+    {
+      "stage": "stage:QUALIFYING",
+      "cohorts": [
+        {
+          "n": 193,
+          "delta_hits": 1,
+          "roi_pp": -4.68264248704664,
+          "nll": -0.05195189648854193,
+          "brier": -0.002099026865545084,
+          "adequate": true
+        },
+        {
+          "n": 157,
+          "delta_hits": 8,
+          "roi_pp": -0.1273885350318471,
+          "nll": -0.07186820768918345,
+          "brier": -0.002987019997663043,
+          "adequate": true
+        }
+      ]
+    },
+    {
+      "stage": "stage:SELECTION",
+      "cohorts": [
+        {
+          "n": 18,
+          "delta_hits": 6,
+          "roi_pp": 80.625,
+          "nll": -0.23380944953135963,
+          "brier": -0.008282942952417605,
+          "adequate": false
+        },
+        {
+          "n": 16,
+          "delta_hits": 1,
+          "roi_pp": 18.281249999999993,
+          "nll": -0.17926386936738314,
+          "brier": -0.005652511299312768,
+          "adequate": false
+        }
+      ]
+    },
+    {
+      "stage": "stage:SEMIFINAL",
+      "cohorts": [
+        {
+          "n": 16,
+          "delta_hits": 0,
+          "roi_pp": 0,
+          "nll": -0.22393370051928452,
+          "brier": -0.009416383954297558,
+          "adequate": false
+        },
+        {
+          "n": 22,
+          "delta_hits": 0,
+          "roi_pp": 0,
+          "nll": -0.21272596641105768,
+          "brier": -0.008622238991772169,
+          "adequate": false
+        }
+      ]
+    },
+    {
+      "stage": "stage:UNSPECIFIED",
+      "cohorts": [
+        {
+          "n": 73,
+          "delta_hits": 0,
+          "roi_pp": -0.46232876712328785,
+          "nll": -0.07863436270141122,
+          "brier": -0.0036739269871967073,
+          "adequate": true
+        },
+        {
+          "n": 70,
+          "delta_hits": 0,
+          "roi_pp": 0.12499999999999734,
+          "nll": -0.09795335649506587,
+          "brier": -0.003909913278820287,
+          "adequate": true
+        }
+      ]
+    }
+  ],
+  "venue_descriptive_comparison": [
+    {
+      "venue": "venue:01",
+      "cohorts": [
+        null,
+        {
+          "n": 22,
+          "nll": -0.016806200084443113,
+          "brier": -0.002920625401638288,
+          "roi_pp": 7.443181818181821,
+          "adequate": false
+        }
+      ]
+    },
+    {
+      "venue": "venue:02",
+      "cohorts": [
+        {
+          "n": 33,
+          "nll": -0.10243817941889466,
+          "brier": -0.0044940934577060165,
+          "roi_pp": -10.56818181818181,
+          "adequate": true
+        },
+        null
+      ]
+    },
+    {
+      "venue": "venue:03",
+      "cohorts": [
+        {
+          "n": 33,
+          "nll": -0.06611334541717095,
+          "brier": -0.0024463557222993426,
+          "roi_pp": -59.54545454545453,
+          "adequate": true
+        },
+        null
+      ]
+    },
+    {
+      "venue": "venue:04",
+      "cohorts": [
+        {
+          "n": 32,
+          "nll": -0.0009011614368237275,
+          "brier": -0.0003708513150919579,
+          "roi_pp": 10.664062499999993,
+          "adequate": true
+        },
+        {
+          "n": 34,
+          "nll": -0.01778931870221001,
+          "brier": -0.00003362500955572667,
+          "roi_pp": 7.279411764705879,
+          "adequate": true
+        }
+      ]
+    },
+    {
+      "venue": "venue:05",
+      "cohorts": [
+        {
+          "n": 36,
+          "nll": -0.03579639429768999,
+          "brier": -0.003160680604010646,
+          "roi_pp": 11.423611111111109,
+          "adequate": true
+        },
+        {
+          "n": 31,
+          "nll": -0.12687685613429833,
+          "brier": -0.004875259667073584,
+          "roi_pp": 26.129032258064512,
+          "adequate": true
+        }
+      ]
+    },
+    {
+      "venue": "venue:06",
+      "cohorts": [
+        {
+          "n": 11,
+          "nll": -0.16503223788963695,
+          "brier": -0.005997012130520618,
+          "roi_pp": -33.63636363636364,
+          "adequate": false
+        },
+        {
+          "n": 31,
+          "nll": -0.152528276795306,
+          "brier": -0.005742267685862834,
+          "roi_pp": 3.669354838709671,
+          "adequate": true
+        }
+      ]
+    },
+    {
+      "venue": "venue:07",
+      "cohorts": [
+        {
+          "n": 24,
+          "nll": -0.09681724297831806,
+          "brier": -0.0039906999050827174,
+          "roi_pp": 0,
+          "adequate": false
+        },
+        null
+      ]
+    },
+    {
+      "venue": "venue:08",
+      "cohorts": [
+        null,
+        {
+          "n": 21,
+          "nll": -0.1265302776853643,
+          "brier": -0.0064466736259305435,
+          "roi_pp": 16.785714285714292,
+          "adequate": false
+        }
+      ]
+    },
+    {
+      "venue": "venue:09",
+      "cohorts": [
+        {
+          "n": 23,
+          "nll": -0.13957588023491496,
+          "brier": -0.0055749825413302645,
+          "roi_pp": -4.728260869565215,
+          "adequate": false
+        },
+        {
+          "n": 34,
+          "nll": -0.11685893438950767,
+          "brier": -0.0014301069503134256,
+          "roi_pp": -24.044117647058837,
+          "adequate": true
+        }
+      ]
+    },
+    {
+      "venue": "venue:10",
+      "cohorts": [
+        null,
+        {
+          "n": 36,
+          "nll": -0.04993853486351352,
+          "brier": -0.0018015608476815714,
+          "roi_pp": 3.9583333333333304,
+          "adequate": true
+        }
+      ]
+    },
+    {
+      "venue": "venue:11",
+      "cohorts": [
+        null,
+        {
+          "n": 35,
+          "nll": -0.07981413961140138,
+          "brier": -0.0021978522841121784,
+          "roi_pp": 16.142857142857135,
+          "adequate": true
+        }
+      ]
+    },
+    {
+      "venue": "venue:12",
+      "cohorts": [
+        null,
+        {
+          "n": 11,
+          "nll": -0.18774574441376268,
+          "brier": -0.00619713231671859,
+          "roi_pp": 26.590909090909086,
+          "adequate": false
+        }
+      ]
+    },
+    {
+      "venue": "venue:13",
+      "cohorts": [
+        {
+          "n": 24,
+          "nll": -0.11985722588814918,
+          "brier": -0.00550476911626685,
+          "roi_pp": 23.54166666666667,
+          "adequate": false
+        },
+        {
+          "n": 12,
+          "nll": 0.029411627047498,
+          "brier": -0.00032114366617996826,
+          "roi_pp": 20.625000000000004,
+          "adequate": false
+        }
+      ]
+    },
+    {
+      "venue": "venue:14",
+      "cohorts": [
+        {
+          "n": 35,
+          "nll": 0.006684877563085223,
+          "brier": -0.001384694915966489,
+          "roi_pp": 10.464285714285715,
+          "adequate": true
+        },
+        {
+          "n": 22,
+          "nll": -0.0911566604485663,
+          "brier": -0.007356848747217759,
+          "roi_pp": -35.51136363636365,
+          "adequate": false
+        }
+      ]
+    },
+    {
+      "venue": "venue:15",
+      "cohorts": [
+        {
+          "n": 31,
+          "nll": -0.10387094735112878,
+          "brier": -0.003722627886897256,
+          "roi_pp": -6.491935483870959,
+          "adequate": true
+        },
+        {
+          "n": 11,
+          "nll": -0.020931674434667258,
+          "brier": 0.0010075258474646631,
+          "roi_pp": 11.818181818181817,
+          "adequate": false
+        }
+      ]
+    },
+    {
+      "venue": "venue:16",
+      "cohorts": [
+        {
+          "n": 34,
+          "nll": -0.1278752370481273,
+          "brier": -0.00304231503988317,
+          "roi_pp": 16.654411764705877,
+          "adequate": true
+        },
+        null
+      ]
+    },
+    {
+      "venue": "venue:17",
+      "cohorts": [
+        null,
+        {
+          "n": 19,
+          "nll": -0.15221193787288634,
+          "brier": -0.005739897046429188,
+          "roi_pp": 0,
+          "adequate": false
+        }
+      ]
+    },
+    {
+      "venue": "venue:19",
+      "cohorts": [
+        {
+          "n": 23,
+          "nll": -0.05751760320855137,
+          "brier": -0.003950779752916245,
+          "roi_pp": 15.978260869565213,
+          "adequate": false
+        },
+        null
+      ]
+    },
+    {
+      "venue": "venue:20",
+      "cohorts": [
+        null,
+        {
+          "n": 21,
+          "nll": -0.03821404768936798,
+          "brier": -0.0006161286039040315,
+          "roi_pp": -45.05952380952382,
+          "adequate": false
+        }
+      ]
+    },
+    {
+      "venue": "venue:23",
+      "cohorts": [
+        {
+          "n": 12,
+          "nll": -0.05987254501922301,
+          "brier": 0.002701262818900707,
+          "roi_pp": -14.16666666666666,
+          "adequate": false
+        },
+        null
+      ]
+    },
+    {
+      "venue": "venue:24",
+      "cohorts": [
+        {
+          "n": 36,
+          "nll": -0.12923025378734865,
+          "brier": -0.004631504487644378,
+          "roi_pp": 7.465277777777768,
+          "adequate": true
+        },
+        {
+          "n": 36,
+          "nll": -0.11829587161886712,
+          "brier": -0.006974432249748697,
+          "roi_pp": 8.958333333333336,
+          "adequate": true
+        }
+      ]
+    }
+  ],
+  "minimum_exploratory_n": 30,
+  "subgroup_router_enabled": false,
+  "production_model_changed": false,
+  "forward_verified_races": 0,
+  "restrictions": [
+    "These are posterior K-labeled historical diagnostics, not genuine preclose Forward results.",
+    "K postrace marker is NOT a predictor, and absence of marker is UNVERIFIED, not accident-free.",
+    "No venue or stage model was fitted, chosen or switched using test K or payouts.",
+    "Subgroups with <30 observations in a cohort are too small even for descriptive comparison. N>=30 is still NOT statistical significance.",
+    "Multiple subgroup comparisons create selection bias. A future untouched period is mandatory for testing any derived rule.",
+    "B-only probabilities trained on earlier dates; no trained coefficients changed.",
+    "Raw official LZH files reside only on the disposable runner."
+  ]
+}

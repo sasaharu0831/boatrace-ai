@@ -1,0 +1,246 @@
+import hashlib
+import errno
+import os
+import shutil
+from pathlib import Path
+import sqlite3
+import sys
+import tempfile
+import unittest
+from unittest.mock import patch
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+from offline_backup import backup, copy_verified, separate_roots, sha256, verify_backup
+
+FAKE_LZH = b"\x15\x00-lh5-" + b"abc123" * 11
+
+
+class OfflineBackupTests(unittest.TestCase):
+    def test_external_volume_without_hardlinks_saves_and_verifies_raw(self):
+        with tempfile.TemporaryDirectory() as td:
+            src, dest = Path(td) / "source", Path(td) / "backup"
+            item = src / "raw" / "B" / "2026" / "b261028.lzh"
+            item.parent.mkdir(parents=True)
+            item.write_bytes(FAKE_LZH)
+            with patch.dict(os.environ, {"GITHUB_ACTIONS": "false"}), \
+                 patch("offline_backup.os.link",
+                       side_effect=OSError(errno.EOPNOTSUPP, "hardlinks unsupported")):
+                first = backup(src, dest, max_files=1)
+                second = backup(src, dest, max_files=1)
+            self.assertEqual(len(first["new_file_copies"]), 1)
+            self.assertEqual(second["new_file_copies"], [])
+            self.assertTrue(verify_backup(dest)["verified_ok"])
+
+    def test_external_volume_without_hardlinks_saves_sqlite(self):
+        with tempfile.TemporaryDirectory() as td:
+            src, dest = Path(td) / "source", Path(td) / "backup"
+            src.mkdir()
+            with sqlite3.connect(src / "historical_only.sqlite3") as con:
+                con.execute("CREATE TABLE t(n INTEGER)")
+                con.execute("INSERT INTO t VALUES (91)")
+            with patch.dict(os.environ, {"GITHUB_ACTIONS": "false"}), \
+                 patch("offline_backup.os.link",
+                       side_effect=OSError(errno.EPERM, "FUSE permission denied")):
+                record = backup(src, dest)
+            self.assertEqual(record["sqlite_snapshots"][0]["status"], "copied")
+            self.assertTrue(verify_backup(dest)["verified_ok"])
+            with sqlite3.connect(record["sqlite_snapshots"][0]["file"]) as con:
+                self.assertEqual(con.execute("SELECT n FROM t").fetchone()[0], 91)
+
+    def test_external_volume_fallback_rejects_overwrite(self):
+        with tempfile.TemporaryDirectory() as td:
+            src, dest = Path(td) / "source", Path(td) / "backup"
+            src.write_bytes(FAKE_LZH)
+            dest.write_bytes(b"not-original")
+            with patch("offline_backup.os.link",
+                       side_effect=OSError(errno.EOPNOTSUPP, "no hardlinks")):
+                with self.assertRaises(ValueError):
+                    copy_verified(src, dest, max_bytes=1000)
+            self.assertEqual(dest.read_bytes(), b"not-original")
+
+    def test_verified_copy_and_resume(self):
+        with tempfile.TemporaryDirectory() as td:
+            src = Path(td) / "source"
+            dst = Path(td) / "second-storage"
+            src.mkdir()
+            raw = src / "raw" / "B" / "2026"
+            raw.mkdir(parents=True)
+            path = raw / "b261028.lzh"
+            path.write_bytes(FAKE_LZH)
+            with patch.dict(os.environ, {"GITHUB_ACTIONS": "false"}):
+                first = backup(src, dst, max_files=1)
+                second = backup(src, dst, max_files=1)
+            target = dst / "files" / "raw" / "B" / "2026" / "b261028.lzh"
+            self.assertEqual(first["new_file_copies"], ["raw/B/2026/b261028.lzh"])
+            self.assertEqual(second["new_file_copies"], [])
+            self.assertEqual(second["matching_existing_files"], 1)
+            self.assertEqual(sha256(target), hashlib.sha256(FAKE_LZH).hexdigest())
+            self.assertTrue((dst / "backup_audit.jsonl").exists())
+
+    def test_raw_backlog_does_not_starve_checkpoint_metadata(self):
+        with tempfile.TemporaryDirectory() as td:
+            src, dest = Path(td) / "source", Path(td) / "backup"
+            raw = src / "raw" / "B" / "2026"
+            raw.mkdir(parents=True)
+            (raw / "b261027.lzh").write_bytes(FAKE_LZH)
+            (raw / "b261028.lzh").write_bytes(FAKE_LZH)
+            (src / "manifest.jsonl").write_text('{"day":"2026-10-28"}\n', encoding="utf-8")
+            with patch.dict(os.environ, {"GITHUB_ACTIONS": "false"}):
+                first = backup(src, dest, max_files=1)
+                second = backup(src, dest, max_files=1)
+                third = backup(src, dest, max_files=1)
+            self.assertEqual(first["new_raw_copies"], 1)
+            self.assertEqual(first["new_metadata_copies"], 1)
+            self.assertFalse(first["copy_batch_complete"])
+            self.assertEqual(first["deferred_raw"], 1)
+            self.assertEqual(second["new_raw_copies"], 1)
+            self.assertTrue(second["copy_batch_complete"])
+            self.assertTrue(third["copy_batch_complete"])
+            self.assertEqual(len(list((dest / "metadata-versions").glob("manifest-*.jsonl"))), 1)
+            self.assertEqual(verify_backup(dest)["verified_objects"], 3)
+
+    def test_metadata_revised_during_copy_is_not_accepted_as_named_version(self):
+        with tempfile.TemporaryDirectory() as td:
+            src, dest = Path(td) / "source", Path(td) / "backup"
+            src.mkdir()
+            manifest = src / "manifest.jsonl"
+            manifest.write_text('{"phase":"old"}\n', encoding="utf-8")
+            real_copy = copy_verified
+
+            def mutate_then_copy(source, destination, *, max_bytes):
+                if source.name == "manifest.jsonl":
+                    source.write_text('{"phase":"new"}\n', encoding="utf-8")
+                return real_copy(source, destination, max_bytes=max_bytes)
+
+            with patch.dict(os.environ, {"GITHUB_ACTIONS": "false"}), \
+                 patch("offline_backup.copy_verified", side_effect=mutate_then_copy):
+                report = backup(src, dest, max_files=1)
+            self.assertEqual(len(report["conflicts"]), 1)
+            self.assertIn("metadata changed during backup", report["conflicts"][0]["error"])
+            self.assertFalse(report["copy_batch_complete"])
+
+    def test_mutable_manifest_is_versioned_across_runs(self):
+        with tempfile.TemporaryDirectory() as td:
+            src, dest = Path(td) / "source", Path(td) / "backup"
+            src.mkdir()
+            manifest = src / "manifest.jsonl"
+            manifest.write_text('{"day":"2026-10-27"}\\n', encoding="utf-8")
+            with patch.dict(os.environ, {"GITHUB_ACTIONS": "false"}):
+                first = backup(src, dest, max_files=1)
+                manifest.write_text('{"day":"2026-10-27"}\\n{"day":"2026-10-28"}\\n',
+                                    encoding="utf-8")
+                second = backup(src, dest, max_files=1)
+            versions = sorted((dest / "metadata-versions").glob("manifest-*.jsonl"))
+            self.assertEqual(len(versions), 2)
+            self.assertEqual(first["conflicts"], [])
+            self.assertEqual(second["conflicts"], [])
+            self.assertEqual(len(second["new_file_copies"]), 1)
+
+    def test_changed_destination_not_silently_overwritten(self):
+        with tempfile.TemporaryDirectory() as td:
+            src, dest = Path(td) / "source", Path(td) / "target"
+            source = src / "raw" / "K" / "2026"
+            source.mkdir(parents=True)
+            path = source / "k261028.lzh"
+            path.write_bytes(FAKE_LZH)
+            with patch.dict(os.environ, {"GITHUB_ACTIONS": "false"}):
+                backup(src, dest, max_files=1)
+                dst_file = dest / "files" / "raw" / "K" / "2026" / "k261028.lzh"
+                dst_file.write_bytes(b"tampered")
+                report = backup(src, dest, max_files=1)
+            self.assertEqual(len(report["conflicts"]), 1)
+            self.assertEqual(dst_file.read_bytes(), b"tampered")
+
+    def test_sqlite_is_snapshotted_and_checked(self):
+        with tempfile.TemporaryDirectory() as td:
+            src, dest = Path(td) / "source", Path(td) / "backup"
+            src.mkdir()
+            database = src / "historical_only.sqlite3"
+            with sqlite3.connect(database) as con:
+                con.execute("CREATE TABLE t(v TEXT)")
+                con.execute("INSERT INTO t(v) VALUES ('readable')")
+                con.commit()
+            with patch.dict(os.environ, {"GITHUB_ACTIONS": "false"}):
+                record = backup(src, dest)
+            self.assertEqual(len(record["sqlite_snapshots"]), 1)
+            path = Path(record["sqlite_snapshots"][0]["file"])
+            self.assertTrue(path.is_file())
+            with sqlite3.connect(path) as con:
+                self.assertEqual(con.execute("SELECT v FROM t").fetchone()[0], "readable")
+
+    def test_verify_with_source_deleted_and_detect_corruption(self):
+        with tempfile.TemporaryDirectory() as td:
+            src, dest = Path(td) / "source", Path(td) / "backup"
+            file = src / "raw" / "B" / "2026" / "b261028.lzh"
+            file.parent.mkdir(parents=True)
+            file.write_bytes(FAKE_LZH)
+            with patch.dict(os.environ, {"GITHUB_ACTIONS": "false"}):
+                backup(src, dest, max_files=1)
+            file.unlink()
+            verified = verify_backup(dest)
+            self.assertTrue(verified["verified_ok"])
+            self.assertEqual(verified["verified_objects"], 1)
+            stored = dest / "files" / "raw" / "B" / "2026" / "b261028.lzh"
+            stored.write_bytes(b"corruption")
+            failed = verify_backup(dest)
+            self.assertFalse(failed["verified_ok"])
+            self.assertEqual(failed["damaged_or_missing"][0]["reason"], "sha256 mismatch")
+
+    def test_receipts_record_versioned_manifest(self):
+        with tempfile.TemporaryDirectory() as td:
+            src, dest = Path(td) / "source", Path(td) / "backup"
+            src.mkdir()
+            manifest = src / "manifest.jsonl"
+            with patch.dict(os.environ, {"GITHUB_ACTIONS": "false"}):
+                manifest.write_text('{"a":1}\\n', encoding="utf-8")
+                first = backup(src, dest, max_files=1)
+                manifest.write_text('{"a":2}\\n', encoding="utf-8")
+                second = backup(src, dest, max_files=1)
+            self.assertNotEqual(first["file_receipts"][0]["backup_relative"],
+                                second["file_receipts"][0]["backup_relative"])
+            self.assertEqual(verify_backup(dest)["verified_objects"], 2)
+
+    def test_moved_backup_directory_keeps_relative_sqlite_receipts_valid(self):
+        with tempfile.TemporaryDirectory() as td:
+            src = Path(td) / "source"
+            dst = Path(td) / "first-backup"
+            moved = Path(td) / "restored-backup"
+            src.mkdir()
+            db = src / "historical_only.sqlite3"
+            with sqlite3.connect(db) as con:
+                con.execute("CREATE TABLE historical(v INTEGER)")
+                con.execute("INSERT INTO historical VALUES (42)")
+            with patch.dict(os.environ, {"GITHUB_ACTIONS": "false"}):
+                backup(src, dst)
+            shutil.move(str(dst), str(moved))
+            report = verify_backup(moved)
+            self.assertTrue(report["verified_ok"])
+            self.assertEqual(report["verified_objects"], 1)
+
+    def test_paths_not_nested_or_ephemeral_ci(self):
+        with tempfile.TemporaryDirectory() as td:
+            src = Path(td) / "source"
+            src.mkdir()
+            with patch.dict(os.environ, {"GITHUB_ACTIONS": "false"}):
+                with self.assertRaises(ValueError):
+                    separate_roots(src, src / "nested")
+                with self.assertRaises(ValueError):
+                    separate_roots(src, src)
+                with self.assertRaises(ValueError):
+                    separate_roots(Path("relative"), Path(td) / "target")
+            with patch.dict(os.environ, {"GITHUB_ACTIONS": "true"}):
+                with self.assertRaises(RuntimeError):
+                    separate_roots(src, Path(td) / "different")
+
+    def test_copy_rejects_oversized_file(self):
+        with tempfile.TemporaryDirectory() as td:
+            src = Path(td) / "s"
+            dst = Path(td) / "d"
+            src.write_bytes(b"abcdefghij")
+            with self.assertRaises(ValueError):
+                copy_verified(src, dst, max_bytes=5)
+            self.assertFalse(dst.exists())
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -1,0 +1,90 @@
+name: One-time B-only venue-stage diagnostic holdout Sep28-Oct26
+on:
+  workflow_dispatch: # Historical 6-day retrieval completed; further requests require manual dispatch
+permissions:
+  contents: read
+concurrency:
+  group: venue-stage-historical-sep28-oct26
+  cancel-in-progress: false
+jobs:
+  diagnostic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: One-time bounded official retrieval gate
+        id: gate
+        env:
+          EVENT: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT" = "workflow_dispatch" ] || [ "$(git log -1 --pretty=%s)" = "Run one-time Sep28-Oct26 frozen venue-stage audit" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "No official network requests after this one-time historical run."
+          fi
+      - uses: actions/setup-python@v5
+        if: steps.gate.outputs.enabled == 'true'
+        with:
+          python-version: '3.12'
+      - name: Offline unit tests
+        if: steps.gate.outputs.enabled == 'true'
+        run: python -W error -m unittest discover -s tests -v
+      - name: Install free LZH tool
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq p7zip-full
+      - name: Download exactly first three old B/K dates - Sep28-30
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python src/boat_free_lab.py collect --start 2026-09-28 --days 3 --root "$RUNNER_TEMP/subgroups" --sleep 2
+      - name: Freeze first B-only audit before reading each K - Sep28-30
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python src/venue_stage_probability_audit.py \
+            --root "$RUNNER_TEMP/subgroups" \
+            --fit-receipt research/role_temperature_aug10_17_train_test.json \
+            --dates 2026-09-28 2026-09-29 2026-09-30 > "$RUNNER_TEMP/cohort1.json"
+      - name: Download exactly second three old B/K dates - Oct24-26
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python src/boat_free_lab.py collect --start 2026-10-24 --days 3 --root "$RUNNER_TEMP/subgroups" --sleep 2
+      - name: Freeze second B-only audit before reading each K - Oct24-26
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python src/venue_stage_probability_audit.py \
+            --root "$RUNNER_TEMP/subgroups" \
+            --fit-receipt research/role_temperature_aug10_17_train_test.json \
+            --dates 2026-10-24 2026-10-25 2026-10-26 > "$RUNNER_TEMP/cohort2.json"
+      - name: Output only SHA and descriptive comparisons with honest denominators
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python - <<'PY'
+          import json, os
+          results=[]
+          for fn in ("cohort1.json","cohort2.json"):
+              r=json.load(open(os.path.join(os.environ["RUNNER_TEMP"],fn),encoding="utf-8"))
+              assert r["mode"]=="HISTORICAL_B_ONLY_VENUE_STAGE_DIAGNOSTICS_NOT_FORWARD"
+              assert r["forward_verified_races"]==0 and r["production_promoted"] is False
+              assert r["subgroup_router_promoted"] is False and r["venue_or_stage_model_changed"] is False
+              assert r["frozen_training_SHA256"]=="a8660f259ab1c88b150aa63f5e663c199ad1d5a68be5484c6f9dfa7e83e4bcbf"
+              results.append(r)
+              print("SUBGROUP_DAYS",json.dumps(r["daily_receipts"],sort_keys=True))
+              for key, row in sorted(r["groups"].items()):
+                  # Full data for independently auditing each stage/venue,
+                  # while never reporting groups as fitted winners.
+                  print("SUBGROUP_STAT",json.dumps({
+                      "dates":r["dates"],"group":key,**row
+                  },sort_keys=True))
+          assert set(results[0]["dates"]).isdisjoint(results[1]["dates"])
+          for r in results:
+              all_n=r["groups"]["overall"]["n"]
+              for prefix in ("venue:","stage:","K_marker:"):
+                  assert sum(x["n"] for k,x in r["groups"].items() if k.startswith(prefix))==all_n
+          PY
+      - name: Never upload raw archives or enable any model router
+        if: always()
+        run: echo "Official B/K temporary only. Subgroup results are postrace historical diagnostics, not a trading strategy."

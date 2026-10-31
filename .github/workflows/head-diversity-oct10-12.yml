@@ -1,0 +1,65 @@
+name: One-time B-only head diversification trial Oct10-12
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/head-diversity-oct10-12.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: one-time-head-diversification-oct10-12
+  cancel-in-progress: true
+jobs:
+  trial:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: No repeated official downloads on PR revisions
+        id: guard
+        env:
+          EVENT: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT" = "workflow_dispatch" ] || [ "$(git log -1 --pretty=%s)" = "Run one-time Oct10-12 head diversified B-only trial" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "No further official requests for this PR revision."
+          fi
+      - uses: actions/setup-python@v5
+        if: steps.guard.outputs.enabled == 'true'
+        with:
+          python-version: '3.12'
+      - name: Offline unit tests
+        if: steps.guard.outputs.enabled == 'true'
+        run: python -W error -m unittest discover -s tests -v
+      - name: Free p7zip LZH utility
+        if: steps.guard.outputs.enabled == 'true'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq p7zip-full
+      - name: Fetch six official B/K files slowly once only
+        if: steps.guard.outputs.enabled == 'true'
+        run: |
+          python src/boat_free_lab.py collect --start 2026-10-10 --days 3 --root "$RUNNER_TEMP/head-trial" --sleep 2
+      - name: Read B and fix tickets before K, compare all three policies equally
+        if: steps.guard.outputs.enabled == 'true'
+        run: |
+          python src/head_diversification_trial.py --root "$RUNNER_TEMP/head-trial" --dates 2026-10-10 2026-10-11 2026-10-12 > "$RUNNER_TEMP/result.json"
+          python - <<'PY'
+          import json, os
+          data=json.load(open(os.path.join(os.environ["RUNNER_TEMP"],"result.json"),encoding="utf-8"))
+          assert data["mode"]=="HISTORICAL_HEAD_DIVERSIFICATION_NOT_FORWARD"
+          assert data["forward_verified_races"]==0 and data["production_promotion"] is False
+          print("TRIAL_DAYS",json.dumps([{"date":d["day"],"B_sha":d["B_sha256"],"K_sha":d["K_sha256"],"ticket_sha":d["B_frozen_sha256"],"frozen":d["B_frozen_races"]} for d in data["per_day"]],sort_keys=True))
+          for name,result in data["aggregate"].items():
+              assert result["races"]>0
+              assert sum(result["miss_reasons"].values())==result["races"]
+              assert result["miss_reasons"]["EXACT_HIT"]==result["hits"]
+              print("TRIAL_POLICY",json.dumps({"name":name,**result},sort_keys=True))
+          PY
+      - name: No raw data upload, production changes, or automated repeat
+        if: always()
+        run: echo "Only historical research aggregates. Raw official B/K ephemeral, no model promotion."

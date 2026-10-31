@@ -1,0 +1,47 @@
+{
+  "report_type": "HISTORICAL_REPLICATION_DECISION_NOT_FORWARD",
+  "reviewed_candidate": "keep_pairs_top2_third2",
+  "baseline": "baseline_local_motor",
+  "automatic_policy": "Require both exact hit and hypothetical payout gains separately in each disjoint cohort, same 8 points. This does NOT authorize production.",
+  "results": [
+    {
+      "cohort": "initial",
+      "dates": [
+        "2026-09-25",
+        "2026-09-26",
+        "2026-09-27"
+      ],
+      "races": 363,
+      "exact_hit_delta": 4,
+      "payout_yen_delta": 7170,
+      "return_percentage_point_delta": 2.46900826446281,
+      "passed_both": true,
+      "head_coverage_equal": true,
+      "pair_coverage_equal": true
+    },
+    {
+      "cohort": "replication",
+      "dates": [
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22"
+      ],
+      "races": 406,
+      "exact_hit_delta": -4,
+      "payout_yen_delta": -6570,
+      "return_percentage_point_delta": -2.022783251231527,
+      "passed_both": false,
+      "head_coverage_equal": true,
+      "pair_coverage_equal": true
+    }
+  ],
+  "passed_historical_replication": false,
+  "production_eligible": false,
+  "genuine_forward_verified_races": 0,
+  "sources": [
+    "research/pair_invariant_20260925_27.json",
+    "research/pair_invariant_20260920_22_replication.json"
+  ],
+  "conclusion": "One positive 363R cohort and one negative 406R replication. Do not promote.",
+  "no_odds_or_K_result_used_in_picks": true
+}

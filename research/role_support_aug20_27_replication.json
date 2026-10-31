@@ -1,0 +1,482 @@
+{
+  "type": "ROLE_SECOND_WITH_BASELINE_HEAD_OR_PAIR_SUPPORT_TWO_DISJOINT_HISTORICAL_COHORTS",
+  "mode": "HISTORICAL_SHADOW_NOT_FORWARD",
+  "source_run": "https://github.com/sasaharu0831/boatrace-ai/actions/runs/41215239740",
+  "model_source": "src/role_support_candidates.py",
+  "fixed_coefficient_source": "src/positional_conditional.py",
+  "cohorts": [
+    {
+      "dates": [
+        "2026-08-20",
+        "2026-08-21",
+        "2026-08-22"
+      ],
+      "sha_receipts": [
+        {
+          "B_frozen": 154,
+          "B_sha256": "51e437d7b10547ee49ad4978a0fa9e9aedcafb85df0146948218f743b945dffb",
+          "K_sha256": "193670fc8ee83ddc22d6e53a97a4896f6af407ff2e53028a18794c85af8b3aa3",
+          "day": "2026-08-20",
+          "evaluated": 146,
+          "tickets_sha256": "0cf78315b9b74cf41962117c1cb533204cf036285521edd7b42dbb5480032a5c"
+        },
+        {
+          "B_frozen": 131,
+          "B_sha256": "94c495668b8d932f3a39592d0614ae4160f500e027355e0100bb5a87bf6803c5",
+          "K_sha256": "e5bcf7f379a02effde8d0ac1617a64a2dddddc94e69c339f7fede88875a592f2",
+          "day": "2026-08-21",
+          "evaluated": 120,
+          "tickets_sha256": "4c227c95a2d82d463a6b22820341af34be12f75a7f51491e9d799b268da7ac0c"
+        },
+        {
+          "B_frozen": 130,
+          "B_sha256": "9e3a0142126ae80ad62b450f723ee4b4dd4da143d6aec6d40bf6bcab6260270f",
+          "K_sha256": "62536fc0bb94ae91da84c173d095e5972d210df44c8003b28fd31fcd0f941a8a",
+          "day": "2026-08-22",
+          "evaluated": 120,
+          "tickets_sha256": "475c8b05cf55983b19ce254acd759ebbfa59dcd6cae1c229ea647d4c9552893f"
+        }
+      ],
+      "models": {
+        "baseline_local_motor": {
+          "K_marker_present": 10,
+          "by_stage": {
+            "FINAL": {
+              "hits": 3,
+              "races": 7
+            },
+            "GENERAL": {
+              "hits": 38,
+              "races": 89
+            },
+            "QUALIFYING": {
+              "hits": 60,
+              "races": 188
+            },
+            "SELECTION": {
+              "hits": 13,
+              "races": 26
+            },
+            "SEMIFINAL": {
+              "hits": 8,
+              "races": 13
+            },
+            "UNSPECIFIED": {
+              "hits": 29,
+              "races": 63
+            }
+          },
+          "gain_hit_only": 0,
+          "head_coverage_rate": 0.8471502590673575,
+          "head_covered": 327,
+          "hits": 151,
+          "hypothetical_hit_rate": 0.3911917098445596,
+          "hypothetical_return_rate": 0.8091968911917099,
+          "lost_hit_only": 0,
+          "misses": {
+            "EXACT_HIT": 151,
+            "HEAD_ABSENT": 59,
+            "HEAD_PRESENT_SECOND_ABSENT": 71,
+            "HEAD_SECOND_PRESENT_THIRD_ABSENT": 90,
+            "SECOND_THIRD_SWAPPED": 15
+          },
+          "pair_coverage_rate": 0.6269430051813472,
+          "pair_covered": 242,
+          "payout_yen": 249880,
+          "races": 386,
+          "stakes_yen": 308800,
+          "tickets_changed": 0
+        },
+        "head_support_role_second": {
+          "K_marker_present": 10,
+          "by_stage": {
+            "FINAL": {
+              "hits": 4,
+              "races": 7
+            },
+            "GENERAL": {
+              "hits": 41,
+              "races": 89
+            },
+            "QUALIFYING": {
+              "hits": 71,
+              "races": 188
+            },
+            "SELECTION": {
+              "hits": 12,
+              "races": 26
+            },
+            "SEMIFINAL": {
+              "hits": 8,
+              "races": 13
+            },
+            "UNSPECIFIED": {
+              "hits": 30,
+              "races": 63
+            }
+          },
+          "gain_hit_only": 38,
+          "head_coverage_rate": 0.8471502590673575,
+          "head_covered": 327,
+          "hits": 166,
+          "hypothetical_hit_rate": 0.43005181347150256,
+          "hypothetical_return_rate": 0.8501943005181347,
+          "lost_hit_only": 23,
+          "misses": {
+            "EXACT_HIT": 166,
+            "HEAD_ABSENT": 59,
+            "HEAD_PRESENT_SECOND_ABSENT": 75,
+            "HEAD_SECOND_PRESENT_THIRD_ABSENT": 48,
+            "SECOND_THIRD_SWAPPED": 38
+          },
+          "pair_coverage_rate": 0.5699481865284974,
+          "pair_covered": 220,
+          "payout_yen": 262540,
+          "races": 386,
+          "stakes_yen": 308800,
+          "tickets_changed": 386
+        },
+        "pair_support_role_second": {
+          "K_marker_present": 10,
+          "by_stage": {
+            "FINAL": {
+              "hits": 4,
+              "races": 7
+            },
+            "GENERAL": {
+              "hits": 42,
+              "races": 89
+            },
+            "QUALIFYING": {
+              "hits": 68,
+              "races": 188
+            },
+            "SELECTION": {
+              "hits": 11,
+              "races": 26
+            },
+            "SEMIFINAL": {
+              "hits": 6,
+              "races": 13
+            },
+            "UNSPECIFIED": {
+              "hits": 28,
+              "races": 63
+            }
+          },
+          "gain_hit_only": 26,
+          "head_coverage_rate": 0.8471502590673575,
+          "head_covered": 327,
+          "hits": 159,
+          "hypothetical_hit_rate": 0.4119170984455959,
+          "hypothetical_return_rate": 0.7903497409326425,
+          "lost_hit_only": 18,
+          "misses": {
+            "EXACT_HIT": 159,
+            "HEAD_ABSENT": 59,
+            "HEAD_PRESENT_SECOND_ABSENT": 65,
+            "HEAD_SECOND_PRESENT_THIRD_ABSENT": 76,
+            "SECOND_THIRD_SWAPPED": 27
+          },
+          "pair_coverage_rate": 0.6269430051813472,
+          "pair_covered": 242,
+          "payout_yen": 244060,
+          "races": 386,
+          "stakes_yen": 308800,
+          "tickets_changed": 386
+        }
+      }
+    },
+    {
+      "dates": [
+        "2026-08-25",
+        "2026-08-26",
+        "2026-08-27"
+      ],
+      "sha_receipts": [
+        {
+          "B_frozen": 132,
+          "B_sha256": "9da7dfd29d5745bdf8be55ac5da29e738a078f526ceb326f6719a765d838a62a",
+          "K_sha256": "c5c672b93739c6b106e5e069d73063473ec566b96691190f84b0ff5fb4aaeb4f",
+          "day": "2026-08-25",
+          "evaluated": 120,
+          "tickets_sha256": "bcbd63b8d9793a98802c4d0389b47651933afdf13b1f4740bad68f170e429ade"
+        },
+        {
+          "B_frozen": 156,
+          "B_sha256": "5017d5b9d441298fc36c6bf8567663dea9668df13ffbabcbd721ea396ca25a35",
+          "K_sha256": "4df31df04fe42e10e3d6ed745d17720b76a05fc994612b3090cded20c83c1868",
+          "day": "2026-08-26",
+          "evaluated": 145,
+          "tickets_sha256": "974081b33d93292f826ebf0dc11df4d078daa710c27ab012998b10846b859b98"
+        },
+        {
+          "B_frozen": 144,
+          "B_sha256": "e208d9658f425149eeec04d1752eeeb2012b5fd3878656c7ef02ffe70f0cf802",
+          "K_sha256": "df1b37c756deea141fc91c3ad5e07b94ba0c72984f5315a363e7f8d097949d1a",
+          "day": "2026-08-27",
+          "evaluated": 135,
+          "tickets_sha256": "8a7bb448ffd259dd68f18d4d7ed254ef56eb12b0efa4010cdc7e467b60470032"
+        }
+      ],
+      "models": {
+        "baseline_local_motor": {
+          "K_marker_present": 3,
+          "by_stage": {
+            "FINAL": {
+              "hits": 3,
+              "races": 5
+            },
+            "GENERAL": {
+              "hits": 20,
+              "races": 79
+            },
+            "QUALIFYING": {
+              "hits": 62,
+              "races": 214
+            },
+            "SELECTION": {
+              "hits": 3,
+              "races": 14
+            },
+            "SEMIFINAL": {
+              "hits": 6,
+              "races": 14
+            },
+            "UNSPECIFIED": {
+              "hits": 26,
+              "races": 74
+            }
+          },
+          "gain_hit_only": 0,
+          "head_coverage_rate": 0.785,
+          "head_covered": 314,
+          "hits": 120,
+          "hypothetical_hit_rate": 0.3,
+          "hypothetical_return_rate": 0.91296875,
+          "lost_hit_only": 0,
+          "misses": {
+            "EXACT_HIT": 120,
+            "HEAD_ABSENT": 86,
+            "HEAD_PRESENT_SECOND_ABSENT": 81,
+            "HEAD_SECOND_PRESENT_THIRD_ABSENT": 92,
+            "SECOND_THIRD_SWAPPED": 21
+          },
+          "pair_coverage_rate": 0.53,
+          "pair_covered": 212,
+          "payout_yen": 292150,
+          "races": 400,
+          "stakes_yen": 320000,
+          "tickets_changed": 0
+        },
+        "head_support_role_second": {
+          "K_marker_present": 3,
+          "by_stage": {
+            "FINAL": {
+              "hits": 3,
+              "races": 5
+            },
+            "GENERAL": {
+              "hits": 18,
+              "races": 79
+            },
+            "QUALIFYING": {
+              "hits": 66,
+              "races": 214
+            },
+            "SELECTION": {
+              "hits": 5,
+              "races": 14
+            },
+            "SEMIFINAL": {
+              "hits": 7,
+              "races": 14
+            },
+            "UNSPECIFIED": {
+              "hits": 26,
+              "races": 74
+            }
+          },
+          "gain_hit_only": 32,
+          "head_coverage_rate": 0.785,
+          "head_covered": 314,
+          "hits": 125,
+          "hypothetical_hit_rate": 0.3125,
+          "hypothetical_return_rate": 0.7243125,
+          "lost_hit_only": 27,
+          "misses": {
+            "EXACT_HIT": 125,
+            "HEAD_ABSENT": 86,
+            "HEAD_PRESENT_SECOND_ABSENT": 94,
+            "HEAD_SECOND_PRESENT_THIRD_ABSENT": 57,
+            "SECOND_THIRD_SWAPPED": 38
+          },
+          "pair_coverage_rate": 0.475,
+          "pair_covered": 190,
+          "payout_yen": 231780,
+          "races": 400,
+          "stakes_yen": 320000,
+          "tickets_changed": 400
+        },
+        "pair_support_role_second": {
+          "K_marker_present": 3,
+          "by_stage": {
+            "FINAL": {
+              "hits": 3,
+              "races": 5
+            },
+            "GENERAL": {
+              "hits": 15,
+              "races": 79
+            },
+            "QUALIFYING": {
+              "hits": 62,
+              "races": 214
+            },
+            "SELECTION": {
+              "hits": 4,
+              "races": 14
+            },
+            "SEMIFINAL": {
+              "hits": 5,
+              "races": 14
+            },
+            "UNSPECIFIED": {
+              "hits": 26,
+              "races": 74
+            }
+          },
+          "gain_hit_only": 18,
+          "head_coverage_rate": 0.785,
+          "head_covered": 314,
+          "hits": 115,
+          "hypothetical_hit_rate": 0.2875,
+          "hypothetical_return_rate": 0.683125,
+          "lost_hit_only": 23,
+          "misses": {
+            "EXACT_HIT": 115,
+            "HEAD_ABSENT": 86,
+            "HEAD_PRESENT_SECOND_ABSENT": 81,
+            "HEAD_SECOND_PRESENT_THIRD_ABSENT": 87,
+            "SECOND_THIRD_SWAPPED": 31
+          },
+          "pair_coverage_rate": 0.53,
+          "pair_covered": 212,
+          "payout_yen": 218600,
+          "races": 400,
+          "stakes_yen": 320000,
+          "tickets_changed": 400
+        }
+      }
+    }
+  ],
+  "combined_descriptive_totals": {
+    "baseline_local_motor": {
+      "races": 786,
+      "hits": 271,
+      "payout_yen": 542030,
+      "stakes_yen": 628800,
+      "hypothetical_hit_rate": 0.34478371501272265,
+      "hypothetical_return_rate": 0.8620069974554707
+    },
+    "head_support_role_second": {
+      "races": 786,
+      "hits": 291,
+      "payout_yen": 494320,
+      "stakes_yen": 628800,
+      "hypothetical_hit_rate": 0.3702290076335878,
+      "hypothetical_return_rate": 0.7861323155216285
+    },
+    "pair_support_role_second": {
+      "races": 786,
+      "hits": 274,
+      "payout_yen": 462660,
+      "stakes_yen": 628800,
+      "hypothetical_hit_rate": 0.3486005089058524,
+      "hypothetical_return_rate": 0.7357824427480916
+    }
+  },
+  "candidate_decisions": {
+    "head_support_role_second": {
+      "per_cohort": [
+        {
+          "dates": [
+            "2026-08-20",
+            "2026-08-21",
+            "2026-08-22"
+          ],
+          "races": 386,
+          "hit_delta": 15,
+          "payout_yen_delta": 12660,
+          "return_rate_pp": 4.099740932642487,
+          "gained_only": 38,
+          "lost_only": 23,
+          "passed_both": true
+        },
+        {
+          "dates": [
+            "2026-08-25",
+            "2026-08-26",
+            "2026-08-27"
+          ],
+          "races": 400,
+          "hit_delta": 5,
+          "payout_yen_delta": -60370,
+          "return_rate_pp": -18.865625,
+          "gained_only": 32,
+          "lost_only": 27,
+          "passed_both": false
+        }
+      ],
+      "replicated_both": false,
+      "production_eligible": false
+    },
+    "pair_support_role_second": {
+      "per_cohort": [
+        {
+          "dates": [
+            "2026-08-20",
+            "2026-08-21",
+            "2026-08-22"
+          ],
+          "races": 386,
+          "hit_delta": 8,
+          "payout_yen_delta": -5820,
+          "return_rate_pp": -1.8847150259067358,
+          "gained_only": 26,
+          "lost_only": 18,
+          "passed_both": false
+        },
+        {
+          "dates": [
+            "2026-08-25",
+            "2026-08-26",
+            "2026-08-27"
+          ],
+          "races": 400,
+          "hit_delta": -5,
+          "payout_yen_delta": -73550,
+          "return_rate_pp": -22.984375,
+          "gained_only": 18,
+          "lost_only": 23,
+          "passed_both": false
+        }
+      ],
+      "replicated_both": false,
+      "production_eligible": false
+    }
+  },
+  "tickets_per_race": 8,
+  "payout_only_used_for_scoring": true,
+  "odds_used_for_ticket_selection": false,
+  "pre_K_ticket_SHA_frozen": true,
+  "forward_verified_races": 0,
+  "production_models_promoted": 0,
+  "limitations": [
+    "Official B/K acquired retrospectively; not genuine predeadline Forward.",
+    "No 6-finisher race is certified non-incident solely by result join.",
+    "No raw B/K permanently stored from CI ephemeral runner.",
+    "Neither candidate replicated simultaneous hit and ROI improvement across both disjoint cohorts.",
+    "No production model or source collection schedule modified."
+  ]
+}

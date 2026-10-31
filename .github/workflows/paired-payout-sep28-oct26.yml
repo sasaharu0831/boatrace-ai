@@ -1,0 +1,103 @@
+name: One-time paired payout attribution Sep28-Oct26
+on:
+  workflow_dispatch: # Historical one-time cross-audit complete; future official requests are manual-only
+permissions:
+  contents: read
+concurrency:
+  group: one-time-retrospective-payout-sep28-oct26
+  cancel-in-progress: false
+jobs:
+  forensic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: One explicit bounded official request authorization
+        id: gate
+        env:
+          EVENT: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT" = "workflow_dispatch" ] || [ "$(git log -1 --pretty=%s)" = "Run one-time paired payout attribution Sep28-Oct26" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "Follow-on PR edits cannot automatically download official B/K files."
+          fi
+      - uses: actions/setup-python@v5
+        if: steps.gate.outputs.enabled == 'true'
+        with:
+          python-version: '3.12'
+      - name: Offline safety and no-leak tests
+        if: steps.gate.outputs.enabled == 'true'
+        run: python -W error -m unittest discover -s tests -v
+      - name: Free LZH decoder
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq p7zip-full
+      - name: Bounded Sep28-30 historical official B K acquisition
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python src/boat_free_lab.py collect --start 2026-09-28 --days 3 --root "$RUNNER_TEMP/forensic" --sleep 2
+      - name: Freeze B only then K-only score Sep28-30
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python src/paired_outcome_attribution.py \
+            --root "$RUNNER_TEMP/forensic" \
+            --fit-receipt research/role_temperature_aug10_17_train_test.json \
+            --dates 2026-09-28 2026-09-29 2026-09-30 > "$RUNNER_TEMP/forensic_a.json"
+      - name: Bounded Oct24-26 historical official B K acquisition
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python src/boat_free_lab.py collect --start 2026-10-24 --days 3 --root "$RUNNER_TEMP/forensic" --sleep 2
+      - name: Freeze B only then K-only score Oct24-26
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python src/paired_outcome_attribution.py \
+            --root "$RUNNER_TEMP/forensic" \
+            --fit-receipt research/role_temperature_aug10_17_train_test.json \
+            --dates 2026-10-24 2026-10-25 2026-10-26 > "$RUNNER_TEMP/forensic_b.json"
+      - name: Cross-verify both reports against independently saved prior official receipts
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python - <<'PY'
+          import json, os
+          runner=os.environ["RUNNER_TEMP"]
+          original=json.load(open("research/venue_stage_sep28_oct26_2026.json",encoding="utf-8"))
+          reports=[]
+          for i, fname in enumerate(("forensic_a.json","forensic_b.json")):
+              x=json.load(open(os.path.join(runner,fname),encoding="utf-8"))
+              assert x["mode"]=="B_ONLY_FIXED_TRAINED_POSTRACE_PAYOUT_ATTRIBUTION_NOT_FORWARD"
+              assert x["forward_verified_races"]==0 and x["production_promoted"] is False
+              assert x["subgroup_router_enabled"] is False and x["payout_used_only_for_outcome_scoring"] is True
+              assert x["frozen_training_SHA256"]==original["fit_sha256"]
+              assert x["test_dates"]==original["cohorts"][i]["dates"]
+              prior=original["cohorts"][i]
+              for a,b in zip(x["source_and_prediction_SHA_receipts"],prior["source_receipts"]):
+                  assert a["day"]==b["day"]
+                  assert a["B_sha256"]==b["B_sha256"],"official B hash drift"
+                  assert a["K_sha256"]==b["K_sha256"],"official K hash drift"
+                  assert a["frozen_predictions_sha256"]==b["frozen_120way_SHA256"],"B frozen prediction hash drift"
+              for key,row in x["groups"].items():
+                  prev=prior["groups"][key]
+                  assert row["races"]==prev["n"],f"population drift: {key}"
+                  assert row["baseline_hits"]==prev["baseline"]["hits"]
+                  assert row["calibrated_hits"]==prev["calibrated"]["hits"]
+                  assert row["baseline_hypothetical_paid_yen"]==prev["baseline"]["payout_yen"]
+                  assert row["calibrated_hypothetical_paid_yen"]==prev["calibrated"]["payout_yen"]
+                  assert row["hit_delta"]==row["gain_only_hits"]-row["lost_only_hits"]
+                  assert row["payout_delta_yen"]==row["gain_only_paid_yen"]-row["lost_only_paid_yen"]
+              reports.append(x)
+              print("PAYOUT_DAYS",json.dumps(x["source_and_prediction_SHA_receipts"],sort_keys=True))
+              for key,row in sorted(x["groups"].items()):
+                  print("PAYOUT_GROUP",json.dumps({"dates":x["test_dates"],"group":key,**row},sort_keys=True))
+          assert set(reports[0]["test_dates"]).isdisjoint(reports[1]["test_dates"])
+          print("PAYOUT_FORENSIC_VERIFIED",json.dumps({"verified":True,
+              "days":[x["test_dates"] for x in reports],
+              "total_races":sum(x["groups"]["overall"]["races"] for x in reports)},sort_keys=True))
+          PY
+      - name: Never export official original archives or change production
+        if: always()
+        run: echo "Original historical B/K ephemeral; payout is outcome-only. No production promotion or venue routing."

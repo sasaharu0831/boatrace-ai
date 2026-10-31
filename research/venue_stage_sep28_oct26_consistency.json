@@ -1,0 +1,205 @@
+{
+  "mode": "VENUE_STAGE_SUBGROUP_CONSISTENCY_DESCRIPTIVE_ONLY",
+  "input_report": "research/venue_stage_sep28_oct26_2026.json",
+  "evidence_ci": "https://github.com/sasaharu0831/boatrace-ai/actions/runs/41228275358",
+  "train_model_hash": "a8660f259ab1c88b150aa63f5e663c199ad1d5a68be5484c6f9dfa7e83e4bcbf",
+  "cohorts": [
+    {
+      "dates": [
+        "2026-09-28",
+        "2026-09-29",
+        "2026-09-30"
+      ],
+      "races": 387,
+      "baseline_hits": 138,
+      "calibrated_hits": 145,
+      "baseline_return": 0.7223514211886305,
+      "calibrated_return": 0.7151808785529715,
+      "baseline_logloss": 4.146730284469145,
+      "calibrated_logloss": 4.066283395429211,
+      "postrace_K_marker": [
+        {
+          "group": "K_marker:ABSENT_UNVERIFIED",
+          "n": 380
+        },
+        {
+          "group": "K_marker:POSITIVE",
+          "n": 7
+        }
+      ]
+    },
+    {
+      "dates": [
+        "2026-10-24",
+        "2026-10-25",
+        "2026-10-26"
+      ],
+      "races": 376,
+      "baseline_hits": 149,
+      "calibrated_hits": 165,
+      "baseline_return": 0.8194481382978723,
+      "calibrated_return": 0.8418550531914893,
+      "baseline_logloss": 4.053780394280116,
+      "calibrated_logloss": 3.9666556977039353,
+      "postrace_K_marker": [
+        {
+          "group": "K_marker:ABSENT_UNVERIFIED",
+          "n": 370
+        },
+        {
+          "group": "K_marker:POSITIVE",
+          "n": 6
+        }
+      ]
+    }
+  ],
+  "B_stage_results": [
+    {
+      "group": "stage:FINAL",
+      "periods": [
+        {
+          "n": 4,
+          "hit_delta": 0,
+          "ROI_pp": 0,
+          "logloss_delta": -0.22081581928308047,
+          "brier_delta": -0.010924617328647357,
+          "large_enough_for_description": false
+        },
+        {
+          "n": 7,
+          "hit_delta": 1,
+          "ROI_pp": 24.28571428571429,
+          "logloss_delta": -0.15274779597110388,
+          "brier_delta": -0.010330125184457528,
+          "large_enough_for_description": false
+        }
+      ]
+    },
+    {
+      "group": "stage:GENERAL",
+      "periods": [
+        {
+          "n": 83,
+          "hit_delta": 0,
+          "ROI_pp": -9.533132530120481,
+          "logloss_delta": -0.08061625279467588,
+          "brier_delta": -0.003042151256360426,
+          "large_enough_for_description": true
+        },
+        {
+          "n": 104,
+          "hit_delta": 6,
+          "ROI_pp": 3.76201923076922,
+          "logloss_delta": -0.057705909692966184,
+          "brier_delta": -0.002125914895362735,
+          "large_enough_for_description": true
+        }
+      ]
+    },
+    {
+      "group": "stage:QUALIFYING",
+      "periods": [
+        {
+          "n": 193,
+          "hit_delta": 1,
+          "ROI_pp": -4.68264248704664,
+          "logloss_delta": -0.05195189648854193,
+          "brier_delta": -0.002099026865545084,
+          "large_enough_for_description": true
+        },
+        {
+          "n": 157,
+          "hit_delta": 8,
+          "ROI_pp": -0.1273885350318471,
+          "logloss_delta": -0.07186820768918345,
+          "brier_delta": -0.002987019997663043,
+          "large_enough_for_description": true
+        }
+      ]
+    },
+    {
+      "group": "stage:SELECTION",
+      "periods": [
+        {
+          "n": 18,
+          "hit_delta": 6,
+          "ROI_pp": 80.625,
+          "logloss_delta": -0.23380944953135963,
+          "brier_delta": -0.008282942952417605,
+          "large_enough_for_description": false
+        },
+        {
+          "n": 16,
+          "hit_delta": 1,
+          "ROI_pp": 18.281249999999993,
+          "logloss_delta": -0.17926386936738314,
+          "brier_delta": -0.005652511299312768,
+          "large_enough_for_description": false
+        }
+      ]
+    },
+    {
+      "group": "stage:SEMIFINAL",
+      "periods": [
+        {
+          "n": 16,
+          "hit_delta": 0,
+          "ROI_pp": 0,
+          "logloss_delta": -0.22393370051928452,
+          "brier_delta": -0.009416383954297558,
+          "large_enough_for_description": false
+        },
+        {
+          "n": 22,
+          "hit_delta": 0,
+          "ROI_pp": 0,
+          "logloss_delta": -0.21272596641105768,
+          "brier_delta": -0.008622238991772169,
+          "large_enough_for_description": false
+        }
+      ]
+    },
+    {
+      "group": "stage:UNSPECIFIED",
+      "periods": [
+        {
+          "n": 73,
+          "hit_delta": 0,
+          "ROI_pp": -0.46232876712328785,
+          "logloss_delta": -0.07863436270141122,
+          "brier_delta": -0.0036739269871967073,
+          "large_enough_for_description": true
+        },
+        {
+          "n": 70,
+          "hit_delta": 0,
+          "ROI_pp": 0.12499999999999734,
+          "logloss_delta": -0.09795335649506587,
+          "brier_delta": -0.003909913278820287,
+          "large_enough_for_description": true
+        }
+      ]
+    }
+  ],
+  "group_names_at_least_30_in_BOTH_cohorts": [
+    "K_marker:ABSENT_UNVERIFIED",
+    "overall",
+    "stage:GENERAL",
+    "stage:QUALIFYING",
+    "stage:UNSPECIFIED",
+    "venue:04",
+    "venue:05",
+    "venue:24"
+  ],
+  "model_router_authorized": false,
+  "production_model_changed": false,
+  "forward_verified_races": 0,
+  "limitations": [
+    "Listed subgroups are posthoc explorations and were NOT independently predeclared hypotheses.",
+    "N>=30 per cohort is a reporting threshold only, not statistical significance or a profitable strategy.",
+    "Many simultaneous venue/stage comparisons can produce false apparent patterns.",
+    "Model was fitted on prior August B/K, not refitted on these September/October K results.",
+    "No genuine preclose provenance, nor complete incident-free/operational event certification.",
+    "Raw official B/K LZH is not durably retained, only source SHA receipt strings."
+  ]
+}

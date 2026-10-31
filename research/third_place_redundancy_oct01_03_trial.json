@@ -1,0 +1,144 @@
+{
+  "kind": "FIXED_B_ONLY_THIRD_REDUNDANCY_DISJOINT_HISTORICAL_HOLDOUT",
+  "mode": "HISTORICAL_NOT_FORWARD",
+  "dates": [
+    "2026-10-01",
+    "2026-10-02",
+    "2026-10-03"
+  ],
+  "source_sha256_and_frozen_picks_sha256": [
+    {
+      "B_frozen": 156,
+      "B_sha": "7e5c18f0ac742c56d6b890c59097c9333569ac0103285ac0755f62d23ca5a7c1",
+      "K_sha": "424325880e2a20d3dae85e4c248cd7998563907af64832de191515ccc5544793",
+      "date": "2026-10-01",
+      "races": 145,
+      "ticket_sha": "5a4604c7bc2fa3102be2e3ec44ceb81d6aafbbcfea9d5177f210eb4075842e51"
+    },
+    {
+      "B_frozen": 156,
+      "B_sha": "2b6d7d0d62007b4864aa00c1328608e9c2f1dd5429850a811820e84bde597f34",
+      "K_sha": "5349a4c09b6dcff5efc8a252cbc3a8439f417d53411b530447297f63bef497fb",
+      "date": "2026-10-02",
+      "races": 138,
+      "ticket_sha": "681b18d7cb0198f94a822f5e6585cd72416577bf7673b7d1a5e6d1210f64ca02"
+    },
+    {
+      "B_frozen": 144,
+      "B_sha": "b12fda529cbd5db423c44cf55fdb473595b3d43dcc060b5e150968830ac82d50",
+      "K_sha": "05fc67206b7a35668f660b81f57c4e3046118c8de89a0588ed455af9bf8adf1d",
+      "date": "2026-10-03",
+      "races": 135,
+      "ticket_sha": "0ea0870048efeb7ecfc41ff7617ed1fb536c30d26cb41c3a731919934d18ebb2"
+    }
+  ],
+  "ci_source_url": "https://github.com/sasaharu0831/boatrace-ai/actions/runs/41207316059",
+  "source": "BOAT RACE official daily B program K result historical LZH",
+  "tickets_per_race": 8,
+  "stake_per_ticket_yen_assumed": 100,
+  "predeclared_candidates": {
+    "pair2_third3": "Top two distinct 1st-2nd pairs have three separate 3rd boats each",
+    "pair3_third2": "Top three distinct 1st-2nd pairs have two separate 3rd boats each"
+  },
+  "fixed_local_motor_weights": true,
+  "unseen_period_relative_to_prior_trials": true,
+  "odds_popularity_outcome_used_for_ticket_selection": false,
+  "results": {
+    "baseline_local_motor": {
+      "K_positive_marker_races": 5,
+      "head_coverage_rate": 0.7870813397129187,
+      "head_covered": 329,
+      "head_second_pair_coverage_rate": 0.5478468899521531,
+      "head_second_pair_covered": 229,
+      "hits": 139,
+      "hypothetical_hit_rate": 0.33253588516746413,
+      "hypothetical_return_rate": 0.6908193779904306,
+      "misses": {
+        "EXACT_HIT": 139,
+        "HEAD_ABSENT": 89,
+        "HEAD_PRESENT_SECOND_ABSENT": 86,
+        "HEAD_SECOND_PRESENT_THIRD_ABSENT": 88,
+        "SECOND_THIRD_SWAPPED": 16
+      },
+      "payout_yen": 231010,
+      "races": 418,
+      "stakes_yen": 334400
+    },
+    "pair2_third3": {
+      "K_positive_marker_races": 5,
+      "head_coverage_rate": 0.7320574162679426,
+      "head_covered": 306,
+      "head_second_pair_coverage_rate": 0.47368421052631576,
+      "head_second_pair_covered": 198,
+      "hits": 147,
+      "hypothetical_hit_rate": 0.35167464114832536,
+      "hypothetical_return_rate": 0.62813995215311,
+      "misses": {
+        "EXACT_HIT": 147,
+        "HEAD_ABSENT": 112,
+        "HEAD_PRESENT_SECOND_ABSENT": 68,
+        "HEAD_SECOND_PRESENT_THIRD_ABSENT": 48,
+        "SECOND_THIRD_SWAPPED": 43
+      },
+      "payout_yen": 210050,
+      "races": 418,
+      "stakes_yen": 334400
+    },
+    "pair3_third2": {
+      "K_positive_marker_races": 5,
+      "head_coverage_rate": 0.7679425837320574,
+      "head_covered": 321,
+      "head_second_pair_coverage_rate": 0.5047846889952153,
+      "head_second_pair_covered": 211,
+      "hits": 139,
+      "hypothetical_hit_rate": 0.33253588516746413,
+      "hypothetical_return_rate": 0.6995514354066986,
+      "misses": {
+        "EXACT_HIT": 139,
+        "HEAD_ABSENT": 97,
+        "HEAD_PRESENT_SECOND_ABSENT": 87,
+        "HEAD_SECOND_PRESENT_THIRD_ABSENT": 70,
+        "SECOND_THIRD_SWAPPED": 25
+      },
+      "payout_yen": 233930,
+      "races": 418,
+      "stakes_yen": 334400
+    }
+  },
+  "delta_relative_to_baseline": {
+    "pair2_third3": {
+      "hits": 8,
+      "payout_yen": -20960,
+      "head_covered": -23,
+      "head_second_pair_covered": -31,
+      "head_absent": 23,
+      "second_third_swapped": 27
+    },
+    "pair3_third2": {
+      "hits": 0,
+      "payout_yen": 2920,
+      "head_covered": -8,
+      "head_second_pair_covered": -18,
+      "head_absent": 8,
+      "second_third_swapped": 9
+    }
+  },
+  "descriptive_baseline_18day_total": {
+    "historical_races": 2382,
+    "hits": 825,
+    "stakes_yen": 1905600,
+    "payout_yen": 1408900,
+    "hypothetical_hit_rate": 0.34634760705289674,
+    "hypothetical_return_rate": 0.7393471872376155
+  },
+  "forward_verified_races": 0,
+  "production_models_promoted": 0,
+  "adoption_decision": "REJECT_FOR_NOW: neither candidate improves BOTH hit rate and hypothetical return",
+  "limitations": [
+    "Historical official archives downloaded after race closure; no authenticated predeadline Forward prediction.",
+    "Six-finisher join does not establish incident-free or all operational specials absent.",
+    "K-positive marker count is postrace annotation only; no marker remains unverified.",
+    "No raw LZH or persistent SQLite archive saved from the CI runner.",
+    "Small sample; no model tuning/selection based on the same holdout."
+  ]
+}

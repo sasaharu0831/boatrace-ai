@@ -1,0 +1,144 @@
+{
+  "kind": "PAIR_INVARIANT_B_ONLY_REPLICATION_HISTORICAL_NOT_FORWARD",
+  "mode": "HISTORICAL_ONLY_SHADOW",
+  "repeat_dates": [
+    "2026-09-20",
+    "2026-09-21",
+    "2026-09-22"
+  ],
+  "repeat_source_receipts": [
+    {
+      "B_frozen": 168,
+      "B_sha": "20039ac9a368748a4e2994d6758c2eeb399c96086a73405428fe091a55971871",
+      "K_sha": "ffc34ccdb3c25bee0993ea88fb42c6109009ee4b8843afbfd1ded5b824eead03",
+      "date": "2026-09-20",
+      "races": 157,
+      "ticket_sha": "1741d4851232ba082746839beecdba163a83741f64e51924991e6f32d45c867c"
+    },
+    {
+      "B_frozen": 156,
+      "B_sha": "f03d0c17092a8089ac9c1bb60de8f8eef1add5ef22ac8054ff80a90a26295e1a",
+      "K_sha": "bbab8adea19ed9fd7e274a1ed42c3e49d42aee37a75c6860a33667db4731eefd",
+      "date": "2026-09-21",
+      "races": 115,
+      "ticket_sha": "c56888a265ea46e24843a596b0987f828da9bbe6753478792877959aa0af75f1"
+    },
+    {
+      "B_frozen": 156,
+      "B_sha": "f5d5d250e0dc5a822499f4a26f844196f9b3d316f394de1659e0c65788b4195b",
+      "K_sha": "bc30de5c6b3f29a298b7c6ddd726a20e2e43359ac398093cfc92932e24f40163",
+      "date": "2026-09-22",
+      "races": 134,
+      "ticket_sha": "54c464cd7f1541b329bd4fe76ed7d36333185658f3ef5a2203a28d462383159c"
+    }
+  ],
+  "initial_trial_report_path": "research/pair_invariant_20260925_27.json",
+  "initial_trial_ci": "https://github.com/sasaharu0831/boatrace-ai/actions/runs/41209344512",
+  "replication_ci": "https://github.com/sasaharu0831/boatrace-ai/actions/runs/41209554995",
+  "replication_results": {
+    "baseline_local_motor": {
+      "K_marker_positive": 1,
+      "changed_races": 0,
+      "head_coverage_rate": 0.7955665024630542,
+      "head_covered": 323,
+      "head_second_pair_covered": 235,
+      "hits": 150,
+      "hypothetical_hit_rate": 0.3694581280788177,
+      "hypothetical_return_rate": 0.7870381773399014,
+      "miss_reasons": {
+        "EXACT_HIT": 150,
+        "HEAD_ABSENT": 83,
+        "HEAD_PRESENT_SECOND_ABSENT": 74,
+        "HEAD_SECOND_PRESENT_THIRD_ABSENT": 84,
+        "SECOND_THIRD_SWAPPED": 15
+      },
+      "pair_coverage_rate": 0.5788177339901478,
+      "payout_yen": 255630,
+      "races": 406,
+      "stakes_yen": 324800
+    },
+    "keep_pairs_top1_third3": {
+      "K_marker_positive": 1,
+      "changed_races": 185,
+      "head_coverage_rate": 0.7955665024630542,
+      "head_covered": 323,
+      "head_second_pair_covered": 235,
+      "hits": 151,
+      "hypothetical_hit_rate": 0.37192118226600984,
+      "hypothetical_return_rate": 0.7617302955665025,
+      "miss_reasons": {
+        "EXACT_HIT": 151,
+        "HEAD_ABSENT": 83,
+        "HEAD_PRESENT_SECOND_ABSENT": 75,
+        "HEAD_SECOND_PRESENT_THIRD_ABSENT": 82,
+        "SECOND_THIRD_SWAPPED": 15
+      },
+      "pair_coverage_rate": 0.5788177339901478,
+      "payout_yen": 247410,
+      "races": 406,
+      "stakes_yen": 324800
+    },
+    "keep_pairs_top2_third2": {
+      "K_marker_positive": 1,
+      "changed_races": 164,
+      "head_coverage_rate": 0.7955665024630542,
+      "head_covered": 323,
+      "head_second_pair_covered": 235,
+      "hits": 146,
+      "hypothetical_hit_rate": 0.35960591133004927,
+      "hypothetical_return_rate": 0.7668103448275863,
+      "miss_reasons": {
+        "EXACT_HIT": 146,
+        "HEAD_ABSENT": 83,
+        "HEAD_PRESENT_SECOND_ABSENT": 76,
+        "HEAD_SECOND_PRESENT_THIRD_ABSENT": 81,
+        "SECOND_THIRD_SWAPPED": 20
+      },
+      "pair_coverage_rate": 0.5788177339901478,
+      "payout_yen": 249060,
+      "races": 406,
+      "stakes_yen": 324800
+    }
+  },
+  "two_cohort_descriptive_totals": {
+    "baseline_local_motor": {
+      "races": 769,
+      "hits": 272,
+      "stakes_yen": 615200,
+      "payout_yen": 486640,
+      "hypothetical_hit_rate": 0.35370611183355005,
+      "hypothetical_return_rate": 0.7910273081924577
+    },
+    "keep_pairs_top1_third3": {
+      "races": 769,
+      "hits": 272,
+      "stakes_yen": 615200,
+      "payout_yen": 468060,
+      "hypothetical_hit_rate": 0.35370611183355005,
+      "hypothetical_return_rate": 0.7608257477243173
+    },
+    "keep_pairs_top2_third2": {
+      "races": 769,
+      "hits": 272,
+      "stakes_yen": 615200,
+      "payout_yen": 487240,
+      "hypothetical_hit_rate": 0.35370611183355005,
+      "hypothetical_return_rate": 0.7920026007802341
+    }
+  },
+  "replication_gate": {
+    "hit_delta": -4,
+    "return_rate_delta": -0.02022783251231519,
+    "pass_both": false
+  },
+  "summary": "Initial cohort hit +4 and return +2.47pp; independent repeat cohort hit -4 and return -2.02pp. No robust improvement.",
+  "production_model_promoted": false,
+  "forward_verified_races": 0,
+  "notes": [
+    "The same fixed B-only selection parameters were used in both cohorts.",
+    "All B/K data were retrieved after races; no authentic preclose timestamps.",
+    "K results only score after B-only tickets fixed.",
+    "Pair/head coverage invariant between each candidate and baseline.",
+    "Six-finisher joins do not certify incident-free races."
+  ]
+}

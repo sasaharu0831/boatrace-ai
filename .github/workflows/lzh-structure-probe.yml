@@ -1,0 +1,48 @@
+name: Official LZH CP932 structure probe (bounded)
+on:
+  workflow_dispatch: # Explicit audit only; raw official URLs are not polled on PR updates
+permissions:
+  contents: read
+concurrency:
+  group: lzh-structure-probe
+  cancel-in-progress: true
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install free 7z decompressor
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq p7zip-full
+          command -v 7z
+      - name: Download two official historical files with bounded requests
+        run: |
+          python src/boat_free_lab.py collect --start 2026-10-28 --days 1 --root "$RUNNER_TEMP/lzh-probe" --sleep 2
+      - name: Extract B and K with CP932 and print limited structure
+        run: |
+          python src/lzh_extract.py "$RUNNER_TEMP/lzh-probe/raw/B/2026/b261028.lzh" --print-structure
+          python src/lzh_extract.py "$RUNNER_TEMP/lzh-probe/raw/K/2026/k261028.lzh" --print-structure
+      - name: Audit historical B/K race joins (do not feed prediction)
+        run: |
+          python src/historical_records.py --b "$RUNNER_TEMP/lzh-probe/raw/B/2026/b261028.lzh" --k "$RUNNER_TEMP/lzh-probe/raw/K/2026/k261028.lzh" --day 2026-10-28 > "$RUNNER_TEMP/join-audit.json"
+          python -c 'import json,os;d=json.load(open(os.environ["RUNNER_TEMP"]+"/join-audit.json"));print(json.dumps({k:v for k,v in d.items() if k not in ("normal_race_keys","issues")},ensure_ascii=False));print("issues by type:",{x[0]:sum(1 for y in d["issues"] if y[0]==x[0]) for x in d["issues"]});assert d["B_races"]>0 and d["K_races"]>0 and d["historical_normal_joined"]>0 and d["forward_eligible"] is False'
+      - name: Import normal races into temporary SQLite twice and verify idempotency
+        run: |
+          python src/historical_sqlite.py --b "$RUNNER_TEMP/lzh-probe/raw/B/2026/b261028.lzh" --k "$RUNNER_TEMP/lzh-probe/raw/K/2026/k261028.lzh" --day 2026-10-28 --db "$RUNNER_TEMP/boatrace_history.sqlite"
+          python src/historical_sqlite.py --b "$RUNNER_TEMP/lzh-probe/raw/B/2026/b261028.lzh" --k "$RUNNER_TEMP/lzh-probe/raw/K/2026/k261028.lzh" --day 2026-10-28 --db "$RUNNER_TEMP/boatrace_history.sqlite"
+          python -c 'import sqlite3,os;c=sqlite3.connect(os.environ["RUNNER_TEMP"]+"/boatrace_history.sqlite");r=[c.execute("select count(*) from "+x).fetchone()[0] for x in ("historical_races","historical_program_entries","historical_result_entries","historical_import_audit")];print("SQLite counts:",r);assert r==[106,636,636,1]'
+      - name: Export 106R B-only historical features and K-only labels
+        run: |
+          python src/historical_export.py --db "$RUNNER_TEMP/boatrace_history.sqlite" --features "$RUNNER_TEMP/feature_only.csv" --outcomes "$RUNNER_TEMP/outcome_only.csv"
+          python -c 'import csv,os;root=os.environ["RUNNER_TEMP"];fr=list(csv.DictReader(open(root+"/feature_only.csv")));orows=list(csv.DictReader(open(root+"/outcome_only.csv")));print("separated CSV rows:",len(fr),len(orows));assert len(fr)==len(orows)==636;assert not {"finish","trifecta","payout_yen_per_100"}.intersection(fr[0].keys());assert set(fr[0].keys()) != set(orows[0].keys())'
+      - name: Conservative stage and special-evidence audit (no forward selection)
+        run: |
+          python src/quality_policy.py --b "$RUNNER_TEMP/lzh-probe/raw/B/2026/b261028.lzh" --k "$RUNNER_TEMP/lzh-probe/raw/K/2026/k261028.lzh" --day 2026-10-28 --summary-only
+      - name: No raw archive upload
+        if: always()
+        run: echo "No historical raw file is uploaded; runner storage is temporary."

@@ -1,0 +1,23 @@
+name: One-day official B/K HTTP probe (no archive publication)
+on:
+  workflow_dispatch: # Historical HTTP check already passed; no repeat on every PR update
+permissions:
+  contents: read
+concurrency:
+  group: official-one-day-probe
+  cancel-in-progress: true
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Request 2026-10-28 official B/K once each (2 second pause)
+        run: |
+          python src/boat_free_lab.py collect --start 2026-10-28 --days 1 --root "$RUNNER_TEMP/official-one-day" --sleep 2
+      - name: Do not upload or publish raw official archives
+        if: always()
+        run: echo "Downloaded files stay only in the temporary runner and are not published."

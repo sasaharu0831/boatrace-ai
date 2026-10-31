@@ -1,0 +1,76 @@
+{
+  "title": "BOAT LAB official B/K historical parser audit",
+  "run_dates": [
+    "2026-10-27",
+    "2026-10-28",
+    "2026-10-29"
+  ],
+  "note": "Aggregate counts only. Not true forward; not proof of accident-free racing or of permanent raw archive storage.",
+  "source": "BOAT RACE official B/K historical LZH",
+  "record_type": "HISTORICAL_ONLY",
+  "forward_verified_races": 0,
+  "model_hit_rate": null,
+  "raw_archives_permanently_saved": false,
+  "summary_saved_to_repository": true,
+  "days": [
+    {
+      "day": "2026-10-27",
+      "B_races": 168,
+      "K_races": 168,
+      "paired_races": 168,
+      "six_finisher_id_and_result_joined": 148,
+      "issues_by_reason": {
+        "incomplete_or_duplicate_B_entries": 12,
+        "non_normal_six_finisher_K": 8
+      },
+      "K_special_text_evidence": 3,
+      "K_incident_text_evidence": 8,
+      "B_sha256": "858cdf313924ad2f7c756d18eea3af8c8948208364382d3f2ace99ade48fcd41",
+      "K_sha256": "644a5b852257fbf57873764ffc2f148c790ba6ee8d83e66e4f733b4b3caf8d0c",
+      "ci_run": "https://github.com/sasaharu0831/boatrace-ai/actions/runs/41089419845"
+    },
+    {
+      "day": "2026-10-28",
+      "B_races": 132,
+      "K_races": 125,
+      "paired_races": 125,
+      "six_finisher_id_and_result_joined": 106,
+      "issues_by_reason": {
+        "incomplete_or_duplicate_B_entries": 12,
+        "non_normal_six_finisher_K": 9
+      },
+      "K_special_text_evidence": 2,
+      "K_incident_text_evidence": 8,
+      "B_sha256": "9adc04038c790e6ee44850e529539b529a158a10eabb7d2d1ead0920d6a7e0a2",
+      "K_sha256": "fd87851c169699293e41b82ae008cae2acec70fadfe6f9f548bde17470e361aa",
+      "ci_run": "https://github.com/sasaharu0831/boatrace-ai/actions/runs/41089419562"
+    },
+    {
+      "day": "2026-10-29",
+      "B_races": 120,
+      "K_races": 120,
+      "paired_races": 120,
+      "six_finisher_id_and_result_joined": 109,
+      "issues_by_reason": {
+        "non_normal_six_finisher_K": 11
+      },
+      "K_special_text_evidence": 2,
+      "K_incident_text_evidence": 9,
+      "B_sha256": "af99f0e9d6c005f090921700c264a83711003b2c24887a1fda54b8df317d4111",
+      "K_sha256": "272f0e2aac574e09370f76511317fb968bfaaa0df2c33ef533d5ba974022a16a",
+      "ci_run": "https://github.com/sasaharu0831/boatrace-ai/actions/runs/41089419845"
+    }
+  ],
+  "total": {
+    "B_races": 420,
+    "K_races": 413,
+    "paired_races": 413,
+    "six_finisher_id_and_result_joined": 363
+  },
+  "caveats": [
+    "Counts are records parsed from historical postrace B/K; preclose capture and Freeze never proven.",
+    "K incident and special text markers are candidates, not confirmed incident-free classifications.",
+    "Raw LZH and SQLite in CI are temporary and are not stored in this repository.",
+    "This report is an aggregate checkpoint, not a 4-year historical archive."
+  ]
+}
