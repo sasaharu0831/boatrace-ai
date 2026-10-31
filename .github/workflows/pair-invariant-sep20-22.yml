@@ -1,0 +1,70 @@
+name: One-time pair-invariant B-only Sep20-22 third allocation trial
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/pair-invariant-sep20-22.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pair-invariant-sep20-22-historical-once
+  cancel-in-progress: true
+jobs:
+  historical_trial:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: One-time official retrieval safety gate
+        id: gate
+        env:
+          EVENT: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT" = "workflow_dispatch" ] || [ "$(git log -1 --pretty=%s)" = "Run one-time Sep20-22 pair-invariant historical trial" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "No repeat official requests for subsequent PR commits."
+          fi
+      - uses: actions/setup-python@v5
+        if: steps.gate.outputs.enabled == 'true'
+        with:
+          python-version: '3.12'
+      - name: Offline safety test suite
+        if: steps.gate.outputs.enabled == 'true'
+        run: python -W error -m unittest discover -s tests -v
+      - name: Free p7zip installation
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq p7zip-full
+      - name: At most six slow official B K downloads
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python src/boat_free_lab.py collect --start 2026-09-20 --days 3 --root "$RUNNER_TEMP/pair-invariant" --sleep 2
+      - name: Freeze B-only fixed eight-ticket sets before opening K
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python src/pair_invariant_third_trial.py --root "$RUNNER_TEMP/pair-invariant" --dates 2026-09-20 2026-09-21 2026-09-22 > "$RUNNER_TEMP/report.json"
+          python - <<'PY'
+          import json, os
+          report=json.load(open(os.path.join(os.environ["RUNNER_TEMP"],"report.json"),encoding="utf-8"))
+          assert report["mode"]=="B_ONLY_INVARIANT_PAIR_THIRD_REALLOCATION_HISTORICAL_NOT_FORWARD"
+          assert report["forward_verified_races"]==0 and report["production_promotion"] is False
+          assert report["pair_support_identical_to_baseline"] is True
+          print("DAYS",json.dumps([{
+            "date":day["day"],"B_sha":day["B_sha256"],
+            "K_sha":day["K_sha256"],"ticket_sha":day["frozen_tickets_sha256"],
+            "B_frozen":day["B_races_frozen"],"races":day["models"]["baseline_local_motor"]["races"]
+          } for day in report["daily"]],sort_keys=True))
+          for name, row in report["aggregate"].items():
+            assert row["races"]>0 and row["stakes_yen"] == 800 * row["races"]
+            assert sum(row["miss_reasons"].values())==row["races"]
+            assert row["hits"] == row["miss_reasons"]["EXACT_HIT"]
+            print("POLICY",json.dumps({"policy":name,**row},sort_keys=True))
+          PY
+      - name: Keep raw historical data ephemeral and no production promotion
+        if: always()
+        run: echo "Original official B/K never uploaded. Only aggregate metrics and hashes in CI logs."
