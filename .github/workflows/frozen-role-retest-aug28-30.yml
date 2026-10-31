@@ -1,9 +1,6 @@
 name: One-time frozen-calibration independent Aug28-30 re-test
 on:
-  pull_request:
-    paths:
-      - '.github/workflows/frozen-role-retest-aug28-30.yml'
-  workflow_dispatch:
+  workflow_dispatch: # Completed once; manual-only future B/K official retrieval
 permissions:
   contents: read
 concurrency:
