@@ -27,7 +27,7 @@ class HoldoutTests(unittest.TestCase):
         self.assertEqual(classify_ticket_miss(base, "6-1-2"), "HEAD_ABSENT")
         # With 1-4-2 present, outcome 1-2-4 is specifically a swap.
         self.assertEqual(classify_ticket_miss(base, "1-2-4"), "SECOND_THIRD_SWAPPED")
-        self.assertEqual(classify_ticket_miss(base, "1-4-3"), "HEAD_PRESENT_SECOND_ABSENT")
+        self.assertEqual(classify_ticket_miss(base, "1-5-4"), "HEAD_PRESENT_SECOND_ABSENT")
         self.assertEqual(classify_ticket_miss(base, "1-2-5"), "HEAD_SECOND_PRESENT_THIRD_ABSENT")
         swapped = ["1-3-2", "1-5-2", "2-1-3", "2-3-1",
                    "3-1-2", "3-2-1", "4-1-2", "5-1-2"]
