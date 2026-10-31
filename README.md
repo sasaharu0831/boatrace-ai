@@ -9,7 +9,7 @@
 - 2026-10-28の106レースについて一時SQLiteにB 636艇行・K 636艇行を保存し、2回の取り込みでも重複0。
 - B由来の特徴量とK由来の結果・払戻を**別CSV**に出力。着順・払戻を予想入力に混ぜないチェック済み。
 - 異常な割合値、登録番号重複、距離不一致、出典ハッシュ変更、レース数の減少は隔離・自動置換拒否。
-- Pythonテスト70件成功。詳細: [GitHub Actions](https://github.com/sasaharu0831/boatrace-ai/actions/runs/41094310877)。
+- Pythonテスト83件成功。詳細: [GitHub Actions](https://github.com/sasaharu0831/boatrace-ai/actions/runs/41149550546)。
 - 3日分の件数・公式ファイルSHA-256・例外理由は [集計JSON](research/verified_coverage_2026-10-27_to_29.json) に記録（**生アーカイブは保存されていない**）。
 
 ## 追加の別期間SHADOW検証（2026-10-20〜22）
