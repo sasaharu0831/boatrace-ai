@@ -128,7 +128,11 @@ def evaluate(first, second):
         "temperatures": temps, "cohorts": cohorts,
         "independent_historical_replication": all(x["improved_all_four"] for x in cohorts),
         "combined_descriptive_totals": combined,
-        "research_status": "REPLICATED_HISTORICAL_HYPOTHESIS_ONLY",
+        "research_status": (
+            "REPLICATED_HISTORICAL_HYPOTHESIS_ONLY" if all(
+                x["improved_all_four"] for x in cohorts
+            ) else "FAILED_HISTORICAL_REPLICATION"
+        ),
         "production_eligible": False, "forward_verified_races": 0,
         "limitations": [
             "Two historically disjoint test cohorts are not genuine Forward.",
