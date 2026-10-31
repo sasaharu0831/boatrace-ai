@@ -1,0 +1,92 @@
+name: One-time frozen-calibrated head guard Sep10-15 historical holdout
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/frozen-head-guard-sep10-15.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: frozen-head-guard-sep10-15-once
+  cancel-in-progress: false
+jobs:
+  historical_8point:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: One-time explicit external fetch gate
+        id: gate
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT_NAME" = "workflow_dispatch" ] || [ "$(git log -1 --pretty=%s)" = "Run one-time frozen head guard Sep10-15 holdout" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "Historical official download skipped; run requires explicit one-time trigger."
+          fi
+      - uses: actions/setup-python@v5
+        if: steps.gate.outputs.enabled == 'true'
+        with:
+          python-version: '3.12'
+      - name: Unit tests without any network
+        if: steps.gate.outputs.enabled == 'true'
+        run: python -W error -m unittest discover -s tests -v
+      - name: Install free LZH extractor
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq p7zip-full
+      - name: Bounded historical B/K Aug-trained Sep10-12 validation
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python src/boat_free_lab.py collect --start 2026-09-10 --days 3 --root "$RUNNER_TEMP/frozen-head" --sleep 2
+      - name: Freeze all September 10-12 B-only tickets before opening K
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python src/frozen_head_guard_trial.py --root "$RUNNER_TEMP/frozen-head" \
+            --fit-receipt research/role_temperature_aug10_17_train_test.json \
+            --test 2026-09-10 2026-09-11 2026-09-12 > "$RUNNER_TEMP/cohort1.json"
+      - name: Bounded second historical Sep13-15 validation
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python src/boat_free_lab.py collect --start 2026-09-13 --days 3 --root "$RUNNER_TEMP/frozen-head" --sleep 2
+      - name: Freeze all September 13-15 B-only tickets before opening K
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python src/frozen_head_guard_trial.py --root "$RUNNER_TEMP/frozen-head" \
+            --fit-receipt research/role_temperature_aug10_17_train_test.json \
+            --test 2026-09-13 2026-09-14 2026-09-15 > "$RUNNER_TEMP/cohort2.json"
+      - name: Print hash receipts, same-population scores and one-time decision only
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python - <<'PY'
+          import json,os
+          reports=[]
+          for filename in ("cohort1.json","cohort2.json"):
+              path=os.path.join(os.environ["RUNNER_TEMP"],filename)
+              r=json.load(open(path,encoding="utf-8"))
+              assert r["mode"]=="FROZEN_TRAINED_B_ONLY_HEAD_GUARD_HISTORICAL_NOT_FORWARD"
+              assert r["forward_verified_races"]==0 and r["production_promoted"] is False
+              assert r["frozen_trained_sha256"]=="a8660f259ab1c88b150aa63f5e663c199ad1d5a68be5484c6f9dfa7e83e4bcbf"
+              reports.append(r)
+              print("GUARD_DAYS",json.dumps(r["daily_receipts"],sort_keys=True))
+              print("GUARD_PROPER",json.dumps(r["probability_scores"],sort_keys=True))
+              for name,stats in r["results"].items():
+                  assert stats["races"]>0 and stats["stakes_yen"]==800*stats["races"]
+                  assert sum(stats["miss_reasons"].values())==stats["races"]
+                  assert stats["hits"]==stats["miss_reasons"]["EXACT_HIT"]
+                  print("GUARD_POLICY",json.dumps({"cohort_dates":r["test_dates"],"policy":name,**stats},sort_keys=True))
+          assert not set(reports[0]["test_dates"]) & set(reports[1]["test_dates"])
+          for r in reports:
+              b=r["results"]["baseline_local_motor"]
+              for key in ("frozen_head_support","frozen_pair_support"):
+                  assert r["results"][key]["heads_covered"]==b["heads_covered"]
+              assert r["results"]["frozen_pair_support"]["pairs_covered"]==b["pairs_covered"]
+          PY
+      - name: No raw archive upload, no true Forward or model deployment
+        if: always()
+        run: echo "Temporary official B/K retained only on runner; aggregate evidence in job log."
