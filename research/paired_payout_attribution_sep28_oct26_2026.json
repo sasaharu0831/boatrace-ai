@@ -1,0 +1,1600 @@
+{
+  "report_type": "PAIRED_B_ONLY_POSTRACE_PAYOUT_ATTRIBUTION_OF_HISTORICAL_HOLDOUT",
+  "mode": "HISTORICAL_POSTRACE_EXPLANATION_NOT_FORWARD",
+  "source_run": "https://github.com/sasaharu0831/boatrace-ai/actions/runs/41229749084",
+  "independently_rechecked_against": "research/venue_stage_sep28_oct26_2026.json",
+  "trained_parameters_sha256": "a8660f259ab1c88b150aa63f5e663c199ad1d5a68be5484c6f9dfa7e83e4bcbf",
+  "predictor_schema": "B-only local win rate, motor 2-rate, boat number, previously frozen role temperatures",
+  "no_odds_popularity_or_payout_in_preclose_selection": true,
+  "train_dates": [
+    "2026-08-10",
+    "2026-08-11",
+    "2026-08-12"
+  ],
+  "tickets_per_race": 8,
+  "assumed_stake_per_ticket_yen": 100,
+  "status_partition": [
+    "both_hit",
+    "baseline_only",
+    "calibrated_only",
+    "neither_hit"
+  ],
+  "payout_delta_definition": "K historical payout sum on calibrated_only winners minus payout sum on baseline_only winners; common wins cancel. These totals are postrace only.",
+  "cohorts": [
+    {
+      "dates": [
+        "2026-09-28",
+        "2026-09-29",
+        "2026-09-30"
+      ],
+      "source_sha_and_frozen_ticket_sha": [
+        {
+          "B_frozen_races": 132,
+          "B_sha256": "08d9efe10a8200007138c61a33fedc63706fd1c30792a582b2aea0c8757b0735",
+          "K_sha256": "0798a14db0d9141b6aef09256c021ae6f23f1b51fce1840454fe4f86624fb9db",
+          "day": "2026-09-28",
+          "evaluated_races": 126,
+          "frozen_predictions_sha256": "340619c2fb951e533e1136654df1c2f86a00a2453cd32fe92f262d578c623444"
+        },
+        {
+          "B_frozen_races": 132,
+          "B_sha256": "d7054808ffde30ae0316a4b6c61d788936d6b6d84e4dc6f1f880c90b62ed0b18",
+          "K_sha256": "8216b0ff0f271a4aa905f4c81f34a60d3d28e72ac85da88b328d1c5a52fcf216",
+          "day": "2026-09-29",
+          "evaluated_races": 124,
+          "frozen_predictions_sha256": "77e2db59664e75256759dbdadc02e95d1f6a2a600a4064712cbdb8c83240f611"
+        },
+        {
+          "B_frozen_races": 144,
+          "B_sha256": "bcdfce16cd665a922677826588d917b440d46b043a6c32d607684986b981961b",
+          "K_sha256": "01e5697b0faf701f0bfe65d6b4c7d246f127144516479a50770717617870131b",
+          "day": "2026-09-30",
+          "evaluated_races": 137,
+          "frozen_predictions_sha256": "67e517508d849632a975ac14272a98c698f58c5c3b573028004495ac1c57c4b2"
+        }
+      ],
+      "groups": {
+        "K_marker:ABSENT_UNVERIFIED": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 134,
+          "baseline_hypothetical_paid_yen": 215020,
+          "baseline_hypothetical_return_rate": 0.7073026315789473,
+          "calibrated_hits": 141,
+          "calibrated_hypothetical_paid_yen": 212800,
+          "calibrated_hypothetical_return_rate": 0.7,
+          "descriptive_sample_at_least_30": true,
+          "gain_only_hits": 23,
+          "gain_only_paid_yen": 45410,
+          "hit_delta": 7,
+          "lost_only_hits": 16,
+          "lost_only_paid_yen": 47630,
+          "outcome_counts": {
+            "baseline_only": 16,
+            "both_hit": 118,
+            "calibrated_only": 23,
+            "neither_hit": 223
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 47630,
+            "both_hit": 167390,
+            "calibrated_only": 45410,
+            "neither_hit": 2103880
+          },
+          "payout_delta_yen": -2220,
+          "races": 380,
+          "stakes_yen": 304000
+        },
+        "K_marker:POSITIVE": {
+          "K_positive_marker_races": 7,
+          "baseline_hits": 4,
+          "baseline_hypothetical_paid_yen": 8620,
+          "baseline_hypothetical_return_rate": 1.5392857142857144,
+          "calibrated_hits": 4,
+          "calibrated_hypothetical_paid_yen": 8620,
+          "calibrated_hypothetical_return_rate": 1.5392857142857144,
+          "descriptive_sample_at_least_30": false,
+          "gain_only_hits": 0,
+          "gain_only_paid_yen": 0,
+          "hit_delta": 0,
+          "lost_only_hits": 0,
+          "lost_only_paid_yen": 0,
+          "outcome_counts": {
+            "baseline_only": 0,
+            "both_hit": 4,
+            "calibrated_only": 0,
+            "neither_hit": 3
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 0,
+            "both_hit": 8620,
+            "calibrated_only": 0,
+            "neither_hit": 8990
+          },
+          "payout_delta_yen": 0,
+          "races": 7,
+          "stakes_yen": 5600
+        },
+        "overall": {
+          "K_positive_marker_races": 7,
+          "baseline_hits": 138,
+          "baseline_hypothetical_paid_yen": 223640,
+          "baseline_hypothetical_return_rate": 0.7223514211886305,
+          "calibrated_hits": 145,
+          "calibrated_hypothetical_paid_yen": 221420,
+          "calibrated_hypothetical_return_rate": 0.7151808785529715,
+          "descriptive_sample_at_least_30": true,
+          "gain_only_hits": 23,
+          "gain_only_paid_yen": 45410,
+          "hit_delta": 7,
+          "lost_only_hits": 16,
+          "lost_only_paid_yen": 47630,
+          "outcome_counts": {
+            "baseline_only": 16,
+            "both_hit": 122,
+            "calibrated_only": 23,
+            "neither_hit": 226
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 47630,
+            "both_hit": 176010,
+            "calibrated_only": 45410,
+            "neither_hit": 2112870
+          },
+          "payout_delta_yen": -2220,
+          "races": 387,
+          "stakes_yen": 309600
+        },
+        "stage:FINAL": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 3,
+          "baseline_hypothetical_paid_yen": 2120,
+          "baseline_hypothetical_return_rate": 0.6625,
+          "calibrated_hits": 3,
+          "calibrated_hypothetical_paid_yen": 2120,
+          "calibrated_hypothetical_return_rate": 0.6625,
+          "descriptive_sample_at_least_30": false,
+          "gain_only_hits": 0,
+          "gain_only_paid_yen": 0,
+          "hit_delta": 0,
+          "lost_only_hits": 0,
+          "lost_only_paid_yen": 0,
+          "outcome_counts": {
+            "baseline_only": 0,
+            "both_hit": 3,
+            "calibrated_only": 0,
+            "neither_hit": 1
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 0,
+            "both_hit": 2120,
+            "calibrated_only": 0,
+            "neither_hit": 2590
+          },
+          "payout_delta_yen": 0,
+          "races": 4,
+          "stakes_yen": 3200
+        },
+        "stage:GENERAL": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 29,
+          "baseline_hypothetical_paid_yen": 47880,
+          "baseline_hypothetical_return_rate": 0.7210843373493976,
+          "calibrated_hits": 29,
+          "calibrated_hypothetical_paid_yen": 41550,
+          "calibrated_hypothetical_return_rate": 0.6257530120481928,
+          "descriptive_sample_at_least_30": true,
+          "gain_only_hits": 6,
+          "gain_only_paid_yen": 11240,
+          "hit_delta": 0,
+          "lost_only_hits": 6,
+          "lost_only_paid_yen": 17570,
+          "outcome_counts": {
+            "baseline_only": 6,
+            "both_hit": 23,
+            "calibrated_only": 6,
+            "neither_hit": 48
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 17570,
+            "both_hit": 30310,
+            "calibrated_only": 11240,
+            "neither_hit": 418130
+          },
+          "payout_delta_yen": -6330,
+          "races": 83,
+          "stakes_yen": 66400
+        },
+        "stage:QUALIFYING": {
+          "K_positive_marker_races": 5,
+          "baseline_hits": 63,
+          "baseline_hypothetical_paid_yen": 109890,
+          "baseline_hypothetical_return_rate": 0.7117227979274612,
+          "calibrated_hits": 64,
+          "calibrated_hypothetical_paid_yen": 102660,
+          "calibrated_hypothetical_return_rate": 0.6648963730569948,
+          "descriptive_sample_at_least_30": true,
+          "gain_only_hits": 10,
+          "gain_only_paid_yen": 21470,
+          "hit_delta": 1,
+          "lost_only_hits": 9,
+          "lost_only_paid_yen": 28700,
+          "outcome_counts": {
+            "baseline_only": 9,
+            "both_hit": 54,
+            "calibrated_only": 10,
+            "neither_hit": 120
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 28700,
+            "both_hit": 81190,
+            "calibrated_only": 21470,
+            "neither_hit": 1231120
+          },
+          "payout_delta_yen": -7230,
+          "races": 193,
+          "stakes_yen": 154400
+        },
+        "stage:SELECTION": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 3,
+          "baseline_hypothetical_paid_yen": 2570,
+          "baseline_hypothetical_return_rate": 0.17847222222222223,
+          "calibrated_hits": 9,
+          "calibrated_hypothetical_paid_yen": 14180,
+          "calibrated_hypothetical_return_rate": 0.9847222222222223,
+          "descriptive_sample_at_least_30": false,
+          "gain_only_hits": 6,
+          "gain_only_paid_yen": 11610,
+          "hit_delta": 6,
+          "lost_only_hits": 0,
+          "lost_only_paid_yen": 0,
+          "outcome_counts": {
+            "baseline_only": 0,
+            "both_hit": 3,
+            "calibrated_only": 6,
+            "neither_hit": 9
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 0,
+            "both_hit": 2570,
+            "calibrated_only": 11610,
+            "neither_hit": 57350
+          },
+          "payout_delta_yen": 11610,
+          "races": 18,
+          "stakes_yen": 14400
+        },
+        "stage:SEMIFINAL": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 10,
+          "baseline_hypothetical_paid_yen": 14200,
+          "baseline_hypothetical_return_rate": 1.109375,
+          "calibrated_hits": 10,
+          "calibrated_hypothetical_paid_yen": 14200,
+          "calibrated_hypothetical_return_rate": 1.109375,
+          "descriptive_sample_at_least_30": false,
+          "gain_only_hits": 0,
+          "gain_only_paid_yen": 0,
+          "hit_delta": 0,
+          "lost_only_hits": 0,
+          "lost_only_paid_yen": 0,
+          "outcome_counts": {
+            "baseline_only": 0,
+            "both_hit": 10,
+            "calibrated_only": 0,
+            "neither_hit": 6
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 0,
+            "both_hit": 14200,
+            "calibrated_only": 0,
+            "neither_hit": 19800
+          },
+          "payout_delta_yen": 0,
+          "races": 16,
+          "stakes_yen": 12800
+        },
+        "stage:UNSPECIFIED": {
+          "K_positive_marker_races": 2,
+          "baseline_hits": 30,
+          "baseline_hypothetical_paid_yen": 46980,
+          "baseline_hypothetical_return_rate": 0.8044520547945205,
+          "calibrated_hits": 30,
+          "calibrated_hypothetical_paid_yen": 46710,
+          "calibrated_hypothetical_return_rate": 0.7998287671232877,
+          "descriptive_sample_at_least_30": true,
+          "gain_only_hits": 1,
+          "gain_only_paid_yen": 1090,
+          "hit_delta": 0,
+          "lost_only_hits": 1,
+          "lost_only_paid_yen": 1360,
+          "outcome_counts": {
+            "baseline_only": 1,
+            "both_hit": 29,
+            "calibrated_only": 1,
+            "neither_hit": 42
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 1360,
+            "both_hit": 45620,
+            "calibrated_only": 1090,
+            "neither_hit": 383880
+          },
+          "payout_delta_yen": -270,
+          "races": 73,
+          "stakes_yen": 58400
+        },
+        "venue:02": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 13,
+          "baseline_hypothetical_paid_yen": 19740,
+          "baseline_hypothetical_return_rate": 0.7477272727272727,
+          "calibrated_hits": 13,
+          "calibrated_hypothetical_paid_yen": 16950,
+          "calibrated_hypothetical_return_rate": 0.6420454545454546,
+          "descriptive_sample_at_least_30": true,
+          "gain_only_hits": 2,
+          "gain_only_paid_yen": 2020,
+          "hit_delta": 0,
+          "lost_only_hits": 2,
+          "lost_only_paid_yen": 4810,
+          "outcome_counts": {
+            "baseline_only": 2,
+            "both_hit": 11,
+            "calibrated_only": 2,
+            "neither_hit": 18
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 4810,
+            "both_hit": 14930,
+            "calibrated_only": 2020,
+            "neither_hit": 92440
+          },
+          "payout_delta_yen": -2790,
+          "races": 33,
+          "stakes_yen": 26400
+        },
+        "venue:03": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 14,
+          "baseline_hypothetical_paid_yen": 32680,
+          "baseline_hypothetical_return_rate": 1.2378787878787878,
+          "calibrated_hits": 11,
+          "calibrated_hypothetical_paid_yen": 16960,
+          "calibrated_hypothetical_return_rate": 0.6424242424242425,
+          "descriptive_sample_at_least_30": true,
+          "gain_only_hits": 1,
+          "gain_only_paid_yen": 1790,
+          "hit_delta": -3,
+          "lost_only_hits": 4,
+          "lost_only_paid_yen": 17510,
+          "outcome_counts": {
+            "baseline_only": 4,
+            "both_hit": 10,
+            "calibrated_only": 1,
+            "neither_hit": 18
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 17510,
+            "both_hit": 15170,
+            "calibrated_only": 1790,
+            "neither_hit": 260020
+          },
+          "payout_delta_yen": -15720,
+          "races": 33,
+          "stakes_yen": 26400
+        },
+        "venue:04": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 8,
+          "baseline_hypothetical_paid_yen": 10190,
+          "baseline_hypothetical_return_rate": 0.398046875,
+          "calibrated_hits": 9,
+          "calibrated_hypothetical_paid_yen": 12920,
+          "calibrated_hypothetical_return_rate": 0.5046875,
+          "descriptive_sample_at_least_30": true,
+          "gain_only_hits": 1,
+          "gain_only_paid_yen": 2730,
+          "hit_delta": 1,
+          "lost_only_hits": 0,
+          "lost_only_paid_yen": 0,
+          "outcome_counts": {
+            "baseline_only": 0,
+            "both_hit": 8,
+            "calibrated_only": 1,
+            "neither_hit": 23
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 0,
+            "both_hit": 10190,
+            "calibrated_only": 2730,
+            "neither_hit": 298010
+          },
+          "payout_delta_yen": 2730,
+          "races": 32,
+          "stakes_yen": 25600
+        },
+        "venue:05": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 12,
+          "baseline_hypothetical_paid_yen": 18290,
+          "baseline_hypothetical_return_rate": 0.6350694444444445,
+          "calibrated_hits": 14,
+          "calibrated_hypothetical_paid_yen": 21580,
+          "calibrated_hypothetical_return_rate": 0.7493055555555556,
+          "descriptive_sample_at_least_30": true,
+          "gain_only_hits": 2,
+          "gain_only_paid_yen": 3290,
+          "hit_delta": 2,
+          "lost_only_hits": 0,
+          "lost_only_paid_yen": 0,
+          "outcome_counts": {
+            "baseline_only": 0,
+            "both_hit": 12,
+            "calibrated_only": 2,
+            "neither_hit": 22
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 0,
+            "both_hit": 18290,
+            "calibrated_only": 3290,
+            "neither_hit": 77470
+          },
+          "payout_delta_yen": 3290,
+          "races": 36,
+          "stakes_yen": 28800
+        },
+        "venue:06": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 4,
+          "baseline_hypothetical_paid_yen": 12190,
+          "baseline_hypothetical_return_rate": 1.3852272727272728,
+          "calibrated_hits": 3,
+          "calibrated_hypothetical_paid_yen": 9230,
+          "calibrated_hypothetical_return_rate": 1.0488636363636363,
+          "descriptive_sample_at_least_30": false,
+          "gain_only_hits": 0,
+          "gain_only_paid_yen": 0,
+          "hit_delta": -1,
+          "lost_only_hits": 1,
+          "lost_only_paid_yen": 2960,
+          "outcome_counts": {
+            "baseline_only": 1,
+            "both_hit": 3,
+            "calibrated_only": 0,
+            "neither_hit": 7
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 2960,
+            "both_hit": 9230,
+            "calibrated_only": 0,
+            "neither_hit": 31120
+          },
+          "payout_delta_yen": -2960,
+          "races": 11,
+          "stakes_yen": 8800
+        },
+        "venue:07": {
+          "K_positive_marker_races": 2,
+          "baseline_hits": 8,
+          "baseline_hypothetical_paid_yen": 7940,
+          "baseline_hypothetical_return_rate": 0.41354166666666664,
+          "calibrated_hits": 8,
+          "calibrated_hypothetical_paid_yen": 7940,
+          "calibrated_hypothetical_return_rate": 0.41354166666666664,
+          "descriptive_sample_at_least_30": false,
+          "gain_only_hits": 0,
+          "gain_only_paid_yen": 0,
+          "hit_delta": 0,
+          "lost_only_hits": 0,
+          "lost_only_paid_yen": 0,
+          "outcome_counts": {
+            "baseline_only": 0,
+            "both_hit": 8,
+            "calibrated_only": 0,
+            "neither_hit": 16
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 0,
+            "both_hit": 7940,
+            "calibrated_only": 0,
+            "neither_hit": 271350
+          },
+          "payout_delta_yen": 0,
+          "races": 24,
+          "stakes_yen": 19200
+        },
+        "venue:09": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 9,
+          "baseline_hypothetical_paid_yen": 12450,
+          "baseline_hypothetical_return_rate": 0.6766304347826086,
+          "calibrated_hits": 11,
+          "calibrated_hypothetical_paid_yen": 11580,
+          "calibrated_hypothetical_return_rate": 0.6293478260869565,
+          "descriptive_sample_at_least_30": false,
+          "gain_only_hits": 3,
+          "gain_only_paid_yen": 4500,
+          "hit_delta": 2,
+          "lost_only_hits": 1,
+          "lost_only_paid_yen": 5370,
+          "outcome_counts": {
+            "baseline_only": 1,
+            "both_hit": 8,
+            "calibrated_only": 3,
+            "neither_hit": 11
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 5370,
+            "both_hit": 7080,
+            "calibrated_only": 4500,
+            "neither_hit": 39280
+          },
+          "payout_delta_yen": -870,
+          "races": 23,
+          "stakes_yen": 18400
+        },
+        "venue:13": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 11,
+          "baseline_hypothetical_paid_yen": 10890,
+          "baseline_hypothetical_return_rate": 0.5671875,
+          "calibrated_hits": 13,
+          "calibrated_hypothetical_paid_yen": 15410,
+          "calibrated_hypothetical_return_rate": 0.8026041666666667,
+          "descriptive_sample_at_least_30": false,
+          "gain_only_hits": 4,
+          "gain_only_paid_yen": 9340,
+          "hit_delta": 2,
+          "lost_only_hits": 2,
+          "lost_only_paid_yen": 4820,
+          "outcome_counts": {
+            "baseline_only": 2,
+            "both_hit": 9,
+            "calibrated_only": 4,
+            "neither_hit": 9
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 4820,
+            "both_hit": 6070,
+            "calibrated_only": 9340,
+            "neither_hit": 81310
+          },
+          "payout_delta_yen": 4520,
+          "races": 24,
+          "stakes_yen": 19200
+        },
+        "venue:14": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 8,
+          "baseline_hypothetical_paid_yen": 13950,
+          "baseline_hypothetical_return_rate": 0.4982142857142857,
+          "calibrated_hits": 8,
+          "calibrated_hypothetical_paid_yen": 16880,
+          "calibrated_hypothetical_return_rate": 0.6028571428571429,
+          "descriptive_sample_at_least_30": true,
+          "gain_only_hits": 1,
+          "gain_only_paid_yen": 6620,
+          "hit_delta": 0,
+          "lost_only_hits": 1,
+          "lost_only_paid_yen": 3690,
+          "outcome_counts": {
+            "baseline_only": 1,
+            "both_hit": 7,
+            "calibrated_only": 1,
+            "neither_hit": 26
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 3690,
+            "both_hit": 10260,
+            "calibrated_only": 6620,
+            "neither_hit": 250370
+          },
+          "payout_delta_yen": 2930,
+          "races": 35,
+          "stakes_yen": 28000
+        },
+        "venue:15": {
+          "K_positive_marker_races": 2,
+          "baseline_hits": 12,
+          "baseline_hypothetical_paid_yen": 15050,
+          "baseline_hypothetical_return_rate": 0.6068548387096774,
+          "calibrated_hits": 11,
+          "calibrated_hypothetical_paid_yen": 13440,
+          "calibrated_hypothetical_return_rate": 0.5419354838709678,
+          "descriptive_sample_at_least_30": true,
+          "gain_only_hits": 0,
+          "gain_only_paid_yen": 0,
+          "hit_delta": -1,
+          "lost_only_hits": 1,
+          "lost_only_paid_yen": 1610,
+          "outcome_counts": {
+            "baseline_only": 1,
+            "both_hit": 11,
+            "calibrated_only": 0,
+            "neither_hit": 19
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 1610,
+            "both_hit": 13440,
+            "calibrated_only": 0,
+            "neither_hit": 133420
+          },
+          "payout_delta_yen": -1610,
+          "races": 31,
+          "stakes_yen": 24800
+        },
+        "venue:16": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 7,
+          "baseline_hypothetical_paid_yen": 7980,
+          "baseline_hypothetical_return_rate": 0.2933823529411765,
+          "calibrated_hits": 10,
+          "calibrated_hypothetical_paid_yen": 12510,
+          "calibrated_hypothetical_return_rate": 0.45992647058823527,
+          "descriptive_sample_at_least_30": true,
+          "gain_only_hits": 3,
+          "gain_only_paid_yen": 4530,
+          "hit_delta": 3,
+          "lost_only_hits": 0,
+          "lost_only_paid_yen": 0,
+          "outcome_counts": {
+            "baseline_only": 0,
+            "both_hit": 7,
+            "calibrated_only": 3,
+            "neither_hit": 24
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 0,
+            "both_hit": 7980,
+            "calibrated_only": 4530,
+            "neither_hit": 181270
+          },
+          "payout_delta_yen": 4530,
+          "races": 34,
+          "stakes_yen": 27200
+        },
+        "venue:19": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 7,
+          "baseline_hypothetical_paid_yen": 7240,
+          "baseline_hypothetical_return_rate": 0.3934782608695652,
+          "calibrated_hits": 8,
+          "calibrated_hypothetical_paid_yen": 10180,
+          "calibrated_hypothetical_return_rate": 0.5532608695652174,
+          "descriptive_sample_at_least_30": false,
+          "gain_only_hits": 2,
+          "gain_only_paid_yen": 3480,
+          "hit_delta": 1,
+          "lost_only_hits": 1,
+          "lost_only_paid_yen": 540,
+          "outcome_counts": {
+            "baseline_only": 1,
+            "both_hit": 6,
+            "calibrated_only": 2,
+            "neither_hit": 14
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 540,
+            "both_hit": 6700,
+            "calibrated_only": 3480,
+            "neither_hit": 243350
+          },
+          "payout_delta_yen": 2940,
+          "races": 23,
+          "stakes_yen": 18400
+        },
+        "venue:23": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 6,
+          "baseline_hypothetical_paid_yen": 16830,
+          "baseline_hypothetical_return_rate": 1.753125,
+          "calibrated_hits": 5,
+          "calibrated_hypothetical_paid_yen": 15470,
+          "calibrated_hypothetical_return_rate": 1.6114583333333334,
+          "descriptive_sample_at_least_30": false,
+          "gain_only_hits": 0,
+          "gain_only_paid_yen": 0,
+          "hit_delta": -1,
+          "lost_only_hits": 1,
+          "lost_only_paid_yen": 1360,
+          "outcome_counts": {
+            "baseline_only": 1,
+            "both_hit": 5,
+            "calibrated_only": 0,
+            "neither_hit": 6
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 1360,
+            "both_hit": 15470,
+            "calibrated_only": 0,
+            "neither_hit": 79300
+          },
+          "payout_delta_yen": -1360,
+          "races": 12,
+          "stakes_yen": 9600
+        },
+        "venue:24": {
+          "K_positive_marker_races": 3,
+          "baseline_hits": 19,
+          "baseline_hypothetical_paid_yen": 38220,
+          "baseline_hypothetical_return_rate": 1.3270833333333334,
+          "calibrated_hits": 21,
+          "calibrated_hypothetical_paid_yen": 40370,
+          "calibrated_hypothetical_return_rate": 1.401736111111111,
+          "descriptive_sample_at_least_30": true,
+          "gain_only_hits": 4,
+          "gain_only_paid_yen": 7110,
+          "hit_delta": 2,
+          "lost_only_hits": 2,
+          "lost_only_paid_yen": 4960,
+          "outcome_counts": {
+            "baseline_only": 2,
+            "both_hit": 17,
+            "calibrated_only": 4,
+            "neither_hit": 13
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 4960,
+            "both_hit": 33260,
+            "calibrated_only": 7110,
+            "neither_hit": 74160
+          },
+          "payout_delta_yen": 2150,
+          "races": 36,
+          "stakes_yen": 28800
+        }
+      }
+    },
+    {
+      "dates": [
+        "2026-10-24",
+        "2026-10-25",
+        "2026-10-26"
+      ],
+      "source_sha_and_frozen_ticket_sha": [
+        {
+          "B_frozen_races": 141,
+          "B_sha256": "85d7d8236fb0a2827ecb3c845146341ae27ee02ca4a3ed2f70e227619cac1537",
+          "K_sha256": "1c75b1f8ee711d9b1f1dab3dffde47b9d264c3f11a4dbc4e4e9f860aa16d50bc",
+          "day": "2026-10-24",
+          "evaluated_races": 137,
+          "frozen_predictions_sha256": "37703651645927fccb744901f83049265028fc72d40c1524e210ed30469daf3c"
+        },
+        {
+          "B_frozen_races": 140,
+          "B_sha256": "f4bebf682c5f2a269088091a79d314d3cc42cc45b49706abafaf0f62f49f5f3e",
+          "K_sha256": "f214e4f0d0910d820ef68d52cd6efe2d11c4b008d21c089dac5852045edbf3dd",
+          "day": "2026-10-25",
+          "evaluated_races": 126,
+          "frozen_predictions_sha256": "8f99b6f57aeb4d40d5f181c4875e3750571c1ff11782bfcf16ed0283f77670f9"
+        },
+        {
+          "B_frozen_races": 118,
+          "B_sha256": "2c615b5350757374d33c0700c4ff71e363b9f82f620c1629d5ac60f7b7100a92",
+          "K_sha256": "f9d258acf249eeb3c6527a57030f5a606f1ee2956a0488c580594fcabdc8f56b",
+          "day": "2026-10-26",
+          "evaluated_races": 113,
+          "frozen_predictions_sha256": "c00b32a30ed046edd3434099133d29ab2c976151589bd8152969c34b6684c5c7"
+        }
+      ],
+      "groups": {
+        "K_marker:ABSENT_UNVERIFIED": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 146,
+          "baseline_hypothetical_paid_yen": 242890,
+          "baseline_hypothetical_return_rate": 0.8205743243243243,
+          "calibrated_hits": 161,
+          "calibrated_hypothetical_paid_yen": 248960,
+          "calibrated_hypothetical_return_rate": 0.841081081081081,
+          "descriptive_sample_at_least_30": true,
+          "gain_only_hits": 24,
+          "gain_only_paid_yen": 48110,
+          "hit_delta": 15,
+          "lost_only_hits": 9,
+          "lost_only_paid_yen": 42040,
+          "outcome_counts": {
+            "baseline_only": 9,
+            "both_hit": 137,
+            "calibrated_only": 24,
+            "neither_hit": 200
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 42040,
+            "both_hit": 200850,
+            "calibrated_only": 48110,
+            "neither_hit": 1952040
+          },
+          "payout_delta_yen": 6070,
+          "races": 370,
+          "stakes_yen": 296000
+        },
+        "K_marker:POSITIVE": {
+          "K_positive_marker_races": 6,
+          "baseline_hits": 3,
+          "baseline_hypothetical_paid_yen": 3600,
+          "baseline_hypothetical_return_rate": 0.75,
+          "calibrated_hits": 4,
+          "calibrated_hypothetical_paid_yen": 4270,
+          "calibrated_hypothetical_return_rate": 0.8895833333333333,
+          "descriptive_sample_at_least_30": false,
+          "gain_only_hits": 1,
+          "gain_only_paid_yen": 670,
+          "hit_delta": 1,
+          "lost_only_hits": 0,
+          "lost_only_paid_yen": 0,
+          "outcome_counts": {
+            "baseline_only": 0,
+            "both_hit": 3,
+            "calibrated_only": 1,
+            "neither_hit": 2
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 0,
+            "both_hit": 3600,
+            "calibrated_only": 670,
+            "neither_hit": 13970
+          },
+          "payout_delta_yen": 670,
+          "races": 6,
+          "stakes_yen": 4800
+        },
+        "overall": {
+          "K_positive_marker_races": 6,
+          "baseline_hits": 149,
+          "baseline_hypothetical_paid_yen": 246490,
+          "baseline_hypothetical_return_rate": 0.8194481382978723,
+          "calibrated_hits": 165,
+          "calibrated_hypothetical_paid_yen": 253230,
+          "calibrated_hypothetical_return_rate": 0.8418550531914893,
+          "descriptive_sample_at_least_30": true,
+          "gain_only_hits": 25,
+          "gain_only_paid_yen": 48780,
+          "hit_delta": 16,
+          "lost_only_hits": 9,
+          "lost_only_paid_yen": 42040,
+          "outcome_counts": {
+            "baseline_only": 9,
+            "both_hit": 140,
+            "calibrated_only": 25,
+            "neither_hit": 202
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 42040,
+            "both_hit": 204450,
+            "calibrated_only": 48780,
+            "neither_hit": 1966010
+          },
+          "payout_delta_yen": 6740,
+          "races": 376,
+          "stakes_yen": 300800
+        },
+        "stage:FINAL": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 4,
+          "baseline_hypothetical_paid_yen": 3120,
+          "baseline_hypothetical_return_rate": 0.5571428571428572,
+          "calibrated_hits": 5,
+          "calibrated_hypothetical_paid_yen": 4480,
+          "calibrated_hypothetical_return_rate": 0.8,
+          "descriptive_sample_at_least_30": false,
+          "gain_only_hits": 1,
+          "gain_only_paid_yen": 1360,
+          "hit_delta": 1,
+          "lost_only_hits": 0,
+          "lost_only_paid_yen": 0,
+          "outcome_counts": {
+            "baseline_only": 0,
+            "both_hit": 4,
+            "calibrated_only": 1,
+            "neither_hit": 2
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 0,
+            "both_hit": 3120,
+            "calibrated_only": 1360,
+            "neither_hit": 27000
+          },
+          "payout_delta_yen": 1360,
+          "races": 7,
+          "stakes_yen": 5600
+        },
+        "stage:GENERAL": {
+          "K_positive_marker_races": 1,
+          "baseline_hits": 43,
+          "baseline_hypothetical_paid_yen": 83450,
+          "baseline_hypothetical_return_rate": 1.0030048076923077,
+          "calibrated_hits": 49,
+          "calibrated_hypothetical_paid_yen": 86580,
+          "calibrated_hypothetical_return_rate": 1.040625,
+          "descriptive_sample_at_least_30": true,
+          "gain_only_hits": 9,
+          "gain_only_paid_yen": 21210,
+          "hit_delta": 6,
+          "lost_only_hits": 3,
+          "lost_only_paid_yen": 18080,
+          "outcome_counts": {
+            "baseline_only": 3,
+            "both_hit": 40,
+            "calibrated_only": 9,
+            "neither_hit": 52
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 18080,
+            "both_hit": 65370,
+            "calibrated_only": 21210,
+            "neither_hit": 462210
+          },
+          "payout_delta_yen": 3130,
+          "races": 104,
+          "stakes_yen": 83200
+        },
+        "stage:QUALIFYING": {
+          "K_positive_marker_races": 2,
+          "baseline_hits": 54,
+          "baseline_hypothetical_paid_yen": 101930,
+          "baseline_hypothetical_return_rate": 0.8115445859872611,
+          "calibrated_hits": 62,
+          "calibrated_hypothetical_paid_yen": 101770,
+          "calibrated_hypothetical_return_rate": 0.8102707006369426,
+          "descriptive_sample_at_least_30": true,
+          "gain_only_hits": 11,
+          "gain_only_paid_yen": 17570,
+          "hit_delta": 8,
+          "lost_only_hits": 3,
+          "lost_only_paid_yen": 17730,
+          "outcome_counts": {
+            "baseline_only": 3,
+            "both_hit": 51,
+            "calibrated_only": 11,
+            "neither_hit": 92
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 17730,
+            "both_hit": 84200,
+            "calibrated_only": 17570,
+            "neither_hit": 790640
+          },
+          "payout_delta_yen": -160,
+          "races": 157,
+          "stakes_yen": 125600
+        },
+        "stage:SELECTION": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 5,
+          "baseline_hypothetical_paid_yen": 6640,
+          "baseline_hypothetical_return_rate": 0.51875,
+          "calibrated_hits": 6,
+          "calibrated_hypothetical_paid_yen": 8980,
+          "calibrated_hypothetical_return_rate": 0.7015625,
+          "descriptive_sample_at_least_30": false,
+          "gain_only_hits": 1,
+          "gain_only_paid_yen": 2340,
+          "hit_delta": 1,
+          "lost_only_hits": 0,
+          "lost_only_paid_yen": 0,
+          "outcome_counts": {
+            "baseline_only": 0,
+            "both_hit": 5,
+            "calibrated_only": 1,
+            "neither_hit": 10
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 0,
+            "both_hit": 6640,
+            "calibrated_only": 2340,
+            "neither_hit": 179580
+          },
+          "payout_delta_yen": 2340,
+          "races": 16,
+          "stakes_yen": 12800
+        },
+        "stage:SEMIFINAL": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 11,
+          "baseline_hypothetical_paid_yen": 12010,
+          "baseline_hypothetical_return_rate": 0.6823863636363636,
+          "calibrated_hits": 11,
+          "calibrated_hypothetical_paid_yen": 12010,
+          "calibrated_hypothetical_return_rate": 0.6823863636363636,
+          "descriptive_sample_at_least_30": false,
+          "gain_only_hits": 0,
+          "gain_only_paid_yen": 0,
+          "hit_delta": 0,
+          "lost_only_hits": 0,
+          "lost_only_paid_yen": 0,
+          "outcome_counts": {
+            "baseline_only": 0,
+            "both_hit": 11,
+            "calibrated_only": 0,
+            "neither_hit": 11
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 0,
+            "both_hit": 12010,
+            "calibrated_only": 0,
+            "neither_hit": 90870
+          },
+          "payout_delta_yen": 0,
+          "races": 22,
+          "stakes_yen": 17600
+        },
+        "stage:UNSPECIFIED": {
+          "K_positive_marker_races": 3,
+          "baseline_hits": 32,
+          "baseline_hypothetical_paid_yen": 39340,
+          "baseline_hypothetical_return_rate": 0.7025,
+          "calibrated_hits": 32,
+          "calibrated_hypothetical_paid_yen": 39410,
+          "calibrated_hypothetical_return_rate": 0.70375,
+          "descriptive_sample_at_least_30": true,
+          "gain_only_hits": 3,
+          "gain_only_paid_yen": 6300,
+          "hit_delta": 0,
+          "lost_only_hits": 3,
+          "lost_only_paid_yen": 6230,
+          "outcome_counts": {
+            "baseline_only": 3,
+            "both_hit": 29,
+            "calibrated_only": 3,
+            "neither_hit": 35
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 6230,
+            "both_hit": 33110,
+            "calibrated_only": 6300,
+            "neither_hit": 415710
+          },
+          "payout_delta_yen": 70,
+          "races": 70,
+          "stakes_yen": 56000
+        },
+        "venue:01": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 8,
+          "baseline_hypothetical_paid_yen": 7030,
+          "baseline_hypothetical_return_rate": 0.39943181818181817,
+          "calibrated_hits": 9,
+          "calibrated_hypothetical_paid_yen": 8340,
+          "calibrated_hypothetical_return_rate": 0.4738636363636364,
+          "descriptive_sample_at_least_30": false,
+          "gain_only_hits": 1,
+          "gain_only_paid_yen": 1310,
+          "hit_delta": 1,
+          "lost_only_hits": 0,
+          "lost_only_paid_yen": 0,
+          "outcome_counts": {
+            "baseline_only": 0,
+            "both_hit": 8,
+            "calibrated_only": 1,
+            "neither_hit": 13
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 0,
+            "both_hit": 7030,
+            "calibrated_only": 1310,
+            "neither_hit": 75850
+          },
+          "payout_delta_yen": 1310,
+          "races": 22,
+          "stakes_yen": 17600
+        },
+        "venue:04": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 11,
+          "baseline_hypothetical_paid_yen": 35280,
+          "baseline_hypothetical_return_rate": 1.2970588235294118,
+          "calibrated_hits": 12,
+          "calibrated_hypothetical_paid_yen": 37260,
+          "calibrated_hypothetical_return_rate": 1.3698529411764706,
+          "descriptive_sample_at_least_30": true,
+          "gain_only_hits": 3,
+          "gain_only_paid_yen": 9070,
+          "hit_delta": 1,
+          "lost_only_hits": 2,
+          "lost_only_paid_yen": 7090,
+          "outcome_counts": {
+            "baseline_only": 2,
+            "both_hit": 9,
+            "calibrated_only": 3,
+            "neither_hit": 20
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 7090,
+            "both_hit": 28190,
+            "calibrated_only": 9070,
+            "neither_hit": 200230
+          },
+          "payout_delta_yen": 1980,
+          "races": 34,
+          "stakes_yen": 27200
+        },
+        "venue:05": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 13,
+          "baseline_hypothetical_paid_yen": 17860,
+          "baseline_hypothetical_return_rate": 0.7201612903225807,
+          "calibrated_hits": 16,
+          "calibrated_hypothetical_paid_yen": 24340,
+          "calibrated_hypothetical_return_rate": 0.9814516129032258,
+          "descriptive_sample_at_least_30": true,
+          "gain_only_hits": 3,
+          "gain_only_paid_yen": 6480,
+          "hit_delta": 3,
+          "lost_only_hits": 0,
+          "lost_only_paid_yen": 0,
+          "outcome_counts": {
+            "baseline_only": 0,
+            "both_hit": 13,
+            "calibrated_only": 3,
+            "neither_hit": 15
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 0,
+            "both_hit": 17860,
+            "calibrated_only": 6480,
+            "neither_hit": 166510
+          },
+          "payout_delta_yen": 6480,
+          "races": 31,
+          "stakes_yen": 24800
+        },
+        "venue:06": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 12,
+          "baseline_hypothetical_paid_yen": 25120,
+          "baseline_hypothetical_return_rate": 1.0129032258064516,
+          "calibrated_hits": 14,
+          "calibrated_hypothetical_paid_yen": 26030,
+          "calibrated_hypothetical_return_rate": 1.0495967741935484,
+          "descriptive_sample_at_least_30": true,
+          "gain_only_hits": 4,
+          "gain_only_paid_yen": 8140,
+          "hit_delta": 2,
+          "lost_only_hits": 2,
+          "lost_only_paid_yen": 7230,
+          "outcome_counts": {
+            "baseline_only": 2,
+            "both_hit": 10,
+            "calibrated_only": 4,
+            "neither_hit": 15
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 7230,
+            "both_hit": 17890,
+            "calibrated_only": 8140,
+            "neither_hit": 95450
+          },
+          "payout_delta_yen": 910,
+          "races": 31,
+          "stakes_yen": 24800
+        },
+        "venue:08": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 8,
+          "baseline_hypothetical_paid_yen": 10710,
+          "baseline_hypothetical_return_rate": 0.6375,
+          "calibrated_hits": 10,
+          "calibrated_hypothetical_paid_yen": 13530,
+          "calibrated_hypothetical_return_rate": 0.8053571428571429,
+          "descriptive_sample_at_least_30": false,
+          "gain_only_hits": 2,
+          "gain_only_paid_yen": 2820,
+          "hit_delta": 2,
+          "lost_only_hits": 0,
+          "lost_only_paid_yen": 0,
+          "outcome_counts": {
+            "baseline_only": 0,
+            "both_hit": 8,
+            "calibrated_only": 2,
+            "neither_hit": 11
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 0,
+            "both_hit": 10710,
+            "calibrated_only": 2820,
+            "neither_hit": 193430
+          },
+          "payout_delta_yen": 2820,
+          "races": 21,
+          "stakes_yen": 16800
+        },
+        "venue:09": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 11,
+          "baseline_hypothetical_paid_yen": 27210,
+          "baseline_hypothetical_return_rate": 1.0003676470588236,
+          "calibrated_hits": 11,
+          "calibrated_hypothetical_paid_yen": 20670,
+          "calibrated_hypothetical_return_rate": 0.7599264705882353,
+          "descriptive_sample_at_least_30": true,
+          "gain_only_hits": 1,
+          "gain_only_paid_yen": 2350,
+          "hit_delta": 0,
+          "lost_only_hits": 1,
+          "lost_only_paid_yen": 8890,
+          "outcome_counts": {
+            "baseline_only": 1,
+            "both_hit": 10,
+            "calibrated_only": 1,
+            "neither_hit": 22
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 8890,
+            "both_hit": 18320,
+            "calibrated_only": 2350,
+            "neither_hit": 182900
+          },
+          "payout_delta_yen": -6540,
+          "races": 34,
+          "stakes_yen": 27200
+        },
+        "venue:10": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 10,
+          "baseline_hypothetical_paid_yen": 15630,
+          "baseline_hypothetical_return_rate": 0.5427083333333333,
+          "calibrated_hits": 10,
+          "calibrated_hypothetical_paid_yen": 16770,
+          "calibrated_hypothetical_return_rate": 0.5822916666666667,
+          "descriptive_sample_at_least_30": true,
+          "gain_only_hits": 1,
+          "gain_only_paid_yen": 2810,
+          "hit_delta": 0,
+          "lost_only_hits": 1,
+          "lost_only_paid_yen": 1670,
+          "outcome_counts": {
+            "baseline_only": 1,
+            "both_hit": 9,
+            "calibrated_only": 1,
+            "neither_hit": 25
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 1670,
+            "both_hit": 13960,
+            "calibrated_only": 2810,
+            "neither_hit": 292690
+          },
+          "payout_delta_yen": 1140,
+          "races": 36,
+          "stakes_yen": 28800
+        },
+        "venue:11": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 10,
+          "baseline_hypothetical_paid_yen": 19330,
+          "baseline_hypothetical_return_rate": 0.6903571428571429,
+          "calibrated_hits": 12,
+          "calibrated_hypothetical_paid_yen": 23850,
+          "calibrated_hypothetical_return_rate": 0.8517857142857143,
+          "descriptive_sample_at_least_30": true,
+          "gain_only_hits": 2,
+          "gain_only_paid_yen": 4520,
+          "hit_delta": 2,
+          "lost_only_hits": 0,
+          "lost_only_paid_yen": 0,
+          "outcome_counts": {
+            "baseline_only": 0,
+            "both_hit": 10,
+            "calibrated_only": 2,
+            "neither_hit": 23
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 0,
+            "both_hit": 19330,
+            "calibrated_only": 4520,
+            "neither_hit": 284810
+          },
+          "payout_delta_yen": 4520,
+          "races": 35,
+          "stakes_yen": 28000
+        },
+        "venue:12": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 4,
+          "baseline_hypothetical_paid_yen": 4760,
+          "baseline_hypothetical_return_rate": 0.5409090909090909,
+          "calibrated_hits": 5,
+          "calibrated_hypothetical_paid_yen": 7100,
+          "calibrated_hypothetical_return_rate": 0.8068181818181818,
+          "descriptive_sample_at_least_30": false,
+          "gain_only_hits": 1,
+          "gain_only_paid_yen": 2340,
+          "hit_delta": 1,
+          "lost_only_hits": 0,
+          "lost_only_paid_yen": 0,
+          "outcome_counts": {
+            "baseline_only": 0,
+            "both_hit": 4,
+            "calibrated_only": 1,
+            "neither_hit": 6
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 0,
+            "both_hit": 4760,
+            "calibrated_only": 2340,
+            "neither_hit": 24600
+          },
+          "payout_delta_yen": 2340,
+          "races": 11,
+          "stakes_yen": 8800
+        },
+        "venue:13": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 6,
+          "baseline_hypothetical_paid_yen": 5420,
+          "baseline_hypothetical_return_rate": 0.5645833333333333,
+          "calibrated_hits": 6,
+          "calibrated_hypothetical_paid_yen": 7400,
+          "calibrated_hypothetical_return_rate": 0.7708333333333334,
+          "descriptive_sample_at_least_30": false,
+          "gain_only_hits": 1,
+          "gain_only_paid_yen": 2870,
+          "hit_delta": 0,
+          "lost_only_hits": 1,
+          "lost_only_paid_yen": 890,
+          "outcome_counts": {
+            "baseline_only": 1,
+            "both_hit": 5,
+            "calibrated_only": 1,
+            "neither_hit": 5
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 890,
+            "both_hit": 4530,
+            "calibrated_only": 2870,
+            "neither_hit": 79270
+          },
+          "payout_delta_yen": 1980,
+          "races": 12,
+          "stakes_yen": 9600
+        },
+        "venue:14": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 12,
+          "baseline_hypothetical_paid_yen": 19910,
+          "baseline_hypothetical_return_rate": 1.13125,
+          "calibrated_hits": 12,
+          "calibrated_hypothetical_paid_yen": 13660,
+          "calibrated_hypothetical_return_rate": 0.7761363636363636,
+          "descriptive_sample_at_least_30": false,
+          "gain_only_hits": 1,
+          "gain_only_paid_yen": 2450,
+          "hit_delta": 0,
+          "lost_only_hits": 1,
+          "lost_only_paid_yen": 8700,
+          "outcome_counts": {
+            "baseline_only": 1,
+            "both_hit": 11,
+            "calibrated_only": 1,
+            "neither_hit": 9
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 8700,
+            "both_hit": 11210,
+            "calibrated_only": 2450,
+            "neither_hit": 39690
+          },
+          "payout_delta_yen": -6250,
+          "races": 22,
+          "stakes_yen": 17600
+        },
+        "venue:15": {
+          "K_positive_marker_races": 1,
+          "baseline_hits": 2,
+          "baseline_hypothetical_paid_yen": 5930,
+          "baseline_hypothetical_return_rate": 0.6738636363636363,
+          "calibrated_hits": 3,
+          "calibrated_hypothetical_paid_yen": 6970,
+          "calibrated_hypothetical_return_rate": 0.7920454545454545,
+          "descriptive_sample_at_least_30": false,
+          "gain_only_hits": 1,
+          "gain_only_paid_yen": 1040,
+          "hit_delta": 1,
+          "lost_only_hits": 0,
+          "lost_only_paid_yen": 0,
+          "outcome_counts": {
+            "baseline_only": 0,
+            "both_hit": 2,
+            "calibrated_only": 1,
+            "neither_hit": 8
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 0,
+            "both_hit": 5930,
+            "calibrated_only": 1040,
+            "neither_hit": 98800
+          },
+          "payout_delta_yen": 1040,
+          "races": 11,
+          "stakes_yen": 8800
+        },
+        "venue:17": {
+          "K_positive_marker_races": 0,
+          "baseline_hits": 12,
+          "baseline_hypothetical_paid_yen": 15030,
+          "baseline_hypothetical_return_rate": 0.9888157894736842,
+          "calibrated_hits": 12,
+          "calibrated_hypothetical_paid_yen": 15030,
+          "calibrated_hypothetical_return_rate": 0.9888157894736842,
+          "descriptive_sample_at_least_30": false,
+          "gain_only_hits": 0,
+          "gain_only_paid_yen": 0,
+          "hit_delta": 0,
+          "lost_only_hits": 0,
+          "lost_only_paid_yen": 0,
+          "outcome_counts": {
+            "baseline_only": 0,
+            "both_hit": 12,
+            "calibrated_only": 0,
+            "neither_hit": 7
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 0,
+            "both_hit": 15030,
+            "calibrated_only": 0,
+            "neither_hit": 20080
+          },
+          "payout_delta_yen": 0,
+          "races": 19,
+          "stakes_yen": 15200
+        },
+        "venue:20": {
+          "K_positive_marker_races": 2,
+          "baseline_hits": 11,
+          "baseline_hypothetical_paid_yen": 19600,
+          "baseline_hypothetical_return_rate": 1.1666666666666667,
+          "calibrated_hits": 10,
+          "calibrated_hypothetical_paid_yen": 12030,
+          "calibrated_hypothetical_return_rate": 0.7160714285714286,
+          "descriptive_sample_at_least_30": false,
+          "gain_only_hits": 0,
+          "gain_only_paid_yen": 0,
+          "hit_delta": -1,
+          "lost_only_hits": 1,
+          "lost_only_paid_yen": 7570,
+          "outcome_counts": {
+            "baseline_only": 1,
+            "both_hit": 10,
+            "calibrated_only": 0,
+            "neither_hit": 10
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 7570,
+            "both_hit": 12030,
+            "calibrated_only": 0,
+            "neither_hit": 155470
+          },
+          "payout_delta_yen": -7570,
+          "races": 21,
+          "stakes_yen": 16800
+        },
+        "venue:24": {
+          "K_positive_marker_races": 3,
+          "baseline_hits": 19,
+          "baseline_hypothetical_paid_yen": 17670,
+          "baseline_hypothetical_return_rate": 0.6135416666666667,
+          "calibrated_hits": 23,
+          "calibrated_hypothetical_paid_yen": 20250,
+          "calibrated_hypothetical_return_rate": 0.703125,
+          "descriptive_sample_at_least_30": true,
+          "gain_only_hits": 4,
+          "gain_only_paid_yen": 2580,
+          "hit_delta": 4,
+          "lost_only_hits": 0,
+          "lost_only_paid_yen": 0,
+          "outcome_counts": {
+            "baseline_only": 0,
+            "both_hit": 19,
+            "calibrated_only": 4,
+            "neither_hit": 13
+          },
+          "outcome_payout_yen_per_100_sum": {
+            "baseline_only": 0,
+            "both_hit": 17670,
+            "calibrated_only": 2580,
+            "neither_hit": 56230
+          },
+          "payout_delta_yen": 2580,
+          "races": 36,
+          "stakes_yen": 28800
+        }
+      }
+    }
+  ],
+  "selected_readout": [
+    {
+      "overall": {
+        "races": 387,
+        "counts": {
+          "baseline_only": 16,
+          "both_hit": 122,
+          "calibrated_only": 23,
+          "neither_hit": 226
+        },
+        "outcome_paid_when_baseline_only": 47630,
+        "outcome_paid_when_calibrated_only": 45410,
+        "net_paid_change": -2220,
+        "net_hit_change": 7
+      },
+      "stage:QUALIFYING": {
+        "races": 193,
+        "counts": {
+          "baseline_only": 9,
+          "both_hit": 54,
+          "calibrated_only": 10,
+          "neither_hit": 120
+        },
+        "outcome_paid_when_baseline_only": 28700,
+        "outcome_paid_when_calibrated_only": 21470,
+        "net_paid_change": -7230,
+        "net_hit_change": 1
+      },
+      "stage:GENERAL": {
+        "races": 83,
+        "counts": {
+          "baseline_only": 6,
+          "both_hit": 23,
+          "calibrated_only": 6,
+          "neither_hit": 48
+        },
+        "outcome_paid_when_baseline_only": 17570,
+        "outcome_paid_when_calibrated_only": 11240,
+        "net_paid_change": -6330,
+        "net_hit_change": 0
+      }
+    },
+    {
+      "overall": {
+        "races": 376,
+        "counts": {
+          "baseline_only": 9,
+          "both_hit": 140,
+          "calibrated_only": 25,
+          "neither_hit": 202
+        },
+        "outcome_paid_when_baseline_only": 42040,
+        "outcome_paid_when_calibrated_only": 48780,
+        "net_paid_change": 6740,
+        "net_hit_change": 16
+      },
+      "stage:QUALIFYING": {
+        "races": 157,
+        "counts": {
+          "baseline_only": 3,
+          "both_hit": 51,
+          "calibrated_only": 11,
+          "neither_hit": 92
+        },
+        "outcome_paid_when_baseline_only": 17730,
+        "outcome_paid_when_calibrated_only": 17570,
+        "net_paid_change": -160,
+        "net_hit_change": 8
+      },
+      "stage:GENERAL": {
+        "races": 104,
+        "counts": {
+          "baseline_only": 3,
+          "both_hit": 40,
+          "calibrated_only": 9,
+          "neither_hit": 52
+        },
+        "outcome_paid_when_baseline_only": 18080,
+        "outcome_paid_when_calibrated_only": 21210,
+        "net_paid_change": 3130,
+        "net_hit_change": 6
+      }
+    }
+  ],
+  "forward_verified_races": 0,
+  "production_model_promoted": false,
+  "automatic_subgroup_router_enabled": false,
+  "caveats": [
+    "K payout and race results never used to fit or alter B-only predictions.",
+    "No actual monetary wagers made or implied by hypothetical scores.",
+    "This retrospective re-audit of previously evaluated dates is not a new OOS trial.",
+    "Neither K marker absence nor six finishers certifies no incident.",
+    "Do not backfit a selection policy based on these K-defined categories, payout sums, venues or race stages.",
+    "Original historical LZH archives were on an ephemeral CI runner and were not permanently saved."
+  ]
+}
