@@ -1,0 +1,123 @@
+{
+  "kind": "PAIR_INVARIANT_8TICKET_B_ONLY_HISTORICAL_HOLDOUT",
+  "dates": [
+    "2026-09-25",
+    "2026-09-26",
+    "2026-09-27"
+  ],
+  "provenance": [
+    {
+      "B_frozen": 120,
+      "B_sha": "46bf98e0b8711820d0568a6aa1a228912583b9e68e5b53e2f3153fa47a2d6188",
+      "K_sha": "568600c2a66219460307c745b5df704b5c4cbceaa1a36549adddc5e81bb70b4b",
+      "date": "2026-09-25",
+      "races": 111,
+      "ticket_sha": "5cc892da4b487b4d9513d81d84f96a93482cdfeb92b6ba821bbe73e8feb94b19"
+    },
+    {
+      "B_frozen": 132,
+      "B_sha": "d92c0284f38649e04bed450babe558dd417dc725c0614f2b589551d43d64f42b",
+      "K_sha": "8faf06635b34c275bc94b9c42b742ca2198dd9d16affddbd80b76d9e27ed044f",
+      "date": "2026-09-26",
+      "races": 126,
+      "ticket_sha": "36bad6e6f934d9313278a7a4f9eb4efa8358eb4983a0c1069413f1e1ca583058"
+    },
+    {
+      "B_frozen": 132,
+      "B_sha": "f1a77bd35dac01b69d444ad3cd161faf7497e3b4cb3896eeae55097fed2dc0bc",
+      "K_sha": "062af8e276fc6e7a4453d82c3f0484b6b04089fe1f659cec5ff217eb5ee4ea24",
+      "date": "2026-09-27",
+      "races": 126,
+      "ticket_sha": "9d32ba579abb8beb17f6d6d5d12ff4759de8c6d1b7a24efbb8e0561a8760b71c"
+    }
+  ],
+  "ci_log": "https://github.com/sasaharu0831/boatrace-ai/actions/runs/41209344512",
+  "origin": "Official BOAT RACE historical B program/K outcomes LZH",
+  "prediction_constructed_from_B_only_before_K": true,
+  "unchanged_baseline_PL_weights": true,
+  "number_of_tickets": 8,
+  "stake_per_ticket_assumed_yen": 100,
+  "baseline_pair_support_exactly_preserved": true,
+  "policies": {
+    "baseline_local_motor": {
+      "K_marker_positive": 2,
+      "changed_races": 0,
+      "head_coverage_rate": 0.8567493112947658,
+      "head_covered": 311,
+      "head_second_pair_covered": 204,
+      "hits": 122,
+      "hypothetical_hit_rate": 0.33608815426997246,
+      "hypothetical_return_rate": 0.7954889807162534,
+      "miss_reasons": {
+        "EXACT_HIT": 122,
+        "HEAD_ABSENT": 52,
+        "HEAD_PRESENT_SECOND_ABSENT": 92,
+        "HEAD_SECOND_PRESENT_THIRD_ABSENT": 81,
+        "SECOND_THIRD_SWAPPED": 16
+      },
+      "pair_coverage_rate": 0.5619834710743802,
+      "payout_yen": 231010,
+      "races": 363,
+      "stakes_yen": 290400
+    },
+    "keep_pairs_top1_third3": {
+      "K_marker_positive": 2,
+      "changed_races": 175,
+      "head_coverage_rate": 0.8567493112947658,
+      "head_covered": 311,
+      "head_second_pair_covered": 204,
+      "hits": 121,
+      "hypothetical_hit_rate": 0.3333333333333333,
+      "hypothetical_return_rate": 0.7598140495867769,
+      "miss_reasons": {
+        "EXACT_HIT": 121,
+        "HEAD_ABSENT": 52,
+        "HEAD_PRESENT_SECOND_ABSENT": 91,
+        "HEAD_SECOND_PRESENT_THIRD_ABSENT": 80,
+        "SECOND_THIRD_SWAPPED": 19
+      },
+      "pair_coverage_rate": 0.5619834710743802,
+      "payout_yen": 220650,
+      "races": 363,
+      "stakes_yen": 290400
+    },
+    "keep_pairs_top2_third2": {
+      "K_marker_positive": 2,
+      "changed_races": 123,
+      "head_coverage_rate": 0.8567493112947658,
+      "head_covered": 311,
+      "head_second_pair_covered": 204,
+      "hits": 126,
+      "hypothetical_hit_rate": 0.34710743801652894,
+      "hypothetical_return_rate": 0.8201790633608815,
+      "miss_reasons": {
+        "EXACT_HIT": 126,
+        "HEAD_ABSENT": 52,
+        "HEAD_PRESENT_SECOND_ABSENT": 93,
+        "HEAD_SECOND_PRESENT_THIRD_ABSENT": 75,
+        "SECOND_THIRD_SWAPPED": 17
+      },
+      "pair_coverage_rate": 0.5619834710743802,
+      "payout_yen": 238180,
+      "races": 363,
+      "stakes_yen": 290400
+    }
+  },
+  "observed_delta": {
+    "exact_hits": 4,
+    "hit_rate_percentage_points": 1.1019283746556474,
+    "payout_yen": 7170,
+    "return_percentage_points": 2.469008264462813,
+    "head_covered": 0,
+    "head_second_pair_covered": 0
+  },
+  "candidate_disposition": "PROMISING_RESEARCH_ONLY; seek another untouched cohort. DO NOT PROMOTE TO PRODUCTION",
+  "forward_verified_races": 0,
+  "limitations": [
+    "B/K were downloaded after races, not preclose authenticated.",
+    "No K outcome/payout, odds or popularity used in selection; K for outcome only.",
+    "The 363 eligible races are six-finisher joins, not positively incident-free certified.",
+    "No evidence future or genuine Forward ROI is >=100%.",
+    "Raw official archives still stored only temporarily on GitHub runner."
+  ]
+}
