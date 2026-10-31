@@ -37,6 +37,13 @@ class VenueStageConsistencyTests(unittest.TestCase):
     def test_reject_forged_subgroup_counts_and_derived_scores(self):
         report=self.load()
         report["cohorts"][0]["groups"]["stage:QUALIFYING"]["calibrated"]["hits"]+=1
+        with self.assertRaisesRegex(ValueError,"miss partition"):
+            evaluate(report)
+        report=self.load()
+        group=report["cohorts"][0]["groups"]["stage:QUALIFYING"]["calibrated"]
+        group["hits"]+=1
+        group["misses"]["EXACT_HIT"]+=1
+        group["misses"]["HEAD_ABSENT"]-=1
         with self.assertRaisesRegex(ValueError,"reconcile"):
             evaluate(report)
         report=self.load()
