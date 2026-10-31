@@ -1,0 +1,66 @@
+name: Independent October 20-22 B-only historical holdout
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/oct20-22-holdout.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: oct20-22-b-only-one-time
+  cancel-in-progress: true
+jobs:
+  historical_holdout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: One-time official HTTP guard
+        id: gate
+        env:
+          EVENT: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT" = "workflow_dispatch" ] || [ "$(git log -1 --pretty=%s)" = "Run one-time disjoint B-only 3day holdout" ]; then
+            echo "authorized=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "authorized=false" >> "$GITHUB_OUTPUT"
+            echo "No network requests for this subsequent PR revision."
+          fi
+      - uses: actions/setup-python@v5
+        if: steps.gate.outputs.authorized == 'true'
+        with:
+          python-version: '3.12'
+      - name: Run tests offline
+        if: steps.gate.outputs.authorized == 'true'
+        run: python -W error -m unittest discover -s tests -v
+      - name: Install free p7zip
+        if: steps.gate.outputs.authorized == 'true'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq p7zip-full
+      - name: Download fixed independent dates October 20 through 22
+        if: steps.gate.outputs.authorized == 'true'
+        run: |
+          python src/boat_free_lab.py collect --start 2026-10-20 --days 3 --root "$RUNNER_TEMP/holdout" --sleep 2
+      - name: Generate B-only tickets first, then K-only historical score
+        if: steps.gate.outputs.authorized == 'true'
+        run: |
+          python src/holdout_analysis.py --root "$RUNNER_TEMP/holdout" --dates 2026-10-20 2026-10-21 2026-10-22 > "$RUNNER_TEMP/report.json"
+          python - <<'PY'
+          import json, os
+          p=os.path.join(os.environ["RUNNER_TEMP"],"report.json")
+          d=json.load(open(p,encoding="utf-8"))
+          assert d["mode"]=="HISTORICAL_OOS_SHADOW_NOT_FORWARD" and d["forward_verified_races"]==0
+          print("MODE:",d["mode"])
+          print("DAYS:")
+          for item in d["per_day"]:
+              print(json.dumps({k:item[k] for k in ("date","B_archive_sha256","K_archive_sha256","B_ticket_sha256","B_races","K_races","paired_races","historical_joined","K_positive_marker_races_in_joined")},ensure_ascii=False))
+          print("AGGREGATE:")
+          for policy, strata in d["aggregate"].items():
+              print(json.dumps({"policy":policy,"overall":strata.get("overall"),"marker":{k:v for k,v in strata.items() if k.startswith("marker:")},"stages":{k:v for k,v in strata.items() if k.startswith("stage:")},"venues":{k:v for k,v in strata.items() if k.startswith("venue:")}},ensure_ascii=False,sort_keys=True))
+          PY
+      - name: No persistent upload or automatic model promotion
+        if: always()
+        run: echo "Raw B/K remain on ephemeral runner. Read-only research; no true Forward claims or production promotion."
