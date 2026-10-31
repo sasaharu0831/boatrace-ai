@@ -48,7 +48,7 @@ class PairedPayoutConsistencyTests(unittest.TestCase):
             verify(report,prior)
         report,prior=load()
         report["cohorts"][0]["groups"]["venue:04"]["calibrated_hits"]+=1
-        with self.assertRaisesRegex(ValueError,"partition fails"):
+        with self.assertRaisesRegex(ValueError,"payout decomposition"):
             verify(report,prior)
         report,prior=load()
         report["cohorts"][1]["dates"][0]=report["cohorts"][0]["dates"][0]
