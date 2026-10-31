@@ -1,0 +1,116 @@
+{
+  "kind": "FROZEN_ROLE_TEMPERATURE_SECOND_HISTORICAL_HOLDOUT",
+  "mode": "HISTORICAL_NOT_FORWARD",
+  "dates": [
+    "2026-08-28",
+    "2026-08-29",
+    "2026-08-30"
+  ],
+  "frozen_trained_parameters_sha256": "a8660f259ab1c88b150aa63f5e663c199ad1d5a68be5484c6f9dfa7e83e4bcbf",
+  "frozen_trained_temperatures": {
+    "first": 1.5,
+    "second": 1,
+    "third": 0.75
+  },
+  "official_raw_and_predicted_sha256": [
+    {
+      "B_frozen_races": 144,
+      "B_sha256": "bc4221dd4a0aa1e6b87301013b9ce82dd43d107ee87ffcea2dbd52cc54b79eae",
+      "K_sha256": "be4b2a41e1b78804fd13dd7cc8645bcf9fa53687bd81c3fb2e88e58efa7bc870",
+      "date": "2026-08-28",
+      "evaluated_races": 136,
+      "frozen_120way_and_8_tickets_sha256": "44f60f710c7766e8379ca424e09c0ae9c6dbfc72372a90abcfb7d0f2edca3eb9"
+    },
+    {
+      "B_frozen_races": 156,
+      "B_sha256": "c77d126fedff4bfc337536ee5a0b32806b7b5e44c30670f9a0a474dda3c619a1",
+      "K_sha256": "3a814ceccc6bf6d9bbb67aaaf0085f1f08481135f38df150910d46aa36b47e32",
+      "date": "2026-08-29",
+      "evaluated_races": 146,
+      "frozen_120way_and_8_tickets_sha256": "4f5cf1af1ef79804bb5db2b156c5790b09cb7eef47c94531b0f4b08a48e57b34"
+    },
+    {
+      "B_frozen_races": 156,
+      "B_sha256": "f82153f8538aceccb1262e6da77b6f2bdfa38af2efb1ad1e52df7ebb28e59da2",
+      "K_sha256": "41d0e937d224513228cd0b42c5c7f02e0c2e68c0dae3a1523ef9721b0ecd713c",
+      "date": "2026-08-30",
+      "evaluated_races": 144,
+      "frozen_120way_and_8_tickets_sha256": "e19040f6b22c98628a7cc907fd6cab8eabad09782f37ae815bb786aa5227178f"
+    }
+  ],
+  "metrics": {
+    "baseline_local_motor": {
+      "K_positive_markers": 3,
+      "average_brier_120": 0.978840413248504,
+      "average_logloss": 4.289225749487462,
+      "brier_sum": 416.9860160438627,
+      "head_coverage": 0.7769953051643192,
+      "head_covered": 331,
+      "hits": 132,
+      "hypothetical_hit_rate": 0.30985915492957744,
+      "hypothetical_return_rate": 0.765287558685446,
+      "logloss_sum": 1827.210169281659,
+      "misses": {
+        "EXACT_HIT": 132,
+        "HEAD_ABSENT": 95,
+        "HEAD_PRESENT_SECOND_ABSENT": 81,
+        "HEAD_SECOND_PRESENT_THIRD_ABSENT": 92,
+        "SECOND_THIRD_SWAPPED": 26
+      },
+      "pair_coverage": 0.528169014084507,
+      "pair_covered": 225,
+      "payout_yen": 260810,
+      "races": 426,
+      "stakes_yen": 340800
+    },
+    "training_calibrated_roles": {
+      "K_positive_markers": 3,
+      "average_brier_120": 0.9760998914062241,
+      "average_logloss": 4.20941153335547,
+      "brier_sum": 415.8185537390515,
+      "head_coverage": 0.6784037558685446,
+      "head_covered": 289,
+      "hits": 151,
+      "hypothetical_hit_rate": 0.3544600938967136,
+      "hypothetical_return_rate": 0.7765551643192489,
+      "logloss_sum": 1793.2093132094303,
+      "misses": {
+        "EXACT_HIT": 151,
+        "HEAD_ABSENT": 137,
+        "HEAD_PRESENT_SECOND_ABSENT": 56,
+        "HEAD_SECOND_PRESENT_THIRD_ABSENT": 55,
+        "SECOND_THIRD_SWAPPED": 27
+      },
+      "pair_coverage": 0.48826291079812206,
+      "pair_covered": 208,
+      "payout_yen": 264650,
+      "races": 426,
+      "stakes_yen": 340800
+    }
+  },
+  "decision": {
+    "both_hits_roi": true,
+    "both_proper_scores": true,
+    "deltas": {
+      "avg_brier": -0.0027405218422799082,
+      "avg_logloss": -0.07981421613199213,
+      "hit_count": 19,
+      "payout_yen": 3840
+    },
+    "forward": 0,
+    "production": false
+  },
+  "first_training_and_holdout_path": "research/role_temperature_aug10_17_train_test.json",
+  "ci_evidence": "https://github.com/sasaharu0831/boatrace-ai/actions/runs/41216987137",
+  "untouched_before_first_historical_calibration": true,
+  "fit_changed_from_previous_holdout": false,
+  "forward_verified_races": 0,
+  "production_promoted": false,
+  "notes": [
+    "Training data are three 2026-08-10 to 12 days only; no re-fit on either validation date.",
+    "Second cohort historical postrace B/K downloaded after races; no preclose authenticity.",
+    "All results and payouts limited to scoring; no odds, K or payout in test picks.",
+    "Results include some K-positive marker cases; six-finishers do not certify incident-free.",
+    "Raw B/K were not durably stored from GitHub ephemeral runner."
+  ]
+}
