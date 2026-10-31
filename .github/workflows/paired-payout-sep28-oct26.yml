@@ -1,9 +1,6 @@
 name: One-time paired payout attribution Sep28-Oct26
 on:
-  pull_request:
-    paths:
-      - '.github/workflows/paired-payout-sep28-oct26.yml'
-  workflow_dispatch:
+  workflow_dispatch: # Historical one-time cross-audit complete; future official requests are manual-only
 permissions:
   contents: read
 concurrency:
