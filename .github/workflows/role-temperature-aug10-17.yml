@@ -1,0 +1,89 @@
+name: One-time train-only role calibration Aug10-17 historical trial
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/role-temperature-aug10-17.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: role-temperature-aug10-17-once
+  cancel-in-progress: false
+jobs:
+  calibrate_then_test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Restrict official downloads to one explicit commit or manual trigger
+        id: gate
+        env:
+          EVENT: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT" = "workflow_dispatch" ] || [ "$(git log -1 --pretty=%s)" = "Run one-time Aug10-17 train-only role calibration" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "No network: subsequent PR edits cannot retrigger this historical fetch."
+          fi
+      - uses: actions/setup-python@v5
+        if: steps.gate.outputs.enabled == 'true'
+        with:
+          python-version: '3.12'
+      - name: Offline unit tests, no external data
+        if: steps.gate.outputs.enabled == 'true'
+        run: python -W error -m unittest discover -s tests -v
+      - name: Install free p7zip extractor
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq p7zip-full
+      - name: Collect bounded training-only official B/K Aug10-12
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python src/boat_free_lab.py collect --start 2026-08-10 --days 3 --root "$RUNNER_TEMP/role-cal" --sleep 2
+      - name: Collect bounded still-untouched test official B/K Aug15-17
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python src/boat_free_lab.py collect --start 2026-08-15 --days 3 --root "$RUNNER_TEMP/role-cal" --sleep 2
+      - name: Train from older data only, then freeze test B and score K
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python src/role_temperature_trial.py \
+            --root "$RUNNER_TEMP/role-cal" \
+            --train 2026-08-10 2026-08-11 2026-08-12 \
+            --test 2026-08-15 2026-08-16 2026-08-17 \
+            > "$RUNNER_TEMP/report.json"
+          python - <<'PY'
+          import json, os
+          path=os.path.join(os.environ["RUNNER_TEMP"],"report.json")
+          report=json.load(open(path,encoding="utf-8"))
+          assert report["mode"]=="TRAIN_ONLY_TEMPERATURE_CALIBRATION_HISTORICAL_NOT_FORWARD"
+          assert report["production_promoted"] is False and report["forward_verified_races"]==0
+          assert report["train_dates"]==["2026-08-10","2026-08-11","2026-08-12"]
+          assert report["test_dates"]==["2026-08-15","2026-08-16","2026-08-17"]
+          print("ROLE_CAL_TRAIN",json.dumps({
+              "train":report["train_dates"],
+              "receipts":report["train_receipts"],
+              "fit":report["fit"],
+              "frozen_fit_sha256":report["trained_parameters_sha256"]
+          },sort_keys=True))
+          print("ROLE_CAL_TEST_DAYS",json.dumps(report["test_receipts"],sort_keys=True))
+          for name,row in report["test_metrics"].items():
+              assert row["races"]>0
+              assert row["stakes_yen"]==800*row["races"]
+              assert sum(row["misses"].values())==row["races"]
+              assert row["hits"]==row["misses"]["EXACT_HIT"]
+              print("ROLE_CAL_POLICY",json.dumps({"policy":name,**row},sort_keys=True))
+          print("ROLE_CAL_DIFFERENCES",json.dumps({
+              "deltas":report["test_deltas"],
+              "both_hits_and_roi":report["test_simultaneously_improves_hits_roi"],
+              "both_proper_scores":report["test_improves_both_proper_scoring_rules"],
+              "production_promoted":False,"forward_verified_races":0
+          },sort_keys=True))
+          PY
+      - name: Never upload raw official B/K or promote trained hypotheses
+        if: always()
+        run: echo "Historical research only; raw B/K only in ephemeral runner. No production change."
