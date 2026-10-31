@@ -20,6 +20,38 @@ from quality_policy import k_observations
 from shadow_baseline import POLICIES, TICKETS, freeze_b_only
 
 
+MISS_REASONS = (
+    "EXACT_HIT",
+    "HEAD_ABSENT",
+    "SECOND_THIRD_SWAPPED",
+    "HEAD_PRESENT_SECOND_ABSENT",
+    "HEAD_SECOND_PRESENT_THIRD_ABSENT",
+)
+
+
+def classify_ticket_miss(tickets: list[str], actual: str) -> str:
+    """Mutually exclusive postrace diagnostics. NEVER an input to ranking."""
+    parts = actual.split("-")
+    if len(parts) != 3 or len(set(parts)) != 3 or any(p not in "123456" for p in parts):
+        raise ValueError("invalid actual 3-place order")
+    if len(tickets) != TICKETS or len(set(tickets)) != TICKETS:
+        raise ValueError("expected eight unique frozen tickets")
+    for ticket in tickets:
+        ordered = ticket.split("-")
+        if len(ordered) != 3 or len(set(ordered)) != 3 or any(x not in "123456" for x in ordered):
+            raise ValueError("invalid frozen ticket")
+    if actual in tickets:
+        return "EXACT_HIT"
+    head, second, third = parts
+    if not any(t.split("-")[0] == head for t in tickets):
+        return "HEAD_ABSENT"
+    if f"{head}-{third}-{second}" in tickets:
+        return "SECOND_THIRD_SWAPPED"
+    if not any(t.split("-")[:2] == [head, second] for t in tickets):
+        return "HEAD_PRESENT_SECOND_ABSENT"
+    return "HEAD_SECOND_PRESENT_THIRD_ABSENT"
+
+
 def new_score():
     return {"races": 0, "hits": 0, "stakes_yen": 0, "payout_yen": 0}
 
@@ -57,6 +89,7 @@ def evaluate_day(b_text: str, k_text: str, day: date) -> dict:
     accepted = sorted(set(joined["normal_race_keys"]) & set(frozen))
     # Paired finishers can still have unobserved operational/incident specials.
     grouped = {p: defaultdict(new_score) for p in POLICIES}
+    missed = {p: defaultdict(lambda: defaultdict(int)) for p in POLICIES}
     positive_markers = set()
     for racekey in accepted:
         stage = stages[racekey]
@@ -72,15 +105,27 @@ def evaluate_day(b_text: str, k_text: str, day: date) -> dict:
             tickets = frozen[racekey][policy]
             if len(tickets) != TICKETS:
                 raise ValueError("ticket cardinality mismatch")
+            reason = classify_ticket_miss(tickets, actual)
             for group in ("overall", f"venue:{venue}", f"stage:{stage}",
                           f"marker:{group_marker}", f"stage+marker:{stage}/{group_marker}"):
                 accumulate(grouped[policy][group], tickets, actual, payout)
+                missed[policy][group][reason] += 1
 
     totals = {p: {key: finish_score(value) for key, value in sorted(groups.items())}
               for p, groups in grouped.items()}
     n = len(accepted)
     if any(totals[p].get("overall", {}).get("races", 0) != n for p in POLICIES):
         raise ValueError("population mismatch across policies")
+    diagnostics = {}
+    for policy in POLICIES:
+        diagnostics[policy] = {}
+        for group, values in missed[policy].items():
+            counts = {reason: values[reason] for reason in MISS_REASONS}
+            if sum(counts.values()) != totals[policy][group]["races"]:
+                raise ValueError("miss diagnostic denominator mismatch")
+            if counts["EXACT_HIT"] != totals[policy][group]["hits"]:
+                raise ValueError("miss diagnostic disagreement with hits")
+            diagnostics[policy][group] = counts
     return {
         "date": day.isoformat(), "B_ticket_sha256": prediction_sha,
         "B_races_frozen_before_K": len(frozen),
@@ -89,6 +134,7 @@ def evaluate_day(b_text: str, k_text: str, day: date) -> dict:
         "historical_joined": n,
         "K_positive_marker_races_in_joined": len(positive_markers),
         "groups": totals,
+        "miss_diagnostics": diagnostics,
         "forward_verified_races": 0
     }
 
@@ -98,6 +144,7 @@ def analyze_holdout(root: Path, days: list[date]) -> dict:
         raise ValueError("1..3 unique historical days")
     day_reports = []
     combined = {p: defaultdict(new_score) for p in POLICIES}
+    combined_miss = {p: defaultdict(lambda: defaultdict(int)) for p in POLICIES}
     for day in sorted(days):
         # Read and validate B before any K archive is read.
         b_text, bmeta = decode_report(archive_path(root, "B", day))
@@ -118,14 +165,22 @@ def analyze_holdout(root: Path, days: list[date]) -> dict:
                 dest = combined[policy][group]
                 for field in ("races", "hits", "stakes_yen", "payout_yen"):
                     dest[field] += score[field]
+            for group, reasons in report["miss_diagnostics"][policy].items():
+                for reason, count in reasons.items():
+                    combined_miss[policy][group][reason] += count
     groups = {p: {k: finish_score(v) for k, v in sorted(vals.items())}
               for p, vals in combined.items()}
+    diagnostic_groups = {p: {
+        group: {reason: counts[reason] for reason in MISS_REASONS}
+        for group, counts in sorted(values.items())
+    } for p, values in combined_miss.items()}
     return {
         "mode": "HISTORICAL_OOS_SHADOW_NOT_FORWARD",
         "ticket_count": TICKETS, "model_coefficients_unchanged": True,
         "weights_fit_on_holdout": False,
         "dates": [d.isoformat() for d in sorted(days)],
         "per_day": day_reports, "aggregate": groups,
+        "miss_diagnostics": diagnostic_groups,
         "forward_verified_races": 0, "production_models_promoted": 0,
         "caveats": [
             "Program B was acquired retrospectively, not independently authenticated before close.",
