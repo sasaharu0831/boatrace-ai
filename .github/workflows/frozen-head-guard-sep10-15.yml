@@ -1,9 +1,6 @@
 name: One-time frozen-calibrated head guard Sep10-15 historical holdout
 on:
-  pull_request:
-    paths:
-      - '.github/workflows/frozen-head-guard-sep10-15.yml'
-  workflow_dispatch:
+  workflow_dispatch: # Completed one-time trial; only explicit manual future requests
 permissions:
   contents: read
 concurrency:
