@@ -34,7 +34,20 @@ def checked_training_fit(receipt: dict, test_days: list[date]):
         raise ValueError("training provenance missing or date mismatch")
     if fit["training_eligible_races"] < 60:
         raise ValueError("too few training races")
-    if freeze_digest({"fit": fit, "train_receipts": train_receipts}) != receipt["trained_parameters_sha256"]:
+    # JSON interchange can canonicalize integral floats to integers
+    # (1.0 becomes 1). Recreate only the original float types used by
+    # the trainer before independently checking its stored SHA-256.
+    canonical_fit = dict(fit)
+    canonical_fit["grid"] = [float(t) for t in fit["grid"]]
+    canonical_fit["ridge_strength"] = float(fit["ridge_strength"])
+    canonical_fit["role_temperatures"] = {
+        k: float(v) for k, v in fit["role_temperatures"].items()
+    }
+    canonical_fit["training_losses"] = {
+        k: {t: float(v) for t, v in losses.items()}
+        for k, losses in fit["training_losses"].items()
+    }
+    if freeze_digest({"fit": canonical_fit, "train_receipts": train_receipts}) != receipt["trained_parameters_sha256"]:
         raise ValueError("training fit hash mismatch; no holdout scoring permitted")
     temperatures = fit["role_temperatures"]
     if set(temperatures) != set(ROLES) or any(t not in TEMPERATURES
