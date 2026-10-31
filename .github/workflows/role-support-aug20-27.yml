@@ -1,0 +1,89 @@
+name: One-time B-only head/pair support guarded roles Aug20-27
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/role-support-aug20-27.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: historical-role-support-aug20-27-once
+  cancel-in-progress: false
+jobs:
+  study:
+    runs-on: ubuntu-latest
+    timeout-minutes: 13
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: One-time bounded download gate
+        id: gate
+        env:
+          EVENT: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT" = "workflow_dispatch" ] || [ "$(git log -1 --pretty=%s)" = "Run one-time Aug20-27 role support historical study" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "No further official network calls."
+          fi
+      - uses: actions/setup-python@v5
+        if: steps.gate.outputs.enabled == 'true'
+        with:
+          python-version: '3.12'
+      - name: Python zero-network tests
+        if: steps.gate.outputs.enabled == 'true'
+        run: python -W error -m unittest discover -s tests -v
+      - name: Install free p7zip
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq p7zip-full
+      - name: Fetch first three old B/K pairs - Aug20-22
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python src/boat_free_lab.py collect --start 2026-08-20 --days 3 --root "$RUNNER_TEMP/role-support" --sleep 2
+      - name: B-only freeze / K-only score for first cohort
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python src/role_support_trial.py --root "$RUNNER_TEMP/role-support" --dates 2026-08-20 2026-08-21 2026-08-22 > "$RUNNER_TEMP/cohort1.json"
+      - name: Fetch separate old B/K pairs - Aug25-27
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python src/boat_free_lab.py collect --start 2026-08-25 --days 3 --root "$RUNNER_TEMP/role-support" --sleep 2
+      - name: B-only freeze / K-only score for second cohort
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python src/role_support_trial.py --root "$RUNNER_TEMP/role-support" --dates 2026-08-25 2026-08-26 2026-08-27 > "$RUNNER_TEMP/cohort2.json"
+      - name: Independent cohort and diagnostic summaries only
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python - <<'PY'
+          import json, os
+          root=os.environ["RUNNER_TEMP"]
+          reports=[]
+          for file in ("cohort1.json","cohort2.json"):
+              x=json.load(open(os.path.join(root,file),encoding="utf-8"))
+              assert x["mode"]=="B_ONLY_SECOND_ROLE_SUPPORT_GUARDS_HISTORICAL_NOT_FORWARD"
+              assert x["forward_verified_races"]==0 and x["production_promoted"] is False
+              dates=x["dates"]
+              reports.append(x)
+              print("SUPPORT_DAYS",json.dumps(x["cohort_receipts"],sort_keys=True))
+              for name,stats in x["aggregate"].items():
+                  assert stats["races"]>0 and stats["stakes_yen"]==800*stats["races"]
+                  assert sum(stats["misses"].values())==stats["races"]
+                  assert stats["misses"]["EXACT_HIT"]==stats["hits"]
+                  print("SUPPORT_POLICY",json.dumps({"cohort":dates,"policy":name,**stats},sort_keys=True))
+          assert not set(reports[0]["dates"]) & set(reports[1]["dates"])
+          for x in reports:
+              base=x["aggregate"]["baseline_local_motor"]
+              for name in ("head_support_role_second","pair_support_role_second"):
+                  candidate=x["aggregate"][name]
+                  assert candidate["races"]==base["races"]
+                  assert candidate["head_covered"]==base["head_covered"]
+              assert x["aggregate"]["pair_support_role_second"]["pair_covered"]==base["pair_covered"]
+          PY
+      - name: No raw archive upload or model promotion
+        if: always()
+        run: echo "Raw official B/K stays on disposable runner; only historical counts and hashes in logs."
