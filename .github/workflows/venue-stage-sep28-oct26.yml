@@ -1,9 +1,6 @@
 name: One-time B-only venue-stage diagnostic holdout Sep28-Oct26
 on:
-  pull_request:
-    paths:
-      - '.github/workflows/venue-stage-sep28-oct26.yml'
-  workflow_dispatch:
+  workflow_dispatch: # Historical 6-day retrieval completed; further requests require manual dispatch
 permissions:
   contents: read
 concurrency:
