@@ -1,0 +1,77 @@
+name: One-time frozen-calibration independent Aug28-30 re-test
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/frozen-role-retest-aug28-30.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: frozen-role-aug28-30-once
+  cancel-in-progress: false
+jobs:
+  second_holdout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: One-time only; no recurring requests on unrelated code changes
+        id: gate
+        env:
+          EVENT: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT" = "workflow_dispatch" ] || [ "$(git log -1 --pretty=%s)" = "Run one-time Aug28-30 frozen role calibration re-test" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "Official B/K download skipped on normal PR edits."
+          fi
+      - uses: actions/setup-python@v5
+        if: steps.gate.outputs.enabled == 'true'
+        with:
+          python-version: '3.12'
+      - name: Offline regression suite including immutable fit hash
+        if: steps.gate.outputs.enabled == 'true'
+        run: python -W error -m unittest discover -s tests -v
+      - name: Free p7zip LZH extractor
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq p7zip-full
+      - name: Fetch only three untouched official test B/K pairs Aug28-30
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python src/boat_free_lab.py collect --start 2026-08-28 --days 3 --root "$RUNNER_TEMP/second-role" --sleep 2
+      - name: Verify immutable earlier fit digest; freeze new B-only then score new K
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          python src/role_temperature_retest.py \
+            --root "$RUNNER_TEMP/second-role" \
+            --fit-receipt research/role_temperature_aug10_17_train_test.json \
+            --test 2026-08-28 2026-08-29 2026-08-30 > "$RUNNER_TEMP/results.json"
+          python - <<'PY'
+          import json,os
+          r=json.load(open(os.path.join(os.environ["RUNNER_TEMP"],"results.json"),encoding="utf-8"))
+          assert r["mode"]=="FROZEN_ROLE_TEMPERATURE_INDEPENDENT_HISTORICAL_RETEST_NOT_FORWARD"
+          assert r["original_fit_sha256"]=="a8660f259ab1c88b150aa63f5e663c199ad1d5a68be5484c6f9dfa7e83e4bcbf"
+          assert r["original_fit_temperatures"]=={"first":1.5,"second":1.0,"third":0.75}
+          assert r["forward_verified_races"]==0 and r["production_promoted"] is False
+          print("ROLE_RETEST_DAYS",json.dumps(r["test_receipts"],sort_keys=True))
+          print("ROLE_RETEST_FIT",json.dumps({"sha":r["original_fit_sha256"],"temperatures":r["original_fit_temperatures"]},sort_keys=True))
+          for name,s in r["test_metrics"].items():
+              assert s["races"]>0 and s["stakes_yen"]==800*s["races"]
+              assert sum(s["misses"].values())==s["races"]
+              assert s["hits"]==s["misses"]["EXACT_HIT"]
+              print("ROLE_RETEST_POLICY",json.dumps({"policy":name,**s},sort_keys=True))
+          print("ROLE_RETEST_DECISION",json.dumps({
+              "deltas":r["test_differences"],
+              "both_hits_roi":r["increased_hits_and_payout"],
+              "both_proper_scores":r["improved_both_proper_scores"],
+              "production":False,"forward":0
+          },sort_keys=True))
+          PY
+      - name: Do not publish raw archives or make production changes
+        if: always()
+        run: echo "Historical research only; original B/K ephemeral, aggregates and hashes in logs."
